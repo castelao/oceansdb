@@ -8,9 +8,8 @@ try:
 except ImportError:
     from distutils.core import setup
 
-#with open('VERSION') as version_file:
-#    version = version_file.read()
-version = '0.0.1'
+with open('VERSION') as version_file:
+    version = version_file.read().rstrip('\n')
 
 with open('README.rst') as readme_file:
     readme = readme_file.read()
