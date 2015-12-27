@@ -7,6 +7,12 @@ from datetime import datetime
 import numpy as np
 from numpy import ma
 
+import os
+
+def woa_dir():
+    return os.path.expanduser(
+            os.getenv('WOA_DIR', '~/.woarc'))
+
 try:
     import netCDF4
 except:
