@@ -310,3 +310,103 @@ def woa_from_file(doy, depth, lat, lon, filename, varnames=None):
         output[v] = griddata(points, values, points_out)
 
     return output
+
+
+class WOA_URL(object):
+    def __init__(self):
+        pass
+
+class WOA_var_nc(object):
+    """
+
+        http://data.nodc.noaa.gov/thredds/dodsC/woa/WOA13/DATAv2/temperature/netcdf/decav/0.25/woa13_decav_t00_04v2.nc.html
+        http://data.nodc.noaa.gov/thredds/dodsC/woa/WOA13/DATAv2/salinity/netcdf/decav/0.25/woa13_decav_s00_04v2.nc.html
+        http://data.nodc.noaa.gov/thredds/dodsC/woa/WOA13/DATA/oxygen/netcdf/all/1.00/woa13_all_o00_01.nc.html
+        http://data.nodc.noaa.gov/thredds/dodsC/woa/WOA13/DATA/nitrate/netcdf/all/1.00/woa13_all_n00_01.nc.html
+
+
+        First case, returns one profile of one variable from a local netCDF file.
+        woa_profile(v,
+                        data.attributes['datetime'],
+                        data.attributes['LATITUDE'],
+                        data.attributes['LONGITUDE'],
+                        data['PRES'],
+                        cfg)
+    """
+    def __init__(self, source):
+        self.source = source
+
+        import netCDF4
+        self.nc = netCDF4.Dataset(self.source, 'r')
+        #self.KEYS = [u't_mn', u't_dd', u't_sd', u't_se', u'crs']
+        self.data = {}
+        for v in self.nc.variables.keys():
+            if v[2:] in ['mn', 'dd', 'sd', 'se']:
+                vout = v[2:]
+            else:
+                vout = v
+            self.data[vout] = self.nc.variables[v]
+
+    def keys(self):
+        #return self.KEYS
+        return self.data.keys()
+
+
+    def __getitem__(self, item=None):
+
+        return self.data[item]
+
+
+    def get_profile(self, var=None, doy=None, depth=None, lat=None, lon=None):
+
+        assert (lat is not None) and (lon is not None)
+
+        if type(var) is str:
+            var = (var,)
+        elif var is None:
+            var = [v for v in self.keys()
+                    if self[v].dimensions ==
+                    (u'time', u'depth', u'lat', u'lon')]
+
+        for v in var:
+            assert v in self.keys()
+
+        if type(doy) is datetime:
+            doy = int(doy.strftime('%j'))
+
+        assert type(doy) is int
+
+        dn = (np.abs(doy - self['time'][:])).argmin()
+        xn = (np.abs(lon - self['lon'][:])).argmin()
+        yn = (np.abs(lat - self['lat'][:])).argmin()
+
+        if depth is None:
+            zn = slice(None, None, None)
+
+        elif np.size(depth) == 1:
+            zn = (np.abs(depth - self['depth'][:])).argmin()
+        else:
+            zn = [(np.abs(z - self['depth'][:])).argmin() for z in depth]
+
+        climdata = {}
+        for v in var:
+            climdata[v] = ma.masked_values(
+                    self[v][dn, zn, yn, xn],
+                    self[v]._FillValue)
+
+        return climdata
+
+
+class WOA(object):
+    """
+    """
+    def __init__(self):
+        self.data = {}
+        self.data['TEMP'] = WOA_var_nc(source=os.path.join(woa_dir(), 'temperature_seasonal_5deg.nc'))
+        self.data['PSAL'] = WOA_var_nc(source=os.path.join(woa_dir(), 'salinity_seasonal_5deg.nc'))
+
+    def keys(self):
+        return self.data.keys()
+
+    def __getitem__(self, item):
+        return self.data[item]
