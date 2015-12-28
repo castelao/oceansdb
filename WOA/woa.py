@@ -25,7 +25,8 @@ try:
 except:
     print("PyDAP is not available")
 
-from scipy.interpolate import RectBivariateSpline, interp1d
+from scipy.interpolate import interp1d
+# RectBivariateSpline
 from scipy.interpolate import griddata
 
 
@@ -80,7 +81,8 @@ def woa_profile_from_dap(var, d, lat, lon, depth, cfg):
             dataset['depth'].shape[0]), dataset.t_mn.attributes['_FillValue'])
         sd = ma.masked_values(dataset.t_sd.t_sd[dn, :, yn, xn].reshape(
             dataset['depth'].shape[0]), dataset.t_sd.attributes['_FillValue'])
-        # se = ma.masked_values(dataset.t_se.t_se[dn, :, yn, xn].reshape( dataset['depth'].shape[0]), dataset.t_se.attributes['_FillValue'])
+        # se = ma.masked_values(dataset.t_se.t_se[dn, :, yn, xn].reshape(
+        #    dataset['depth'].shape[0]), dataset.t_se.attributes['_FillValue'])
         # Use this in the future. A minimum # of samples
         # dd = ma.masked_values(dataset.t_dd.t_dd[dn, :, yn, xn].reshape(
         #    dataset['depth'].shape[0]), dataset.t_dd.attributes['_FillValue'])
@@ -168,7 +170,7 @@ def woa_track_from_file(d, lat, lon, filename, varnames=None):
     lat = np.asanyarray(lat)
     lon = np.asanyarray(lon)
 
-    lon[lon<0] += 360
+    lon[lon < 0] += 360
 
     doy = np.array([int(dd.strftime('%j')) for dd in d])
 
@@ -186,7 +188,7 @@ def woa_track_from_file(d, lat, lon, filename, varnames=None):
 
     for d_n, lat_n, lon_n in zip(doy, lat, lon):
         # Get the nearest point. In the future interpolate.
-        n_d = (np.abs(d_n- nc.variables['time'][:])).argmin()
+        n_d = (np.abs(d_n - nc.variables['time'][:])).argmin()
         n_x = (np.abs(lon_n - nc.variables['lon'][:])).argmin()
         n_y = (np.abs(lat_n - nc.variables['lat'][:])).argmin()
 
@@ -197,6 +199,7 @@ def woa_track_from_file(d, lat, lon, filename, varnames=None):
         output[v] = ma.fix_invalid(output[v])
 
     return output
+
 
 # ---- unifinished, under development ----
 def build_input(doy, depth, lat, lon, filename, varnames):
@@ -316,6 +319,7 @@ class WOA_URL(object):
     def __init__(self):
         pass
 
+
 class WOA_var_nc(object):
     """
 
@@ -351,11 +355,9 @@ class WOA_var_nc(object):
         #return self.KEYS
         return self.data.keys()
 
-
     def __getitem__(self, item=None):
 
         return self.data[item]
-
 
     def get_profile(self, var=None, doy=None, depth=None, lat=None, lon=None):
 
