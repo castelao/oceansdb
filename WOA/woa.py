@@ -342,7 +342,7 @@ class WOA_var_nc(object):
 
         import netCDF4
         self.nc = netCDF4.Dataset(self.source, 'r')
-        #self.KEYS = [u't_mn', u't_dd', u't_sd', u't_se', u'crs']
+        # self.KEYS = [u't_mn', u't_dd', u't_sd', u't_se', u'crs']
         self.data = {}
         for v in self.nc.variables.keys():
             if v[2:] in ['mn', 'dd', 'sd', 'se']:
@@ -352,7 +352,7 @@ class WOA_var_nc(object):
             self.data[vout] = self.nc.variables[v]
 
     def keys(self):
-        #return self.KEYS
+        # return self.KEYS
         return self.data.keys()
 
     def __getitem__(self, item=None):
