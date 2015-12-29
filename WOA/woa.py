@@ -398,6 +398,64 @@ class WOA_var_nc(object):
 
         return climdata
 
+    def get_track(self, var=None, doy=None, depth=None, lat=None, lon=None):
+
+        doy = np.asanyarray(doy)
+        lat = np.asanyarray(lat)
+        lon = np.asanyarray(lon)
+
+        lon[lon < 0] += 360
+
+        assert np.shape(lat) == np.shape(lon)
+
+        # (np.size(depth) == 1), \
+        assert (np.shape(doy) == np.shape(lat)), \
+                "Sorry, I'm not ready for that yet."
+
+        if type(var) is str:
+            var = (var,)
+        elif var is None:
+            var = [v for v in self.keys()
+                    if self[v].dimensions ==
+                    (u'time', u'depth', u'lat', u'lon')]
+
+        for v in var:
+            assert v in self.keys()
+
+
+        if type(doy[0]) is datetime:
+            doy = np.array([int(dd.strftime('%j')) for dd in doy])
+
+        #assert type(doy) is int
+
+        climdata = {}
+        for v in var:
+            climdata[v] = []
+
+        #dn = (np.abs(doy - self['time'][:])).argmin()
+        #xn = (np.abs(lon - self['lon'][:])).argmin()
+        #yn = (np.abs(lat - self['lat'][:])).argmin()
+        for d_n, lat_n, lon_n in zip(doy, lat, lon):
+            # Get the nearest point. In the future interpolate.
+            n_d = (np.abs(d_n - self['time'][:])).argmin()
+            n_x = (np.abs(lon_n - self['lon'][:])).argmin()
+            n_y = (np.abs(lat_n - self['lat'][:])).argmin()
+
+            n_z = 0
+
+            for v in var:
+                climdata[v].append(self[v][n_d, n_z, n_y, n_x])
+
+        for v in var:
+            climdata[v] = ma.fix_invalid(climdata[v])
+
+        #for v in var:
+        #    climdata[v] = ma.masked_values(
+        #            self[v][dn, zn, yn, xn],
+        #            self[v]._FillValue)
+
+        return climdata
+
 
 class WOA(object):
     """
