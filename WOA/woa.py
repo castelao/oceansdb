@@ -288,7 +288,6 @@ def woa_from_file(doy, depth, lat, lon, filename, varnames=None):
                 for xn in lon:
                     points_out.append([tn, zn, yn, xn])
 
-    import pdb; pdb.set_trace()
     output = []
     for v in varnames:
         values = []
