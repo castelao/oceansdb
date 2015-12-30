@@ -35,3 +35,4 @@ def test_get_profile():
 def test_get_track():
     db = WOA()
     db['TEMP'].get_track(doy=[datetime.now()], depth=0, lat=[10], lon=[330])
+    db['TEMP'].get_track(doy=2*[datetime.now()], depth=0, lat=[10, 12], lon=[330, -35])
