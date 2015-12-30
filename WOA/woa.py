@@ -398,6 +398,10 @@ class WOA_var_nc(object):
         return climdata
 
     def get_track(self, var=None, doy=None, depth=None, lat=None, lon=None):
+        """
+
+            Temporary solution for CoTeDe
+        """
 
         doy = np.asanyarray(doy)
         lat = np.asanyarray(lat)
