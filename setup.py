@@ -27,35 +27,6 @@ with open('test-requirements.txt') as test_requirements_file:
     test_requirements = test_requirements_file.read()
 
 
-# == Temporary solution
-def download_data():
-    """ Temporary solution to download WOA database.
-
-        Copied from CoTeDe. Update it after CoTeDe is completely migrated to use it here.
-    """
-    try:
-        # Python 3
-        import urllib.request as urllib
-    except:
-        import urllib2 as urllib
-    import os
-    woa_dir = os.path.expanduser(os.getenv('WOA_DIR', '~/.woarc'))
-    urls = ['http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA09/NetCDFdata/temperature_seasonal_5deg.nc',
-    'http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA09/NetCDFdata/salinity_seasonal_5deg.nc']
-
-    if not os.path.exists(woa_dir):
-        os.makedirs(woa_dir)
-
-    for url in urls:
-        print("Downloading: %s" % url)
-        remote = urllib.urlopen(url)
-        f = open(os.path.join(woa_dir, os.path.basename(url)), 'wb')
-        f.write(remote.read())
-        f.close()
-
-download_data()
-
-
 setup(
     name='pyWOA',
     version=version,

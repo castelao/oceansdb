@@ -9,9 +9,7 @@ from numpy import ma
 
 import os
 
-
-def woa_dir():
-    return os.path.expanduser(os.getenv('WOA_DIR', '~/.woarc'))
+from WOA.utils import datafile
 
 try:
     import netCDF4
@@ -465,8 +463,8 @@ class WOA(object):
     """
     def __init__(self):
         self.data = {}
-        self.data['TEMP'] = WOA_var_nc(source=os.path.join(woa_dir(), 'temperature_seasonal_5deg.nc'))
-        self.data['PSAL'] = WOA_var_nc(source=os.path.join(woa_dir(), 'salinity_seasonal_5deg.nc'))
+        self.data['TEMP'] = WOA_var_nc(source=datafile('TEMP'))
+        self.data['PSAL'] = WOA_var_nc(source=datafile('PSAL'))
 
     def keys(self):
         return self.data.keys()
