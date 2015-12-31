@@ -23,7 +23,7 @@ else:
 def woa_dir():
     return os.path.expanduser(os.getenv('WOA_DIR', '~/.woarc'))
 
-def download_file(url, md5hash, d):
+def download_file(url, md5hash, dbpath):
     """ Download data file from web
 
         Copied from CoTeDe.
@@ -34,12 +34,12 @@ def download_file(url, md5hash, d):
 
     assert type(md5hash) is str
 
-    if not os.path.exists(d):
-        os.makedirs(d)
+    if not os.path.exists(dbpath):
+        os.makedirs(dbpath)
 
     hash = hashlib.md5()
 
-    fname = os.path.join(d, os.path.basename(urlparse(url).path))
+    fname = os.path.join(dbpath, os.path.basename(urlparse(url).path))
     if os.path.isfile(fname):
         h = hashlib.md5(open(fname, 'rb').read()).hexdigest()
         if h == md5hash:
