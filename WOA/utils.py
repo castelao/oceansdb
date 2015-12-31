@@ -14,7 +14,7 @@ from tempfile import NamedTemporaryFile
 
 if sys.version_info >= (3, 0):
     from urllib.request import urlopen
-    import urllib.parse as urlparse
+    from urllib.parse import urlparse
 else:
     from urllib2 import urlopen
     from urlparse import urlparse
