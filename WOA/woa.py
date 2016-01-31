@@ -393,6 +393,8 @@ class WOA_var_nc(object):
                     self[v][dn, zn, yn, xn],
                     self[v]._FillValue)
 
+        climdata['depth'] = self['depth'][zn]
+
         return climdata
 
     def get_track(self, var=None, doy=None, depth=None, lat=None, lon=None):
