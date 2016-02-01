@@ -362,8 +362,15 @@ class magic(object):
 
     def extract(self, **kwargs):
         for k in kwargs:
-            assert k in ['doy', 'depth', 'lat', 'lon'], \
+            assert k in ['var', 'doy', 'depth', 'lat', 'lon'], \
                     "Wrong dimension to extract, check the manual"
+
+        if 'var' in kwargs:
+            var = kwargs['var']
+            if type(var) == str:
+                var = [var]
+        else:
+            var = self.KEYS
 
         lat = kwargs['lat']
         yn = (np.abs(lat - self.dims['lat'][:])).argmin()
@@ -421,8 +428,9 @@ class magic(object):
         #    tn = tn + [0]
 
         subset = {}
-        for v in self.keys():
+        for v in var:
             subset[v] = self.ncs[tn][v][0,zn,yn,xn]
+
         return subset
 
         import pdb; pdb.set_trace()
