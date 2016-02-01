@@ -91,12 +91,16 @@ files_db = {'TEMP': {
     }
 
 
-def datafile(var, resolution=5):
+def dbsource(var, resolution=5, tscale='seasonal'):
     dbpath = woa_dir()
-    cfg = files_db[var][resolution]
-    #with FileLock(fname):
-    download_file(cfg['url'], cfg['md5'], dbpath)
-    datafile = os.path.join(dbpath,
-            os.path.basename(urlparse(cfg['url']).path))
+    datafiles = []
+    for cfg in files_db[var][resolution][tscale]:
+        #with FileLock(fname):
+        #download_file(cfg['url'], cfg['md5'], dbpath)
+        download_file(cfg, 'null', dbpath)
 
-    return datafile
+        datafiles.append(os.path.join(dbpath,
+            os.path.basename(urlparse(cfg).path)))
+            #os.path.basename(urlparse(cfg['url']).path)))
+
+    return datafiles

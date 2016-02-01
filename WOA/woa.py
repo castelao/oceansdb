@@ -9,7 +9,7 @@ from numpy import ma
 
 import os
 
-from WOA.utils import datafile
+from WOA.utils import dbsource
 
 try:
     import netCDF4
@@ -317,15 +317,13 @@ class WOA_URL(object):
         pass
 
 
-class magic(object):
-    def __init__(self):
+class WOA_var_nc(object):
+    def __init__(self, source):
         import netCDF4
 
         self.ncs = []
-        self.ncs.append(netCDF4.Dataset('/Users/castelao/.woarc/woa13_decav_t13_5dv2.nc', 'r'))
-        self.ncs.append(netCDF4.Dataset('/Users/castelao/.woarc/woa13_decav_t14_5dv2.nc', 'r'))
-        self.ncs.append(netCDF4.Dataset('/Users/castelao/.woarc/woa13_decav_t15_5dv2.nc', 'r'))
-        self.ncs.append(netCDF4.Dataset('/Users/castelao/.woarc/woa13_decav_t16_5dv2.nc', 'r'))
+        for s in source:
+            self.ncs.append(netCDF4.Dataset(s, 'r'))
 
         self.load_dims()
         self.set_keys()
@@ -450,7 +448,7 @@ class magic(object):
 
 #griddata((x,y),ssh,(xout,yout))
 
-class WOA_var_nc(object):
+class WOA_var_nc_old(object):
     """
 
         http://data.nodc.noaa.gov/thredds/dodsC/woa/WOA13/DATAv2/temperature/netcdf/decav/0.25/woa13_decav_t00_04v2.nc.html
