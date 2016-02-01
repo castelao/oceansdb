@@ -317,6 +317,131 @@ class WOA_URL(object):
         pass
 
 
+class magic(object):
+    def __init__(self):
+        import netCDF4
+
+        self.ncs = []
+        self.ncs.append(netCDF4.Dataset('/Users/castelao/.woarc/woa13_decav_t13_5dv2.nc', 'r'))
+        self.ncs.append(netCDF4.Dataset('/Users/castelao/.woarc/woa13_decav_t14_5dv2.nc', 'r'))
+        self.ncs.append(netCDF4.Dataset('/Users/castelao/.woarc/woa13_decav_t15_5dv2.nc', 'r'))
+        self.ncs.append(netCDF4.Dataset('/Users/castelao/.woarc/woa13_decav_t16_5dv2.nc', 'r'))
+
+        self.load_dims()
+        self.set_keys()
+
+    def keys(self):
+        return self.KEYS
+
+    def load_dims(self):
+        self.dims = {}
+        for d in ['lat', 'lon', 'depth']:
+            self.dims[d] = self.ncs[0].variables[d][:]
+            for nc in self.ncs[1:]:
+                assert (self.dims[d] == nc.variables[d][:]).all()
+
+        self.dims['time'] = []
+        mfrac = 365/12.
+        for nc in self.ncs:
+            assert nc.variables['time'].size == 1
+            self.dims['time'].append(mfrac * nc.variables['time'][0])
+        self.dims['time'] = np.array(self.dims['time'])
+
+    def set_keys(self):
+        """
+        """
+        self.KEYS = []
+        for v in self.ncs[0].variables.keys():
+            if self.ncs[0].variables[v].dimensions == \
+                    (u'time', u'depth', u'lat', u'lon'):
+                        S = self.ncs[0].variables[v].shape
+                        for nc in self.ncs[1:]:
+                            assert v in nc.variables
+                            assert nc.variables[v].shape == S
+                        self.KEYS.append(v)
+
+    def extract(self, **kwargs):
+        for k in kwargs:
+            assert k in ['doy', 'depth', 'lat', 'lon'], \
+                    "Wrong dimension to extract, check the manual"
+
+        lat = kwargs['lat']
+        yn = (np.abs(lat - self.dims['lat'][:])).argmin()
+        #yn = slice(
+        #        max(0,
+        #            (np.abs(
+        #                np.min(lat) - self.dims['lat'][:])).argmin() - 1),
+        #        min(self.dims['lat'].size,
+        #            (np.abs(
+        #                np.max(lat) - self.dims['lat'][:])).argmin() + 1)
+        #        )
+
+        #FIXME
+        lon = kwargs['lon']
+        xn = (np.abs(lon - self.dims['lon'][:])).argmin()
+        #xn = slice(
+        #        max(0,
+        #            (np.abs(
+        #                np.min(lon) - self.dims['lon'][:])).argmin() - 1),
+        #        min(self.dims['lon'].size-1,
+        #            (np.abs(
+        #                np.max(lon) - self.dims['lon'][:])).argmin() + 1)
+        #        )
+
+        if 'depth' not in kwargs:
+            zn = slice(None, None, None)
+        else:
+            depth = kwargs['depth']
+            zn = [(np.abs(z - self.dims['depth'][:])).argmin() for z in depth]
+            #zn = slice(
+            #    max(0,
+            #        (np.abs(
+            #            np.min(depth) - self.dims['depth'][:])).argmin() - 1),
+            #    min(self.dims['depth'].size-1,
+            #        (np.abs(
+            #            np.max(depth) - self.dims['depth'][:])).argmin() + 1)
+            #    )
+
+        #if len(self.ncs) == 1:
+        #    tn = [0]
+        #else:
+
+        doy = kwargs['doy']
+        tn = (np.abs(doy - self.dims['time'][:])).argmin()
+        #tn = [max(0,
+        #    (np.abs(
+        #        np.min(doy) - self.dims['time'][:])).argmin() - 1),
+        #    min(self.dims['time'].size-1,
+        #        (np.abs(
+        #            np.max(doy) - self.dims['time'][:])).argmin() + 1)
+        #    ]
+        #if doy < min(self.dims['time']):
+        #    tn = [-1] + tn
+        #if doy > max(self.dims['time']):
+        #    tn = tn + [0]
+
+        subset = {}
+        for v in self.keys():
+            subset[v] = self.ncs[tn][v][0,zn,yn,xn]
+        return subset
+
+        import pdb; pdb.set_trace()
+        subset = []
+        for n in tn:
+            subset.append(self.ncs[n]['t_mn'][0,zn,yn,xn])
+
+        subset = np.asanyarray(subset)
+        output = self.ncs[0]['t_mn']
+
+#x = [1, 2, 1, 2]
+#y = [10, 20, 20, 10]
+#ssh = [4, 8, 4, 8]
+
+#xout = [1.5]
+#yout = [12]
+
+#griddata((x,y),ssh,(xout,yout))
+
 class WOA_var_nc(object):
     """
 
