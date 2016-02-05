@@ -358,6 +358,25 @@ class WOA_var_nc(object):
                             assert nc.variables[v].shape == S
                         self.KEYS.append(v)
 
+    def closest(self, doy, depth, lat, lon, var):
+        tn = (np.abs(doy - self.dims['time'][:])).argmin()
+        zn = [(np.abs(z - self.dims['depth'][:])).argmin() for z in depth]
+        yn = (np.abs(lat - self.dims['lat'][:])).argmin()
+        # FIXME
+        xn = (np.abs(lon - self.dims['lon'][:])).argmin()
+
+        subset = {}
+        for v in var:
+            if v in self.KEYS:
+                subset[v] = self.ncs[tn][v][0,zn,yn,xn]
+            else:
+                # FIXME: Ugly temporary solution
+                tmp = [vv for vv in self.KEYS if vv[2:] == v]
+                assert len(tmp) == 1
+                subset[v] = self.ncs[tn][tmp[0]][0,zn,yn,xn]
+
+        return subset
+
     def extract(self, **kwargs):
         for k in kwargs:
             assert k in ['var', 'doy', 'depth', 'lat', 'lon'], \
@@ -370,8 +389,24 @@ class WOA_var_nc(object):
         else:
             var = self.KEYS
 
-        lat = kwargs['lat']
-        yn = (np.abs(lat - self.dims['lat'][:])).argmin()
+        doy = kwargs['doy']
+        if np.size(doy) == 1:
+            if type(doy) is datetime:
+                doy = int(doy.strftime('%j'))
+        else:
+            import pdb; pdb.set_trace()
+
+        if 'depth' in kwargs:
+            depth = np.asanyarray(kwargs['depth'])
+            if np.ndim(depth) == 0:
+                depth = np.array([depth])
+        else:
+            depth = self.dims['depth'][:]
+
+        lat = np.asanyarray(kwargs['lat'])
+        lon = np.asanyarray(kwargs['lon'])
+
+
         #yn = slice(
         #        max(0,
         #            (np.abs(
@@ -382,8 +417,6 @@ class WOA_var_nc(object):
         #        )
 
         #FIXME
-        lon = kwargs['lon']
-        xn = (np.abs(lon - self.dims['lon'][:])).argmin()
         #xn = slice(
         #        max(0,
         #            (np.abs(
@@ -393,11 +426,7 @@ class WOA_var_nc(object):
         #                np.max(lon) - self.dims['lon'][:])).argmin() + 1)
         #        )
 
-        if 'depth' not in kwargs:
-            zn = slice(None, None, None)
-        else:
-            depth = kwargs['depth']
-            zn = [(np.abs(z - self.dims['depth'][:])).argmin() for z in depth]
+            #zn = slice(None, None, None)
             #zn = slice(
             #    max(0,
             #        (np.abs(
@@ -411,8 +440,6 @@ class WOA_var_nc(object):
         #    tn = [0]
         #else:
 
-        doy = kwargs['doy']
-        tn = (np.abs(doy - self.dims['time'][:])).argmin()
         #tn = [max(0,
         #    (np.abs(
         #        np.min(doy) - self.dims['time'][:])).argmin() - 1),
@@ -425,9 +452,7 @@ class WOA_var_nc(object):
         #if doy > max(self.dims['time']):
         #    tn = tn + [0]
 
-        subset = {}
-        for v in var:
-            subset[v] = self.ncs[tn][v][0,zn,yn,xn]
+        subset = self.closest(doy, depth, lat, lon, var)
 
         return subset
 
