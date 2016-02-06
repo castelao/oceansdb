@@ -541,51 +541,6 @@ class WOA_var_nc(object):
         lat = np.atleast_1d(kwargs['lat'])
         lon = np.atleast_1d(kwargs['lon'])
 
-        #yn = slice(
-        #        max(0,
-        #            (np.abs(
-        #                np.min(lat) - self.dims['lat'][:])).argmin() - 1),
-        #        min(self.dims['lat'].size,
-        #            (np.abs(
-        #                np.max(lat) - self.dims['lat'][:])).argmin() + 1)
-        #        )
-
-        #FIXME
-        #xn = slice(
-        #        max(0,
-        #            (np.abs(
-        #                np.min(lon) - self.dims['lon'][:])).argmin() - 1),
-        #        min(self.dims['lon'].size-1,
-        #            (np.abs(
-        #                np.max(lon) - self.dims['lon'][:])).argmin() + 1)
-        #        )
-
-            #zn = slice(None, None, None)
-            #zn = slice(
-            #    max(0,
-            #        (np.abs(
-            #            np.min(depth) - self.dims['depth'][:])).argmin() - 1),
-            #    min(self.dims['depth'].size-1,
-            #        (np.abs(
-            #            np.max(depth) - self.dims['depth'][:])).argmin() + 1)
-            #    )
-
-        #if len(self.ncs) == 1:
-        #    tn = [0]
-        #else:
-
-        #tn = [max(0,
-        #    (np.abs(
-        #        np.min(doy) - self.dims['time'][:])).argmin() - 1),
-        #    min(self.dims['time'].size-1,
-        #        (np.abs(
-        #            np.max(doy) - self.dims['time'][:])).argmin() + 1)
-        #    ]
-        #if doy < min(self.dims['time']):
-        #    tn = [-1] + tn
-        #if doy > max(self.dims['time']):
-        #    tn = tn + [0]
-
         if mode == 'nearest':
             output = self.closest(doy, depth, lat, lon, var)
         else:
