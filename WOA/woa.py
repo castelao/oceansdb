@@ -527,15 +527,12 @@ class WOA_var_nc(object):
             import pdb; pdb.set_trace()
 
         if 'depth' in kwargs:
-            depth = np.asanyarray(kwargs['depth'])
-            if np.ndim(depth) == 0:
-                depth = np.array([depth])
+            depth = np.atleast_1d(kwargs['depth'])
         else:
             depth = self.dims['depth'][:]
 
-        lat = np.asanyarray(kwargs['lat'])
-        lon = np.asanyarray(kwargs['lon'])
-
+        lat = np.atleast_1d(kwargs['lat'])
+        lon = np.atleast_1d(kwargs['lon'])
 
         #yn = slice(
         #        max(0,
