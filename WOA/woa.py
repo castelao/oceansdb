@@ -377,6 +377,66 @@ class WOA_var_nc(object):
 
         return subset
 
+    def subset(self, doy, depth, lat, lon, var):
+        """ Subset the necessary data to interpolate in the right position
+
+            Special cases that should be handled here:
+                0 to 360 versus -180 to 180
+                position near grenwich, or international date line
+
+        """
+        dims = {}
+
+        zn = slice(
+                np.nonzero(self.dims['depth'] <= depth.min())[0].max(),
+                np.nonzero(self.dims['depth'] >= depth.max())[0].min()+1)
+        dims['depth'] = np.atleast_1d(self.dims['depth'][zn])
+
+        yn = slice(
+                np.nonzero(self.dims['lat'] <= lat.min())[0].max(),
+                np.nonzero(self.dims['lat'] >= lat.max())[0].min() + 1)
+        dims['lat'] = np.atleast_1d(self.dims['lat'][yn])
+
+        lon_ext = np.array(
+                (self.dims['lon'] - 360).tolist() + \
+                        self.dims['lon'].tolist() + \
+                        (self.dims['lon']+360).tolist())
+        xn_ext = np.array(3 * range(self.dims['lon'].shape[0]))
+        xn_start = np.nonzero(lon_ext <= lon.min())[0].max()
+        xn_end = np.nonzero(lon_ext >= lon.max())[0].min()
+        xn = xn_ext[xn_start:xn_end+1]
+        dims['lon'] = np.atleast_1d(lon_ext[xn_start:xn_end+1])
+
+        #tn_last = self.dims['time'].shape[0]
+        #if doy.min() < self.dims['time'].min():
+        #    dims['time'] = np.append(
+        #            [self.dims['time'][-1] - 365.25], self.dims['time'])
+        #    tn_start = [tn_last, 0]
+        #else:
+        #    dims['time'] = self.dims['time'][0]
+        #    tn_start = [0]
+        #if doy.max() > self.dims['time'].max():
+        #    tn_end = [tn_last, 0]
+        #else:
+        #    tn_end = [tn_last]
+        #tn = tn_start + range(tn_start[-1] + 1, tn_end[0]) + tn_end
+
+        #if doy.min() < self.dims['time'][:].min():
+        tn = (np.abs(doy - self.dims['time'][:])).argmin()
+        dims['time'] = np.array([self.dims['time'][tn]])
+
+        subset = {}
+        for v in var:
+            if v in self.KEYS:
+                subset[v] = self.ncs[tn][v][0:1,zn,yn,xn]
+            else:
+                # FIXME: Ugly temporary solution
+                tmp = [vv for vv in self.KEYS if vv[2:] == v]
+                assert len(tmp) == 1
+                subset[v] = self.ncs[tn][tmp[0]][0:1,zn,yn,xn]
+
+        return subset, dims
+
     def extract(self, **kwargs):
         for k in kwargs:
             assert k in ['var', 'doy', 'depth', 'lat', 'lon'], \
