@@ -508,6 +508,15 @@ class WOA_var_nc(object):
         return output
 
     def extract(self, **kwargs):
+        """
+
+            Possible scenarios:
+              - Point:   doy{1},   depth{1},     lat{1},lon{1}
+              - Profile: doy{1},   depth{0,1,n}, lat{1},lon{1}
+              - Section: doy{1},   depth{0, n}, [lat{1},lon{n} | lat{n},lon{1}]
+
+              - Track:   doy{1,n}, depth{1,n2},  lat{n},lon{n}
+        """
         for k in kwargs:
             assert k in ['var', 'doy', 'depth', 'lat', 'lon'], \
                     "Wrong dimension to extract, check the manual"
