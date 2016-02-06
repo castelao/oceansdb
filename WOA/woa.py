@@ -507,7 +507,7 @@ class WOA_var_nc(object):
 
         return output
 
-    def extract(self, **kwargs):
+    def extract(self, mode=None, **kwargs):
         """
 
             Possible scenarios:
@@ -586,17 +586,14 @@ class WOA_var_nc(object):
         #if doy > max(self.dims['time']):
         #    tn = tn + [0]
 
-        subset = self.closest(doy, depth, lat, lon, var)
+        if mode == 'nearest':
+            output = self.closest(doy, depth, lat, lon, var)
+        else:
+            output = self.interpolate(doy, depth, lat, lon, var)
+            for v in output:
+                output[v] = np.atleast_1d(np.squeeze(output[v]))
 
-        return subset
-
-        import pdb; pdb.set_trace()
-        subset = []
-        for n in tn:
-            subset.append(self.ncs[n]['t_mn'][0,zn,yn,xn])
-
-        subset = np.asanyarray(subset)
-        output = self.ncs[0]['t_mn']
+        return output
 
 #x = [1, 2, 1, 2]
 #y = [10, 20, 20, 10]
