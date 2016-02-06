@@ -473,14 +473,11 @@ class WOA_var_nc(object):
             values = []
             # The valid data
             Nt, Nz, Ny, Nx = np.nonzero(~ma.getmaskarray(subset[v]))
-            for tn in Nt:
-                for nz in Nz:
-                    for ny in Ny:
-                        for nx in Nx:
-                            points.append([dims['time'][tn],
-                                dims['depth'][nz], dims['lat'][ny],
-                                dims['lon'][nx]])
-                            values.append(subset[v][tn,nz,ny,nx])
+            for tn, nz, ny, nx in zip(Nt, Nz, Ny, Nx):
+                points.append([dims['time'][tn],
+                    dims['depth'][nz], dims['lat'][ny],
+                    dims['lon'][nx]])
+                values.append(subset[v][tn,nz,ny,nx])
 
             points = np.array(points)
             values = np.array(values)
