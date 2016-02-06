@@ -425,15 +425,17 @@ class WOA_var_nc(object):
         tn = (np.abs(doy - self.dims['time'][:])).argmin()
         dims['time'] = np.array([self.dims['time'][tn]])
 
-        subset = {}
+        # messy way to accept t_mn or mn
+        varin = []
         for v in var:
             if v in self.KEYS:
-                subset[v] = self.ncs[tn][v][0:1,zn,yn,xn]
-            else:
-                # FIXME: Ugly temporary solution
-                tmp = [vv for vv in self.KEYS if vv[2:] == v]
-                assert len(tmp) == 1
-                subset[v] = self.ncs[tn][tmp[0]][0:1,zn,yn,xn]
+                varin.append(v)
+            elif self.KEYS[0][:2] + v in self.KEYS:
+                varin.append(self.KEYS[0][:2] + v)
+
+        subset = {}
+        for v, vin in zip(var, varin):
+            subset[v] = self.ncs[tn][vin][0:1,zn,yn,xn]
 
         return subset, dims
 
