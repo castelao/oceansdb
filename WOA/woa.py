@@ -432,7 +432,8 @@ class WOA_var_nc(object):
 
         subset = {}
         for v, vin in zip(var, varin):
-            subset[v] = np.asanyarray([self.ncs[tnn][vin][0,zn,yn,xn] for tnn in tn])
+            subset[v] = ma.asanyarray(
+                    [self.ncs[tnn][vin][0, zn, yn, xn] for tnn in tn])
 
         return subset, dims
 
