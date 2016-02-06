@@ -515,11 +515,9 @@ class WOA_var_nc(object):
                     "Wrong dimension to extract, check the manual"
 
         if 'var' in kwargs:
-            var = kwargs['var']
-            if type(var) == str:
-                var = [var]
+            var = np.atleast_1d(kwargs['var'])
         else:
-            var = self.KEYS
+            var = np.asanyarray(self.KEYS)
 
         doy = kwargs['doy']
         if np.size(doy) == 1:
