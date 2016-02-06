@@ -407,23 +407,20 @@ class WOA_var_nc(object):
         xn = xn_ext[xn_start:xn_end+1]
         dims['lon'] = np.atleast_1d(lon_ext[xn_start:xn_end+1])
 
-        #tn_last = self.dims['time'].shape[0]
-        #if doy.min() < self.dims['time'].min():
-        #    dims['time'] = np.append(
-        #            [self.dims['time'][-1] - 365.25], self.dims['time'])
-        #    tn_start = [tn_last, 0]
-        #else:
-        #    dims['time'] = self.dims['time'][0]
-        #    tn_start = [0]
-        #if doy.max() > self.dims['time'].max():
-        #    tn_end = [tn_last, 0]
-        #else:
-        #    tn_end = [tn_last]
-        #tn = tn_start + range(tn_start[-1] + 1, tn_end[0]) + tn_end
-
-        #if doy.min() < self.dims['time'][:].min():
-        tn = (np.abs(doy - self.dims['time'][:])).argmin()
-        dims['time'] = np.array([self.dims['time'][tn]])
+        if self.dims['time'].shape == (1,):
+            tn = 0
+            dims['time'] = self.dims['time']
+        else:
+            time_ext = np.array(
+                    [self.dims['time'][-1] - 365.25] + \
+                            self.dims['time'].tolist() + \
+                            [self.dims['time'][0] + 365.25])
+            tn_ext = range(self.dims['time'].size)
+            tn_ext = [tn_ext[-1]] + tn_ext + [tn_ext[0]]
+            tn_start = np.nonzero(time_ext <= doy.min())[0].max()
+            tn_end = np.nonzero(time_ext >= doy.max())[0].min()
+            tn = tn_ext[tn_start:tn_end+1]
+            dims['time'] = np.atleast_1d(time_ext[tn_start:tn_end+1])
 
         # messy way to accept t_mn or mn
         varin = []
@@ -435,7 +432,7 @@ class WOA_var_nc(object):
 
         subset = {}
         for v, vin in zip(var, varin):
-            subset[v] = self.ncs[tn][vin][0:1,zn,yn,xn]
+            subset[v] = np.asanyarray([self.ncs[tnn][vin][0,zn,yn,xn] for tnn in tn])
 
         return subset, dims
 
