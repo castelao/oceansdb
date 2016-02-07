@@ -80,16 +80,41 @@ def download_file(url, md5hash, dbpath):
     print("Downloaded: %s" % fname)
 
 
-files_db = {'TEMP': {
-    5: {
-        'url': 'http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA09/NetCDFdata/temperature_seasonal_5deg.nc',
-        'md5': '271f66e8dea4dfef7db99f5f411af330'
-        }
-    },
+files_db = {
+    'TEMP': {
+        5: {
+            'annual': {
+                'url': 'http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/temperature/netcdf/decav/5deg/woa13_decav_t00_5dv2.nc',
+                'md5': '9cc5cf28d4f1f4057c9d9f263ca13d2a'
+                },
+            'seasonal_old': {
+                'url': 'http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA09/NetCDFdata/temperature_seasonal_5deg.nc',
+                'md5': '271f66e8dea4dfef7db99f5f411af330'
+                },
+            'seasonal': [
+                'http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/temperature/netcdf/decav/5deg/woa13_decav_t13_5dv2.nc',
+                'http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/temperature/netcdf/decav/5deg/woa13_decav_t14_5dv2.nc',
+                'http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/temperature/netcdf/decav/5deg/woa13_decav_t15_5dv2.nc',
+                'http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/temperature/netcdf/decav/5deg/woa13_decav_t16_5dv2.nc',
+                ]
+            },
+        },
     'PSAL': {
         5: {
-            'url': 'http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA09/NetCDFdata/salinity_seasonal_5deg.nc',
-            'md5': '1d2d1982338c688bdd18069d030ec05f'
+            'annual': {
+                'url': 'http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/salinity/netcdf/decav/5deg/woa13_decav_s00_5dv2.nc',
+                'md5': '108f28fe1dd250b0598ae666be08fc19'
+                },
+            'seasonal_old': {
+                'url': 'http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA09/NetCDFdata/salinity_seasonal_5deg.nc',
+                'md5': '1d2d1982338c688bdd18069d030ec05f'
+                },
+            'seasonal': [
+                'http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/salinity/netcdf/decav/5deg/woa13_decav_s13_5dv2.nc',
+                'http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/salinity/netcdf/decav/5deg/woa13_decav_s14_5dv2.nc',
+                'http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/salinity/netcdf/decav/5deg/woa13_decav_s15_5dv2.nc',
+                'http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/salinity/netcdf/decav/5deg/woa13_decav_s16_5dv2.nc',
+                ]
             }
         }
     }
