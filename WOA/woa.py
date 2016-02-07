@@ -568,8 +568,8 @@ class WOA(object):
     """
     def __init__(self):
         self.data = {}
-        self.data['TEMP'] = WOA_var_nc(source=datafile('TEMP'))
-        self.data['PSAL'] = WOA_var_nc(source=datafile('PSAL'))
+        self.data['TEMP'] = WOA_var_nc(source=dbsource('TEMP'))
+        self.data['PSAL'] = WOA_var_nc(source=dbsource('PSAL'))
 
     def keys(self):
         return self.data.keys()
