@@ -41,13 +41,16 @@ def download_file(url, md5hash, dbpath):
 
     fname = os.path.join(dbpath, os.path.basename(urlparse(url).path))
     if os.path.isfile(fname):
-        h = hashlib.md5(open(fname, 'rb').read()).hexdigest()
-        if h == md5hash:
-            print("Was previously downloaded: %s" % fname)
-            return
-        else:
-            assert False, "%s already exist but doesn't match the hash: %s" % \
-                    (fname, md5hash)
+        return
+        # FIXME: This is not efficient. As it is, a checksum is estimated
+        #   for every access. That's way too much.
+        #h = hashlib.md5(open(fname, 'rb').read()).hexdigest()
+        #if h == md5hash:
+        #    #print("Was previously downloaded: %s" % fname)
+        #    return
+        #else:
+        #    assert False, "%s already exist but doesn't match the hash: %s" % \
+        #            (fname, md5hash)
 
     remote = urlopen(url)
 
