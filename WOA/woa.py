@@ -550,18 +550,6 @@ class WOA_var_nc(object):
 
         return output
 
-#x = [1, 2, 1, 2]
-#y = [10, 20, 20, 10]
-#ssh = [4, 8, 4, 8]
-
-#xout = [1.5]
-#yout = [12]
-#zout = [4]
-#
-#xin = (x, y, z)
-#out = (xout, yout, zout)
-#griddata(xin, ssh, out)
-
 
 class WOA(object):
     """
