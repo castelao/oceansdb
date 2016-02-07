@@ -2,6 +2,9 @@
 pyWOA
 =====
 
+.. image:: https://zenodo.org/badge/4645/castelao/pyWOA.svg
+   :target: https://zenodo.org/badge/latestdoi/4645/castelao/pyWOA
+
 .. image:: https://readthedocs.org/projects/pyWOA/badge/?version=latest
    :target: https://readthedocs.org/projects/pyWOA/?badge=latest
          :alt: Documentation Status
