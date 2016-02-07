@@ -526,12 +526,10 @@ class WOA_var_nc(object):
         else:
             var = np.asanyarray(self.KEYS)
 
-        doy = kwargs['doy']
-        if np.size(doy) == 1:
-            if type(doy) is datetime:
-                doy = int(doy.strftime('%j'))
-        else:
-            import pdb; pdb.set_trace()
+        doy = np.atleast_1d(kwargs['doy'])
+        # This would only work if doy is 1D
+        if type(doy[0]) is datetime:
+            doy = np.array([int(d.strftime('%j')) for d in doy])
 
         if 'depth' in kwargs:
             depth = np.atleast_1d(kwargs['depth'])
