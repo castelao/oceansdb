@@ -19,6 +19,7 @@ else:
     from urllib2 import urlopen
     from urlparse import urlparse
 
+import filelock
 
 def woa_dir():
     return os.path.expanduser(os.getenv('WOA_DIR', '~/.woarc'))
@@ -52,32 +53,44 @@ def download_file(url, md5hash, dbpath):
         #    assert False, "%s already exist but doesn't match the hash: %s" % \
         #            (fname, md5hash)
 
-    remote = urlopen(url)
+    #try:
+    #    with lock.acquire(timeout = 10):
+    #        pass
+    #except filelock.Timeout:
+    #    pass
 
-    with NamedTemporaryFile(delete=False) as f:
-        try:
-            bytes_read = 0
-            block = remote.read(download_block_size)
-            while block:
-                f.write(block)
-                hash.update(block)
-                bytes_read += len(block)
+    flock = "%s.lock" % fname
+    lock = filelock.FileLock(flock)
+    with lock.acquire(timeout = 1000):
+        if os.path.isfile(fname):
+            return
+        print("Will download %s" % url)
+        remote = urlopen(url)
+
+        with NamedTemporaryFile(delete=False) as f:
+            try:
+                bytes_read = 0
                 block = remote.read(download_block_size)
-        except:
-            if os.path.exists(f.name):
-                os.remove(f.name)
-                raise
+                while block:
+                    f.write(block)
+                    hash.update(block)
+                    bytes_read += len(block)
+                    block = remote.read(download_block_size)
+            except:
+                if os.path.exists(f.name):
+                    os.remove(f.name)
+                    raise
 
-    h = hash.hexdigest()
-    #if h != md5hash:
-    if False:
-        os.remove(f.name)
-        print("Downloaded file doesn't match. %s" % h)
-        assert False, "Downloaded file (%s) doesn't match with expected hash (%s)" % \
-                (fname, md5hash)
+        h = hash.hexdigest()
+        #if h != md5hash:
+        if False:
+            os.remove(f.name)
+            print("Downloaded file doesn't match. %s" % h)
+            assert False, "Downloaded file (%s) doesn't match with expected hash (%s)" % \
+                    (fname, md5hash)
 
-    shutil.move(f.name, fname)
-    print("Downloaded: %s" % fname)
+        shutil.move(f.name, fname)
+        print("Downloaded: %s" % fname)
 
 
 files_db = {

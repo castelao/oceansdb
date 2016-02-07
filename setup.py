@@ -20,6 +20,7 @@ with open('HISTORY.rst') as history_file:
 requirements = [
     'numpy',
     'netCDF4',
+    'filelock',
     'scipy',
 ]
 
