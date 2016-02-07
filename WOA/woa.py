@@ -556,26 +556,11 @@ class WOA_var_nc(object):
 
 #xout = [1.5]
 #yout = [12]
-
-#griddata((x,y),ssh,(xout,yout))
-
-class WOA_var_nc_old(object):
-    """
-
-        http://data.nodc.noaa.gov/thredds/dodsC/woa/WOA13/DATAv2/temperature/netcdf/decav/0.25/woa13_decav_t00_04v2.nc.html
-        http://data.nodc.noaa.gov/thredds/dodsC/woa/WOA13/DATAv2/salinity/netcdf/decav/0.25/woa13_decav_s00_04v2.nc.html
-        http://data.nodc.noaa.gov/thredds/dodsC/woa/WOA13/DATA/oxygen/netcdf/all/1.00/woa13_all_o00_01.nc.html
-        http://data.nodc.noaa.gov/thredds/dodsC/woa/WOA13/DATA/nitrate/netcdf/all/1.00/woa13_all_n00_01.nc.html
-
-
-        First case, returns one profile of one variable from a local netCDF file.
-        woa_profile(v,
-                        data.attributes['datetime'],
-                        data.attributes['LATITUDE'],
-                        data.attributes['LONGITUDE'],
-                        data['PRES'],
-                        cfg)
-    """
+#zout = [4]
+#
+#xin = (x, y, z)
+#out = (xout, yout, zout)
+#griddata(xin, ssh, out)
 
 
 class WOA(object):
