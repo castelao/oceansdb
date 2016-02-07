@@ -6,6 +6,8 @@
 
 from datetime import datetime
 
+import numpy as np
+
 from WOA.woa import WOA
 
 def test_import():
@@ -20,19 +22,85 @@ def test_available_vars():
     for v in ['TEMP', 'PSAL']:
         assert v in db.keys()
 
-      
-def test_get_profile():
+
+# ==== Request points coincidents to the WOA gridpoints
+def test_coincident_gridpoint():
     db = WOA()
 
-    db['TEMP'].get_profile(var='mn', doy=datetime.now(),
-            depth=0, lat=10, lon=330)
-    db['TEMP'].get_profile(var='mn', doy=datetime.now(),
-            depth=[0,10], lat=10, lon=330)
-    db['TEMP'].get_profile(doy=datetime.now(),
-            depth=[0,10], lat=10, lon=330)
+    t = db['TEMP'].extract(var='mn', doy=136.875,
+            depth=0, lat=17.5, lon=-37.5)
+    assert np.allclose(t['mn'], [24.60449791])
+
+    t = db['TEMP'].extract(var='t_mn', doy=[136.875, 228.125],
+            depth=0, lat=17.5, lon=-37.5)
+    assert np.allclose(t['t_mn'], [24.60449791,  26.38446426])
+
+    t = db['TEMP'].extract(var='t_mn', doy=136.875,
+            depth=[0, 10], lat=17.5, lon=-37.5)
+    assert np.allclose(t['t_mn'], [24.60449791,  24.62145996])
+
+    t = db['TEMP'].extract(var='t_mn', doy=136.875,
+            depth=0, lat=[17.5, 12.5], lon=-37.5)
+    assert np.allclose(t['t_mn'], [25.17827606,  24.60449791])
+
+    t = db['TEMP'].extract(var='t_mn', doy=136.875,
+            depth=0, lat=17.5, lon=[-37.5, -32.5])
+    assert np.allclose(t['t_mn'], [24.60449791,  23.98172188])
+
+    t = db['TEMP'].extract(var='t_mn', doy=136.875,
+            depth=[0, 10], lat=[17.5, 12.5], lon=-37.5)
+    assert np.allclose(t['t_mn'],
+            [[ 25.17827606,  24.60449791], [ 25.25433731,  24.62145996]])
 
 
-def test_get_track():
+def test_lon_cyclic():
+    db = WOA()
+
+    t1 = db['TEMP'].extract(var='t_mn', doy=136.875,
+            depth=0, lat=17.5, lon=182.5)
+    t2 = db['TEMP'].extract(var='t_mn', doy=136.875,
+            depth=0, lat=17.5, lon=-177.5)
+    assert np.allclose(t1['t_mn'], t2['t_mn'])
+
+    t1 = db['TEMP'].extract(var='t_mn', doy=136.875,
+            depth=0, lat=17.5, lon=[-37.5, -32.5])
+    t2 = db['TEMP'].extract(var='t_mn', doy=136.875,
+            depth=0, lat=17.5, lon=[322.5, 327.5])
+    assert np.allclose(t1['t_mn'], t2['t_mn'])
+# ======
+
+
+def notest_get_point():
+    db = WOA()
+
+    t = db['TEMP'].extract(var='t_mn', doy=90,
+            depth=0, lat=17.5, lon=-37.5)
+            #depth=0, lat=10, lon=330)
+    assert np.allclose(t['mn'], [24.60449791])
+
+
+def notest_get_profile():
+    db = WOA()
+
+
+    t = db['TEMP'].extract(var='mn', doy=10,
+            depth=[0,10], lat=10, lon=330)
+    assert np.allclose(t['mn'], [ 28.09378815,  28.09343529])
+
+    t = db['TEMP'].extract(doy=10,
+            depth=[0,10], lat=10, lon=330)
+    assert np.allclose(t['t_se'], [ 0.01893404,  0.0176903 ])
+    assert np.allclose(t['t_sd'], [ 0.5348658,  0.4927946])
+    assert np.allclose(t['t_mn'], [ 28.09378815,  28.09343529])
+    assert np.allclose(t['t_dd'], [ 798, 776])
+
+
+def notest_get_track():
     db = WOA()
     db['TEMP'].get_track(doy=[datetime.now()], depth=0, lat=[10], lon=[330])
     db['TEMP'].get_track(doy=2*[datetime.now()], depth=0, lat=[10, 12], lon=[330, -35])
+
+
+def test_dev():
+    db = WOA()
+    t = db['TEMP'].extract(doy=228.125, lat=12.5, lon=-37.5)
