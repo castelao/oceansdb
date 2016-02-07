@@ -47,7 +47,7 @@ setup(
     zip_safe=False,
     keywords='WOA World Ocean Atlas climatology oceanographic data oceanography temperature salinity',
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 3 - Alpha',
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: BSD License',
         "Programming Language :: Python :: 2",
