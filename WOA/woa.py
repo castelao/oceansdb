@@ -401,7 +401,7 @@ class WOA_var_nc(object):
                 (self.dims['lon'] - 360).tolist() + \
                         self.dims['lon'].tolist() + \
                         (self.dims['lon']+360).tolist())
-        xn_ext = np.array(3 * range(self.dims['lon'].shape[0]))
+        xn_ext = np.array(3 * list(range(self.dims['lon'].shape[0])))
         xn_start = np.nonzero(lon_ext <= lon.min())[0].max()
         xn_end = np.nonzero(lon_ext >= lon.max())[0].min()
         xn = xn_ext[xn_start:xn_end+1]
@@ -415,7 +415,7 @@ class WOA_var_nc(object):
                     [self.dims['time'][-1] - 365.25] + \
                             self.dims['time'].tolist() + \
                             [self.dims['time'][0] + 365.25])
-            tn_ext = range(self.dims['time'].size)
+            tn_ext = list(range(self.dims['time'].size))
             tn_ext = [tn_ext[-1]] + tn_ext + [tn_ext[0]]
             tn_start = np.nonzero(time_ext <= doy.min())[0].max()
             tn_end = np.nonzero(time_ext >= doy.max())[0].min()
