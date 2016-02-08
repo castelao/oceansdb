@@ -548,6 +548,10 @@ class WOA_var_nc(object):
 
         return output
 
+    def get_profile(var, doy, depth, lat, lon):
+        print("get_profile is deprecated. You should migrate to extract()")
+        return extract(var=var, doy=doy, depth=depth, lat=lat, lon=lon)
+
 
 class WOA(object):
     """
