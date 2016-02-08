@@ -24,14 +24,17 @@ Package to subsample World Ocean Atlas climatology.
 Features
 --------
 
-* TODO
+* If the WOA database files are not localy available, download it.
+* Extract, or interpolate if necessary, climatologic data on requested coordinates;
+* Can request a single point, a profile or a section;
+* Ready to handle -180 to 180 or 0 to 360 coordinate system;
 
 Quick howto use
 ---------------
 
 Inside python:
 
-    from WOA import WOA
+    from pyWOA import WOA
 
     db = WOA()
 
