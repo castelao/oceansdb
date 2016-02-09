@@ -8,6 +8,4 @@ __version__ = '0.1.0'
 from pyWOA.woa import WOA
 #from WOA.woa import woa_profile
 #from WOA.woa import woa_profile_from_dap
-#from WOA.woa import woa_profile_from_file
 #from WOA.woa import woa_track_from_file
-#from WOA.woa import woa_from_file
