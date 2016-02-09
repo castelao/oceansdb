@@ -21,6 +21,7 @@ To get temperature at one point::
 
 The climatologic temperature will be available as t['t_mn'].
 If you prefer you can obtain all available variables by not defining var, like::
+
     $ t = db['PSAL'].extract(doy=136.875, depth=[0, 10, 15, 18], \
     $ lat=17.5, lon=-37.5)
 
