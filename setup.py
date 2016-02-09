@@ -37,10 +37,10 @@ setup(
     author_email='guilherme@castelao.net',
     url='https://github.com/castelao/pyWOA',
     packages=[
-        'WOA',
+        'pyWOA',
     ],
-    package_dir={'WOA':
-                 'WOA'},
+    package_dir={'pyWOA':
+                 'pyWOA'},
     include_package_data=True,
     install_requires=requirements,
     license='3-clause BSD',
