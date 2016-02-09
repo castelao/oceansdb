@@ -8,11 +8,11 @@ from datetime import datetime
 
 import numpy as np
 
-from WOA.woa import WOA
+from pyWOA.woa import WOA
 
 def test_import():
     # A shortcut
-    from WOA import WOA
+    from pyWOA import WOA
     db = WOA()
 
 

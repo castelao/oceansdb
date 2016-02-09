@@ -9,7 +9,7 @@ from numpy import ma
 
 import os
 
-from WOA.utils import dbsource
+from pyWOA.utils import dbsource
 
 try:
     import netCDF4
