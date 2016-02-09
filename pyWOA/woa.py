@@ -375,6 +375,8 @@ class WOA_var_nc(object):
         else:
             depth = self.dims['depth'][:]
 
+        assert np.all(depth >= 0), "Depth was supposed to be positive."
+
         lat = np.atleast_1d(kwargs['lat'])
         lon = np.atleast_1d(kwargs['lon'])
 
