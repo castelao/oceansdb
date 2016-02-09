@@ -146,50 +146,6 @@ def woa_track_from_file(d, lat, lon, filename, varnames=None):
     return output
 
 
-# ---- unifinished, under development ----
-def build_input(doy, depth, lat, lon, filename, varnames):
-    """ Subsample WOA from nc file
-
-        To improve efficiency of interpolation
-    """
-    nc = netCDF4.Dataset(expanduser(filename), 'r')
-
-    output = {}
-    for v in (u'time', u'depth', u'lat', u'lon'):
-        output[v] = nc.variables[v][:]
-    for v in varnames:
-        output[v] = nc.variables[v][:]
-
-    return output
-    # Get the nearest point. In the future interpolate.
-    dn = slice(
-            (np.abs(np.min(doy) - nc.variables['time'][:])).argmin() - 1,
-            (np.abs(np.max(doy) - nc.variables['time'][:])).argmin() + 1
-            )
-    zn = slice(
-            (np.abs(np.min(depth) - nc.variables['depth'][:])).argmin() - 1,
-            (np.abs(np.max(depth) - nc.variables['depth'][:])).argmin() + 1
-            )
-    xn = slice(
-            (np.abs(np.min(lon) - nc.variables['lon'][:])).argmin() - 1,
-            (np.abs(np.max(lon) - nc.variables['lon'][:])).argmin() + 1
-            )
-    yn = slice(
-            (np.abs(np.min(lat) - nc.variables['lat'][:])).argmin() - 1,
-            (np.abs(np.max(lat) - nc.variables['lat'][:])).argmin() + 1
-            )
-
-    # Temporary solution. Improve in the future
-    if dn.start < 0:
-        dn = slice(0, dn.stop, dn.step)
-    if zn.start < 0:
-        zn = slice(0, zn.stop, zn.step)
-    if xn.start < 0:
-        xn = slice(0, xn.stop, xn.step)
-    if yn.start < 0:
-        yn = slice(0, yn.stop, yn.step)
-
-
 def woa_from_file(doy, depth, lat, lon, filename, varnames=None):
     """
     Monthly Climatologic Mean and Standard Deviation from WOA,
