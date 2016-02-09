@@ -5,8 +5,8 @@ pyWOA
 .. image:: https://zenodo.org/badge/4645/castelao/pyWOA.svg
    :target: https://zenodo.org/badge/latestdoi/4645/castelao/pyWOA
 
-.. image:: https://readthedocs.org/projects/pyWOA/badge/?version=latest
-   :target: https://readthedocs.org/projects/pyWOA/?badge=latest
+.. image:: https://readthedocs.org/projects/pywoa/badge/?version=latest
+    :target: http://pywoa.readthedocs.org/en/latest/?badge=latest
          :alt: Documentation Status
 
 .. image:: https://img.shields.io/travis/castelao/pyWOA.svg
