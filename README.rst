@@ -44,5 +44,5 @@ To get temperature at one point:
 To get one profile of salinity:
     t = db['PSAL'].extract(var='t_mn', doy=136.875, depth=[0, 10, 15, 18], lat=17.5, lon=-37.5)
 
-To get one section of temperature:
+To get a full depth section of temperature:
     t = db['TEMP'].extract(var='t_mn', doy=136.875, lat=17.5, lon=[-39, -37.5, -35])
