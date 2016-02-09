@@ -108,59 +108,6 @@ def woa_profile_from_dap(var, d, lat, lon, depth, cfg):
     return output
 
 
-def woa_profile_from_file(var, d, lat, lon, depth, cfg):
-    """
-    Monthly Climatologic Mean and Standard Deviation from WOA,
-    used either for temperature or salinity.
-
-    INPUTS
-        time: [day of the year]
-        lat: [-90<lat<90]
-        lon: [-180<lon<180]
-        depth: [meters]
-
-    Reads the WOA Monthly Climatology NetCDF file and
-    returns the corresponding WOA values of salinity or temperature mean and
-    standard deviation for the given time, lat, lon, depth.
-    """
-    if lon < 0:
-        lon = lon + 360
-
-    doy = int(d.strftime('%j'))
-    nc = netCDF4.Dataset(expanduser(cfg['file']), 'r')
-
-    # Get the nearest point. In the future interpolate.
-    dn = (np.abs(doy - nc.variables['time'][:])).argmin()
-    xn = (np.abs(lon - nc.variables['lon'][:])).argmin()
-    yn = (np.abs(lat - nc.variables['lat'][:])).argmin()
-
-    vars = cfg['vars']
-
-    climdata = {}
-    for v in vars:
-        climdata[v] = ma.masked_values(
-                nc.variables[vars[v]][dn, :, yn, xn],
-                nc.variables[vars[v]]._FillValue)
-
-    zwoa = ma.array(nc.variables['depth'][:])
-
-    ind_z = (depth <= zwoa.max()) & (depth >= zwoa.min())
-    output = {}
-    # Mean value profile
-    for v in vars:
-        # interp1d can't handle masked values
-        ind_valid = ~ma.getmaskarray(climdata[v])
-        f = interp1d(zwoa[ind_valid], climdata[v][ind_valid])
-        output[v] = ma.masked_all(depth.shape)
-        output[v][ind_z] = f(depth[ind_z])
-    # # The stdev profile
-    # f = interp1d(zwoa[~ma.getmaskarray(sd)].compressed(), sd.compressed())
-    # sd_interp = ma.masked_all(depth.shape)
-    # sd_interp[ind] = f(depth[ind])
-
-    return output
-
-
 def woa_track_from_file(d, lat, lon, filename, varnames=None):
     """ Temporary solution: WOA for surface track
     """
