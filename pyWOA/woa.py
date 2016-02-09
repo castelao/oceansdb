@@ -152,6 +152,11 @@ class WOA_URL(object):
 
 
 class WOA_var_nc(object):
+    """
+    Reads the WOA Monthly Climatology NetCDF file and
+    returns the corresponding WOA values of salinity or temperature mean and
+    standard deviation for the given time, lat, lon, depth.
+    """
     def __init__(self, source):
         import netCDF4
 
@@ -312,12 +317,23 @@ class WOA_var_nc(object):
             points = []
             values = []
             # The valid data
+            # Maybe another possibility:
+            #ind = np.nonzero(~ma.getmaskarray(woa[v]))
+            #points = np.array([
+            #    woa['time'][ind[0]],
+            #    woa['depth'][ind[0]],
+            #    woa['lat'][ind[0]],
+            #    woa['lon'][ind[0]]
+            #    ]).T
+            #values = woa[v][ind]
             Nt, Nz, Ny, Nx = np.nonzero(~ma.getmaskarray(subset[v]))
             for tn, nz, ny, nx in zip(Nt, Nz, Ny, Nx):
                 points.append([dims['time'][tn],
                     dims['depth'][nz], dims['lat'][ny],
                     dims['lon'][nx]])
                 values.append(subset[v][tn,nz,ny,nx])
+            # Would this work and be more efficient?
+            #values = subset[v][Nt, Nz, Ny, Nx].T
 
             points = np.array(points)
             values = np.array(values)
