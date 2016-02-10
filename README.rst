@@ -16,7 +16,9 @@ pyWOA
         :target: https://pypi.python.org/pypi/pyWOA
 
 
-Package to subsample World Ocean Atlas climatology.
+Package to subsample, or interpolate, World Ocean Atlas climatology to any coordinates.
+
+This package started with functions to obtain climatological values to compare with measured data, allowing a quality control check by comparison. It hence needed to work for any coordinates requested. I recently split these functionalities from CoTeDe into this standalone package to allow more people to use it for other purposes.
 
 * Free software: 3-clause BSD style license - see LICENSE.rst  
 * Documentation: https://pyWOA.readthedocs.org.
