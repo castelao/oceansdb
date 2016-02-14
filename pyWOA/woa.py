@@ -314,51 +314,35 @@ class WOA_var_nc(object):
 
         output = {}
         for v in var:
-            points = []
-            values = []
-            # The valid data
-            # Maybe another possibility:
-            #ind = np.nonzero(~ma.getmaskarray(woa[v]))
-            #points = np.array([
-            #    woa['time'][ind[0]],
-            #    woa['depth'][ind[0]],
-            #    woa['lat'][ind[0]],
-            #    woa['lon'][ind[0]]
-            #    ]).T
-            #values = woa[v][ind]
-            Nt, Nz, Ny, Nx = np.nonzero(~ma.getmaskarray(subset[v]))
-            for tn, nz, ny, nx in zip(Nt, Nz, Ny, Nx):
-                points.append([dims['time'][tn],
-                    dims['depth'][nz], dims['lat'][ny],
-                    dims['lon'][nx]])
-                values.append(subset[v][tn,nz,ny,nx])
-            # Would this work and be more efficient?
-            #values = subset[v][Nt, Nz, Ny, Nx].T
-
-            points = np.array(points)
-            values = np.array(values)
-
-            # Interpolate along the dimensions that have more than one
-            #   position, otherwise it means that the output is exactly
-            #   on that coordinate.
-            ind = np.array(
-                    [np.unique(points[:,i]).size > 1 for i in
-                        range(points.shape[1])])
-            assert ind.any()
-
-            values_out = griddata(
-                    np.atleast_1d(np.squeeze(points[:,ind])),
-                    values,
-                    np.atleast_1d(np.squeeze(points_out[:,ind]))
-                    )
-
             output[v] = ma.masked_all(
                     (doy.size, depth.size, lat.size, lon.size),
                     dtype=subset[v].dtype)
 
-            # Remap the interpolated value back into a 4D array
-            for [t, z, y, x], out in zip(points_out, values_out):
-                output[v][t==doy, z==depth, y==lat, x==lon] = out
+            # The valid data
+            idx = np.nonzero(~ma.getmaskarray(subset[v]))
+
+            if idx[0].any():
+                points = np.array([dims['time'][idx[0]], dims['depth'][idx[1]], dims['lat'][idx[2]], dims['lon'][idx[3]]]).T
+                values = subset[v][idx]
+
+                # Interpolate along the dimensions that have more than one
+                #   position, otherwise it means that the output is exactly
+                #   on that coordinate.
+                ind = np.array(
+                        [np.unique(points[:,i]).size > 1 for i in
+                            range(points.shape[1])])
+                assert ind.any()
+
+                values_out = griddata(
+                        np.atleast_1d(np.squeeze(points[:,ind])),
+                        values,
+                        np.atleast_1d(np.squeeze(points_out[:,ind]))
+                        )
+
+                # Remap the interpolated value back into a 4D array
+                idx = np.isfinite(values_out)
+                for [t, z, y, x], out in zip(points_out[idx], values_out[idx]):
+                    output[v][t==doy, z==depth, y==lat, x==lon] = out
 
         return output
 
