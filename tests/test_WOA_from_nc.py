@@ -75,7 +75,7 @@ def test_no_data_available():
     db = WOA()
     out = db['TEMP'].extract(doy=155, lat=48.1953, lon=-69.5855,
             depth=[2.0, 5.0, 6.0, 21.0, 44.0, 79.0, 5000])
-    assert out.keys() == [u't_se', u't_sd', u't_mn', u't_dd']
+    assert sorted(out.keys()) == [u't_dd', u't_mn', u't_sd', u't_se']
     for v in out:
         ma.getmaskarray(out[v]).all()
 
