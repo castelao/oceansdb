@@ -7,6 +7,7 @@
 from datetime import datetime
 
 import numpy as np
+from numpy import ma
 
 from pyWOA.woa import WOA
 
@@ -67,6 +68,17 @@ def test_lon_cyclic():
     t2 = db['TEMP'].extract(var='t_mn', doy=136.875,
             depth=0, lat=17.5, lon=[322.5, 327.5])
     assert np.allclose(t1['t_mn'], t2['t_mn'])
+
+def test_no_data_available():
+    """ This is a position without valid data """
+
+    db = WOA()
+    out = db['TEMP'].extract(doy=155, lat=48.1953, lon=-69.5855,
+            depth=[2.0, 5.0, 6.0, 21.0, 44.0, 79.0, 5000])
+    assert out.keys() == [u't_se', u't_sd', u't_mn', u't_dd']
+    for v in out:
+        ma.getmaskarray(out[v]).all()
+
 # ======
 
 
