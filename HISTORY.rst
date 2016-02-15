@@ -3,6 +3,11 @@
 History
 -------
 
+0.1.0 (2015-02-09)
+------------------
+
+* Generalized interpolator. Extract climatology for point, profile or section.
+
 0.0.1 (2015-12-13)
 ------------------
 
