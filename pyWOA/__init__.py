@@ -2,7 +2,7 @@
 
 __author__ = 'Guilherme Castelao'
 __email__ = 'guilherme@castelao.net'
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 
 from pyWOA.woa import WOA
