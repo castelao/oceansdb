@@ -79,6 +79,20 @@ def test_no_data_available():
     for v in out:
         ma.getmaskarray(out[v]).all()
 
+def test_extract_overlimit():
+    """ Thest a request over the limits of the database """
+    db = WOA()
+
+    t = db['TEMP'].extract(var='t_mn', doy=136.875,
+            depth=5502, lat=17.5, lon=-37.5)
+    assert ma.is_masked(t['t_mn'])
+
+    t = db['TEMP'].extract(var='t_mn', doy=136.875,
+            depth=[10, 5502], lat=17.5, lon=-37.5)
+    assert np.all(t['t_mn'].mask == [False, True])
+    assert ma.allclose(t['t_mn'],
+            ma.masked_array([24.62145996, 0], mask=[False, True]))
+
 # ======
 
 
