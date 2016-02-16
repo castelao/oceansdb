@@ -325,7 +325,7 @@ class WOA_var_nc(object):
             # The valid data
             idx = np.nonzero(~ma.getmaskarray(subset[v]))
 
-            if idx[0].any():
+            if idx[0].size > 0 :
                 points = np.array([dims['time'][idx[0]], dims['depth'][idx[1]], dims['lat'][idx[2]], dims['lon'][idx[3]]]).T
                 values = subset[v][idx]
 
