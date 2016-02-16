@@ -228,7 +228,11 @@ class WOA_var_nc(object):
 
         zn = slice(
                 np.nonzero(self.dims['depth'] <= depth.min())[0].max(),
-                np.nonzero(self.dims['depth'] >= depth.max())[0].min()+1)
+                np.nonzero(
+                    self.dims['depth'] >= \
+                            min(self.dims['depth'].max(), depth.max())
+                            )[0].min() + 1
+                )
         # If a higher degree interpolation system uses more than one data
         #   point in the edge, I should extend this selection one point on
         #   each side, without go beyond 0
