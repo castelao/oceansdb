@@ -384,12 +384,16 @@ class WOA_var_nc(object):
         lat = np.atleast_1d(kwargs['lat'])
         lon = np.atleast_1d(kwargs['lon'])
 
-        if mode == 'nearest':
-            output = self.closest(doy, depth, lat, lon, var)
-        else:
-            output = self.interpolate(doy, depth, lat, lon, var)
-            for v in output:
-                output[v] = np.atleast_1d(np.squeeze(output[v]))
+        try:
+            if mode == 'nearest':
+                output = self.closest(doy, depth, lat, lon, var)
+            else:
+                output = self.interpolate(doy, depth, lat, lon, var)
+                for v in output:
+                    output[v] = np.atleast_1d(np.squeeze(output[v]))
+        except:
+            print("Sorry, I was not able to extract the climatology.")
+            return
 
         return output
 
