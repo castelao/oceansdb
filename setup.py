@@ -17,12 +17,8 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read().replace('.. :changelog:', '')
 
-requirements = [
-    'numpy',
-    'netCDF4',
-    'filelock',
-    'scipy',
-]
+with open('requirements.txt') as requirements_file:
+    requirements = requirements_file.read()
 
 with open('test-requirements.txt') as test_requirements_file:
     test_requirements = test_requirements_file.read()
