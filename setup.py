@@ -25,18 +25,18 @@ with open('test-requirements.txt') as test_requirements_file:
 
 
 setup(
-    name='pyWOA',
+    name='oceandb',
     version=version,
     description="Package to subsample World Ocean Atlas climatology.",
     long_description=readme + '\n\n' + history,
     author="Guilherme Castelao",
     author_email='guilherme@castelao.net',
-    url='https://github.com/castelao/pyWOA',
+    url='https://github.com/castelao/oceandb',
     packages=[
-        'pyWOA',
+        'oceandb',
     ],
-    package_dir={'pyWOA':
-                 'pyWOA'},
+    package_dir={'oceandb':
+                 'oceandb'},
     include_package_data=True,
     install_requires=requirements,
     license='3-clause BSD',

@@ -9,7 +9,7 @@ from numpy import ma
 
 import os
 
-from pyWOA.utils import dbsource
+from oceandb.utils import dbsource
 
 try:
     import netCDF4

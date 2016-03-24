@@ -5,7 +5,7 @@ __email__ = 'guilherme@castelao.net'
 __version__ = '0.1.2'
 
 
-from pyWOA.woa import WOA
+from oceandb.woa import WOA
 #from WOA.woa import woa_profile
 #from WOA.woa import woa_profile_from_dap
 #from WOA.woa import woa_track_from_file
