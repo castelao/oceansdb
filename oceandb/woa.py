@@ -34,12 +34,10 @@ def woa_profile(var, d, lat, lon, depth, cfg):
     #   etopo file, but if fail for another reason, like there is no lat,
     #   it will loose time trying from_dap.
     try:
-        woa = woa_profile_from_file(var,
-                d, lat, lon, depth, cfg)
+        woa = woa_profile_from_file(var, d, lat, lon, depth, cfg)
     except:
         try:
-            woa = woa_profile_from_dap(var,
-                d, lat, lon, depth, cfg)
+            woa = woa_profile_from_dap(var, d, lat, lon, depth, cfg)
         except:
             print("Couldn't make woa_comparison of %s" % var)
             return
@@ -124,8 +122,9 @@ def woa_track_from_file(d, lat, lon, filename, varnames=None):
     if varnames is None:
         varnames = {}
         for v in nc.variables.keys():
-            if nc.variables[v].dimensions == (u'time', u'depth', u'lat', u'lon'):
-                varnames[v] = v
+            if nc.variables[v].dimensions == \
+                    (u'time', u'depth', u'lat', u'lon'):
+                        varnames[v] = v
 
     output = {}
     for v in varnames:
@@ -207,12 +206,12 @@ class WOA_var_nc(object):
         subset = {}
         for v in var:
             if v in self.KEYS:
-                subset[v] = self.ncs[tn][v][0,zn,yn,xn]
+                subset[v] = self.ncs[tn][v][0, zn, yn, xn]
             else:
                 # FIXME: Ugly temporary solution
                 tmp = [vv for vv in self.KEYS if vv[2:] == v]
                 assert len(tmp) == 1
-                subset[v] = self.ncs[tn][tmp[0]][0,zn,yn,xn]
+                subset[v] = self.ncs[tn][tmp[0]][0, zn, yn, xn]
 
         return subset
 
@@ -229,14 +228,14 @@ class WOA_var_nc(object):
         zn = slice(
                 np.nonzero(self.dims['depth'] <= depth.min())[0].max(),
                 np.nonzero(
-                    self.dims['depth'] >= \
+                    self.dims['depth'] >=
                             min(self.dims['depth'].max(), depth.max())
                             )[0].min() + 1
                 )
         # If a higher degree interpolation system uses more than one data
         #   point in the edge, I should extend this selection one point on
         #   each side, without go beyond 0
-        #if zn.start < 0:
+        # if zn.start < 0:
         #    zn = slice(0, zn.stop, zn.step)
         dims['depth'] = np.atleast_1d(self.dims['depth'][zn])
 
@@ -246,8 +245,8 @@ class WOA_var_nc(object):
         dims['lat'] = np.atleast_1d(self.dims['lat'][yn])
 
         lon_ext = np.array(
-                (self.dims['lon'] - 360).tolist() + \
-                        self.dims['lon'].tolist() + \
+                (self.dims['lon'] - 360).tolist() +
+                        self.dims['lon'].tolist() +
                         (self.dims['lon']+360).tolist())
         xn_ext = np.array(3 * list(range(self.dims['lon'].shape[0])))
         xn_start = np.nonzero(lon_ext <= lon.min())[0].max()
@@ -260,8 +259,8 @@ class WOA_var_nc(object):
             dims['time'] = self.dims['time']
         else:
             time_ext = np.array(
-                    [self.dims['time'][-1] - 365.25] + \
-                            self.dims['time'].tolist() + \
+                    [self.dims['time'][-1] - 365.25] +
+                            self.dims['time'].tolist() +
                             [self.dims['time'][0] + 365.25])
             tn_ext = list(range(self.dims['time'].size))
             tn_ext = [tn_ext[-1]] + tn_ext + [tn_ext[0]]
@@ -302,9 +301,9 @@ class WOA_var_nc(object):
                     xn = np.nonzero([x in lon for x in dims['lon']])[0]
                     output = {}
                     for v in subset:
-                        #output[v] = subset[v][dn, zn, yn, xn]
+                        # output[v] = subset[v][dn, zn, yn, xn]
                         # Seriously that this is the way to do it?!!??
-                        output[v] = subset[v][:,:,:,xn][:,:,yn][:,zn][dn]
+                        output[v] = subset[v][:, :, :, xn][:, :, yn][:, zn][dn]
                     return output
 
         # The output coordinates shall be created only once.
@@ -325,22 +324,24 @@ class WOA_var_nc(object):
             # The valid data
             idx = np.nonzero(~ma.getmaskarray(subset[v]))
 
-            if idx[0].size > 0 :
-                points = np.array([dims['time'][idx[0]], dims['depth'][idx[1]], dims['lat'][idx[2]], dims['lon'][idx[3]]]).T
+            if idx[0].size > 0:
+                points = np.array([
+                    dims['time'][idx[0]], dims['depth'][idx[1]],
+                    dims['lat'][idx[2]], dims['lon'][idx[3]]]).T
                 values = subset[v][idx]
 
                 # Interpolate along the dimensions that have more than one
                 #   position, otherwise it means that the output is exactly
                 #   on that coordinate.
                 ind = np.array(
-                        [np.unique(points[:,i]).size > 1 for i in
+                        [np.unique(points[:, i]).size > 1 for i in
                             range(points.shape[1])])
                 assert ind.any()
 
                 values_out = griddata(
-                        np.atleast_1d(np.squeeze(points[:,ind])),
+                        np.atleast_1d(np.squeeze(points[:, ind])),
                         values,
-                        np.atleast_1d(np.squeeze(points_out[:,ind]))
+                        np.atleast_1d(np.squeeze(points_out[:, ind]))
                         )
 
                 # Remap the interpolated value back into a 4D array
