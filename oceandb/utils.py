@@ -21,8 +21,8 @@ else:
 
 import filelock
 
-def woa_dir():
-    return os.path.expanduser(os.getenv('WOA_DIR', '~/.woarc'))
+def oceandb_dir():
+        return os.path.expanduser(os.getenv('OCEANDB_DIR', '~/.config/oceandb'))
 
 def download_file(url, md5hash, dbpath):
     """ Download data file from web
@@ -151,7 +151,7 @@ http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/temperature/netcdf
 """
 
 def dbsource(var, resolution=5, tscale='seasonal'):
-    dbpath = woa_dir()
+    dbpath = oceandb_dir()
     datafiles = []
     for cfg in files_db[var][resolution][tscale]:
         #with FileLock(fname):
