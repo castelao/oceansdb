@@ -113,14 +113,21 @@ http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/temperature/netcdf
 
 """
 
-def dbsource(var, resolution='5', tscale='seasonal'):
+def dbsource(dbname, var, resolution='5', tscale='seasonal'):
+
+    db_cfg = {}
+    cfg_dir = 'datasource'
+    for src_cfg in pkg_resources.resource_listdir('oceandb', cfg_dir):
+        text = pkg_resources.resource_string(
+                'oceandb', os.path.join(cfg_dir, src_cfg))
+        cfg = json.loads(text)
+        for c in cfg:
+            assert c not in db_cfg, "Trying to overwrite %s"
+            db_cfg[c] = cfg[c]
+
     dbpath = oceandb_dir()
     datafiles = []
-    src_dir = 'datasource'
-    src_cfg = 'woa.json'
-    text = pkg_resources.resource_string(
-            'oceandb', os.path.join(src_dir, src_cfg))
-    files_db = json.loads(text)
+    files_db = db_cfg[dbname]
     for cfg in files_db[var][resolution][tscale]:
         #with FileLock(fname):
         #download_file(cfg['url'], cfg['md5'], dbpath)
