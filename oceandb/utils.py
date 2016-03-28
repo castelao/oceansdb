@@ -9,6 +9,8 @@ import sys
 import shutil
 import hashlib
 from tempfile import NamedTemporaryFile
+import pkg_resources
+import json
 
 #from filelock import FileLock
 
@@ -93,45 +95,6 @@ def download_file(url, md5hash, dbpath):
         print("Downloaded: %s" % fname)
 
 
-files_db = {
-    'TEMP': {
-        5: {
-            'annual': {
-                'url': 'http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/temperature/netcdf/decav/5deg/woa13_decav_t00_5dv2.nc',
-                'md5': '9cc5cf28d4f1f4057c9d9f263ca13d2a'
-                },
-            'seasonal_old': {
-                'url': 'http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA09/NetCDFdata/temperature_seasonal_5deg.nc',
-                'md5': '271f66e8dea4dfef7db99f5f411af330'
-                },
-            'seasonal': [
-                'http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/temperature/netcdf/decav/5deg/woa13_decav_t13_5dv2.nc',
-                'http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/temperature/netcdf/decav/5deg/woa13_decav_t14_5dv2.nc',
-                'http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/temperature/netcdf/decav/5deg/woa13_decav_t15_5dv2.nc',
-                'http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/temperature/netcdf/decav/5deg/woa13_decav_t16_5dv2.nc',
-                ]
-            },
-        },
-    'PSAL': {
-        5: {
-            'annual': {
-                'url': 'http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/salinity/netcdf/decav/5deg/woa13_decav_s00_5dv2.nc',
-                'md5': '108f28fe1dd250b0598ae666be08fc19'
-                },
-            'seasonal_old': {
-                'url': 'http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA09/NetCDFdata/salinity_seasonal_5deg.nc',
-                'md5': '1d2d1982338c688bdd18069d030ec05f'
-                },
-            'seasonal': [
-                'http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/salinity/netcdf/decav/5deg/woa13_decav_s13_5dv2.nc',
-                'http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/salinity/netcdf/decav/5deg/woa13_decav_s14_5dv2.nc',
-                'http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/salinity/netcdf/decav/5deg/woa13_decav_s15_5dv2.nc',
-                'http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/salinity/netcdf/decav/5deg/woa13_decav_s16_5dv2.nc',
-                ]
-            }
-        }
-    }
-
 """
 
         http://data.nodc.noaa.gov/thredds/dodsC/woa/WOA13/DATAv2/temperature/netcdf/decav/0.25/woa13_decav_t00_04v2.nc.html
@@ -150,9 +113,14 @@ http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/temperature/netcdf
 
 """
 
-def dbsource(var, resolution=5, tscale='seasonal'):
+def dbsource(var, resolution='5', tscale='seasonal'):
     dbpath = oceandb_dir()
     datafiles = []
+    src_dir = 'datasource'
+    src_cfg = 'woa.json'
+    text = pkg_resources.resource_string(
+            'oceandb', os.path.join(src_dir, src_cfg))
+    files_db = json.loads(text)
     for cfg in files_db[var][resolution][tscale]:
         #with FileLock(fname):
         #download_file(cfg['url'], cfg['md5'], dbpath)

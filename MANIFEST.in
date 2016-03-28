@@ -6,6 +6,7 @@ include LICENSE.rst
 include README.rst
 include test-requirements.txt
 
+recursive-include oceandb/datasource *
 recursive-include tests *
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]
