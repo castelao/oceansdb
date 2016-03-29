@@ -185,7 +185,7 @@ class ETOPO_var_nc(object):
         if 'var' in kwargs:
             var = np.atleast_1d(kwargs['var'])
         else:
-            var = np.asanyarray(self.KEYS)
+            var = np.asanyarray(self.keys())
 
         lat = np.atleast_1d(kwargs['lat'])
         lon = np.atleast_1d(kwargs['lon'])
