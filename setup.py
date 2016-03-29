@@ -41,7 +41,7 @@ setup(
     install_requires=requirements,
     license='3-clause BSD',
     zip_safe=False,
-    keywords='WOA World Ocean Atlas climatology oceanographic data oceanography temperature salinity',
+    keywords='WOA World Ocean Atlas climatology oceanographic data oceanography ETOPO temperature salinity bathymetry',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Science/Research',
