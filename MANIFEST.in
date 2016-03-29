@@ -7,7 +7,7 @@ include README.rst
 include requirements.txt
 include test-requirements.txt
 
-recursive-include oceandb/datasource *
+recursive-include oceansdb/datasource *
 recursive-include tests *
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]
