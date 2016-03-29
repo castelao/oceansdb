@@ -23,8 +23,8 @@ else:
 
 import filelock
 
-def oceandb_dir():
-        return os.path.expanduser(os.getenv('OCEANDB_DIR', '~/.config/oceandb'))
+def oceansdb_dir():
+    return os.path.expanduser(os.getenv('OCEANSDB_DIR', '~/.config/oceansdb'))
 
 def download_file(cfg, md5hash, dbpath):
     """ Download data file from web
@@ -127,15 +127,15 @@ def dbsource(dbname, var, resolution=None, tscale=None):
 
     db_cfg = {}
     cfg_dir = 'datasource'
-    for src_cfg in pkg_resources.resource_listdir('oceandb', cfg_dir):
+    for src_cfg in pkg_resources.resource_listdir('oceansdb', cfg_dir):
         text = pkg_resources.resource_string(
-                'oceandb', os.path.join(cfg_dir, src_cfg))
+                'oceansdb', os.path.join(cfg_dir, src_cfg))
         cfg = json.loads(text)
         for c in cfg:
             assert c not in db_cfg, "Trying to overwrite %s"
             db_cfg[c] = cfg[c]
 
-    dbpath = oceandb_dir()
+    dbpath = oceansdb_dir()
     datafiles = []
     cfg = db_cfg[dbname]
 

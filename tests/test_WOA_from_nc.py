@@ -9,11 +9,11 @@ from datetime import datetime
 import numpy as np
 from numpy import ma
 
-from oceandb.woa import WOA
+from oceansdb.woa import WOA
 
 def test_import():
     # A shortcut
-    from oceandb import WOA
+    from oceansdb import WOA
     db = WOA()
 
 

@@ -9,7 +9,7 @@ from numpy import ma
 
 import os
 
-from oceandb.utils import dbsource
+from oceansdb.utils import dbsource
 
 try:
     import netCDF4

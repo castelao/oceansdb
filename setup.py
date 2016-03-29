@@ -25,18 +25,18 @@ with open('test-requirements.txt') as test_requirements_file:
 
 
 setup(
-    name='oceandb',
+    name='oceansdb',
     version=version,
     description="Package to subsample World Ocean Atlas climatology.",
     long_description=readme + '\n\n' + history,
     author="Guilherme Castelao",
     author_email='guilherme@castelao.net',
-    url='https://github.com/castelao/oceandb',
+    url='https://github.com/castelao/oceansdb',
     packages=[
-        'oceandb',
+        'oceansdb',
     ],
-    package_dir={'oceandb':
-                 'oceandb'},
+    package_dir={'oceansdb':
+                 'oceansdb'},
     include_package_data=True,
     install_requires=requirements,
     license='3-clause BSD',
