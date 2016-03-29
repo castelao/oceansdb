@@ -4,6 +4,7 @@ include CONTRIBUTING.rst
 include HISTORY.rst
 include LICENSE.rst
 include README.rst
+include requirements.txt
 include test-requirements.txt
 
 recursive-include oceandb/datasource *
