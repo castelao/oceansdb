@@ -26,13 +26,15 @@ import filelock
 def oceandb_dir():
         return os.path.expanduser(os.getenv('OCEANDB_DIR', '~/.config/oceandb'))
 
-def download_file(url, md5hash, dbpath):
+def download_file(cfg, md5hash, dbpath):
     """ Download data file from web
 
         Copied from CoTeDe.
 
         IMPROVE it to automatically extract gz files
     """
+    url = cfg['url']
+
     download_block_size = 2 ** 16
 
     assert type(md5hash) is str
@@ -42,7 +44,11 @@ def download_file(url, md5hash, dbpath):
 
     hash = hashlib.md5()
 
-    fname = os.path.join(dbpath, os.path.basename(urlparse(url).path))
+    if 'filename' in cfg:
+        fname = os.path.join(dbpath, cfg['filename'])
+    else:
+        fname = os.path.join(dbpath, os.path.basename(urlparse(url).path))
+
     if os.path.isfile(fname):
         return
         # FIXME: This is not efficient. As it is, a checksum is estimated
@@ -113,7 +119,11 @@ http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/temperature/netcdf
 
 """
 
-def dbsource(dbname, var, resolution='5', tscale='seasonal'):
+def dbsource(dbname, var, resolution=None, tscale=None):
+    """
+
+        Temporary solution, just to move on with CoTeDe.
+    """
 
     db_cfg = {}
     cfg_dir = 'datasource'
@@ -127,14 +137,23 @@ def dbsource(dbname, var, resolution='5', tscale='seasonal'):
 
     dbpath = oceandb_dir()
     datafiles = []
-    files_db = db_cfg[dbname]
-    for cfg in files_db[var][resolution][tscale]:
+    cfg = db_cfg[dbname]
+
+    if (resolution is None):
+        resolution = cfg['vars'][var]['default_resolution']
+
+    if (tscale is None):
+        tscale = cfg['vars'][var][resolution]["default_tscale"]
+
+    for cfg in cfg['vars'][var][resolution][tscale]:
         #with FileLock(fname):
         #download_file(cfg['url'], cfg['md5'], dbpath)
         download_file(cfg, 'null', dbpath)
 
-        datafiles.append(os.path.join(dbpath,
-            os.path.basename(urlparse(cfg).path)))
-            #os.path.basename(urlparse(cfg['url']).path)))
+        if 'filename' in cfg:
+            datafiles.append(os.path.join(dbpath, cfg['filename']))
+        else:
+            datafiles.append(os.path.join(dbpath,
+                os.path.basename(urlparse(cfg['url']).path)))
 
     return datafiles

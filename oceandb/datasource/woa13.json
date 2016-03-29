@@ -1,0 +1,38 @@
+{"WOA13": {
+    "rel_path": "woa",
+    "vars": {
+        "TEMP": {
+            "default_resolution": "5deg",		
+            "5deg": {
+                "default_tscale": "seasonal",
+                "seasonal": [
+                    {
+                        "url": "http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/temperature/netcdf/decav/5deg/woa13_decav_t13_5dv2.nc"
+                        },
+	            {
+                        "url": "http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/temperature/netcdf/decav/5deg/woa13_decav_t14_5dv2.nc"
+                        },
+                    {"url": "http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/temperature/netcdf/decav/5deg/woa13_decav_t15_5dv2.nc"},
+                    {"url": "http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/temperature/netcdf/decav/5deg/woa13_decav_t16_5dv2.nc"}
+                    ]
+                }
+            },
+        "PSAL": {
+            "default_resolution": "5deg",		
+            "5deg": {
+                "default_tscale": "seasonal",
+                "seasonal": [
+                    {
+                        "url": "http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/temperature/netcdf/decav/5deg/woa13_decav_s13_5dv2.nc"
+                        },
+	            {
+                        "url": "http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/temperature/netcdf/decav/5deg/woa13_decav_s14_5dv2.nc"
+                        },
+                    {"url": "http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/temperature/netcdf/decav/5deg/woa13_decav_s15_5dv2.nc"},
+                    {"url": "http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/temperature/netcdf/decav/5deg/woa13_decav_s16_5dv2.nc"}
+                    ]
+                }
+            }
+        }
+    }
+}

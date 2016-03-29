@@ -1,0 +1,19 @@
+{"ETOPO": {
+    "rel_path": "etopo",
+    "vars": {
+        "DEPTH": {
+            "default_resolution": "5min",
+            "5min": {
+                "default_tscale": "stationary",
+                "stationary": [
+                    {
+                        "filename": "etopo5.nc",
+                        "url": "http://oos.soest.hawaii.edu/thredds/ncss/etopo5?var=ROSE&disableLLSubset=on&disableProjSubset=on&horizStride=1&addLatLon=true",
+	                "md5": "b7ffbe0b132027a65eab2ad05e9a98f1"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

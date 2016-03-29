@@ -1,0 +1,32 @@
+{"CARS": {
+    "rel_path": "cars",
+    "vars": {
+        "TEMP": {
+            "default_resolution": "30min",
+            "30min": {
+                "default_tscale": "stationary",
+		"stationary": [
+                    {
+                        "filename": "temperature_cars2009a.nc",
+                        "url": "http://www.marine.csiro.au/atlas/export/temperature_cars2009a.nc.gz",
+                        "md5": "a310418e6c36751f2f9e9e641905d503"
+                        }
+                    ]
+                }
+            },
+        "PSAL": {
+            "default_resolution": "30min",
+            "30min": {
+                "default_tscale": "stationary",
+		"stationary": [
+                    {
+                        "filename": "salinity_cars2009a.nc",
+                        "url": "http://www.marine.csiro.au/atlas/export/salinity_cars2009a.nc.gz",
+                        "md5": "7f78173f4ef2c0a4ff9b5e52b62dc97d"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
