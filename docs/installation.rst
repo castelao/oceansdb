@@ -4,9 +4,9 @@ Installation
 
 At the command line::
 
-    $ easy_install pyWOA
+    $ easy_install oceansdb
 
 Or, if you have virtualenvwrapper installed::
 
-    $ mkvirtualenv pyWOA
-    $ pip install pyWOA
+    $ mkvirtualenv oceansdb
+    $ pip install oceansdb

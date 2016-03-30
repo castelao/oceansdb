@@ -1,6 +1,6 @@
-=====
-pyWOA
-=====
+========
+OceansDB
+========
 
 .. image:: https://zenodo.org/badge/4645/castelao/pyWOA.svg
    :target: https://zenodo.org/badge/latestdoi/4645/castelao/pyWOA
@@ -9,11 +9,11 @@ pyWOA
     :target: http://pywoa.readthedocs.org/en/latest/?badge=latest
          :alt: Documentation Status
 
-.. image:: https://img.shields.io/travis/castelao/pyWOA.svg
-        :target: https://travis-ci.org/castelao/pyWOA
+.. image:: https://img.shields.io/travis/castelao/oceansdb.svg
+        :target: https://travis-ci.org/castelao/oceansdb
 
-.. image:: https://img.shields.io/pypi/v/pyWOA.svg
-        :target: https://pypi.python.org/pypi/pyWOA
+.. image:: https://img.shields.io/pypi/v/oceansdb.svg
+        :target: https://pypi.python.org/pypi/oceansdb
 
 
 Package to subsample, or interpolate, World Ocean Atlas climatology to any coordinates.
@@ -21,7 +21,7 @@ Package to subsample, or interpolate, World Ocean Atlas climatology to any coord
 This package started with functions to obtain climatological values to compare with measured data, allowing a quality control check by comparison. It hence needed to work for any coordinates requested. I recently split these functionalities from CoTeDe into this standalone package to allow more people to use it for other purposes.
 
 * Free software: 3-clause BSD style license - see LICENSE.rst  
-* Documentation: https://pyWOA.readthedocs.org.
+* Documentation: https://oceansdb.readthedocs.org.
 
 Features
 --------
@@ -36,7 +36,7 @@ Quick howto use
 
 Inside python:
 
-    from pyWOA import WOA
+    from oceansdb import WOA
 
     db = WOA()
 

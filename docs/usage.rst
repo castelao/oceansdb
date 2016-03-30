@@ -2,9 +2,9 @@
 Usage
 ========
 
-To use pyWOA in a project::
+To use oceansdb in a project::
 
-    $ from pyWOA import WOA
+    $ from oceansdb import WOA
 
 Now create a World Ocean Atlas database object by::
 
