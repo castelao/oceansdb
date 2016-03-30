@@ -130,6 +130,7 @@ def dbsource(dbname, var, resolution=None, tscale=None):
     for src_cfg in pkg_resources.resource_listdir('oceansdb', cfg_dir):
         text = pkg_resources.resource_string(
                 'oceansdb', os.path.join(cfg_dir, src_cfg))
+        text = text.decode('UTF-8', 'replace')
         cfg = json.loads(text)
         for c in cfg:
             assert c not in db_cfg, "Trying to overwrite %s"
