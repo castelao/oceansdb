@@ -406,7 +406,7 @@ class WOA_var_nc(object):
 class WOA(object):
     """
     """
-    def __init__(self, dbname='WOA'):
+    def __init__(self, dbname='WOA13'):
         self.data = {}
         self.data['TEMP'] = WOA_var_nc(source=dbsource(dbname, 'TEMP'))
         self.data['PSAL'] = WOA_var_nc(source=dbsource(dbname, 'PSAL'))
