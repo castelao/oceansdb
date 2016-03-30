@@ -72,6 +72,10 @@ class ETOPO_var_nc(object):
     def keys(self):
         return ['elevation']
 
+    def __getitem__(self, item):
+        # elevation
+        return self.data[item]
+
     def load_dims(self):
         self.dims = {
                 'lat': self.ncs[0].variables['ETOPO05_Y'][:],
