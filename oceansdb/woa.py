@@ -16,12 +16,12 @@ try:
 except:
     print("netCDF4 is not available")
 
-try:
-    from pydap.client import open_url
-    import pydap.lib
-    pydap.lib.CACHE = expanduser('~/.cotederc/pydap_cache')
-except:
-    print("PyDAP is not available")
+# try:
+#    from pydap.client import open_url
+#    import pydap.lib
+#    pydap.lib.CACHE = expanduser('~/.cotederc/pydap_cache')
+# except:
+#    print("PyDAP is not available")
 
 from scipy.interpolate import interp1d
 # RectBivariateSpline
