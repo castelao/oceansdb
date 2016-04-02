@@ -23,7 +23,7 @@ with open('requirements.txt') as requirements_file:
 setup(
     name='oceansdb',
     version=version,
-    description="Package to subsample World Ocean Atlas climatology.",
+    description="Package to subsample ocean climatologies and reference data.",
     long_description=readme + '\n\n' + history,
     author="Guilherme Castelao",
     author_email='guilherme@castelao.net',
