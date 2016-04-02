@@ -20,10 +20,6 @@ with open('HISTORY.rst') as history_file:
 with open('requirements.txt') as requirements_file:
     requirements = requirements_file.read()
 
-with open('test-requirements.txt') as test_requirements_file:
-    test_requirements = test_requirements_file.read()
-
-
 setup(
     name='oceansdb',
     version=version,
