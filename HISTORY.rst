@@ -3,17 +3,22 @@
 History
 -------
 
-0.4.0 (2015-03-29)
+0.6.0 (2016-04-14)
+------------------
+
+* Adding CSIRO Atlas of Regional Seas (CARS), another climatology for temperature and salinity.
+
+0.4.0 (2016-03-29)
 ------------------
 
 * Added etopo5, a world wide bathymetry. Some of this code has its origins on pyAVISO and CoTeDe.
 
-0.2.0 (2015-03)
+0.2.0 (2016-03)
 ------------------
 
 * Renamed package to OceansDB, planning to include other climatologies and references.
 
-0.1.0 (2015-02-09)
+0.1.0 (2016-02-09)
 ------------------
 
 * Generalized interpolator. Extract climatology for point, profile or section.
