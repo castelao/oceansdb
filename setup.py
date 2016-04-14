@@ -30,8 +30,6 @@ setup(
     url='https://github.com/castelao/oceansdb',
     packages=[
         'oceansdb',
-        'oceansdb.woa',
-        'oceansdb.etopo',
     ],
     package_dir={'oceansdb':
                  'oceansdb'},
