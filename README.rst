@@ -48,3 +48,12 @@ To get one profile of salinity:
 
 To get a full depth section of temperature:
     t = db['TEMP'].extract(var='t_mn', doy=136.875, lat=17.5, lon=[-39, -37.5, -35])
+
+
+Or topography for one point:
+
+    import oceansdb
+
+    db = oceansdb.ETOPO()
+
+    h = db.extract(lat=17.5, lon=0)
