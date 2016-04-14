@@ -32,6 +32,7 @@ setup(
         'oceansdb',
         'oceansdb.woa',
         'oceansdb.etopo',
+        'oceansdb.cars',
     ],
     package_dir={'oceansdb':
                  'oceansdb'},
