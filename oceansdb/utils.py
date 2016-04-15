@@ -101,7 +101,7 @@ def download_file(cfg, md5hash, dbpath):
         # FIXME: The right place for this is when I'm reading from remote,
         #   so the checksum is already in the decompressed content.
         if '.gz' == urlparse(url).path[-3:]:
-            with open(fname, 'w') as fout:
+            with open(fname, 'wb') as fout:
                 fgz = gzip.open(f.name, 'rb')
                 fout.write(fgz.read())
 
