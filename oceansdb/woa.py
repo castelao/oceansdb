@@ -407,12 +407,14 @@ class WOA(object):
     """
     """
     def __init__(self, dbname='WOA13'):
-        self.data = {}
-        self.data['TEMP'] = WOA_var_nc(source=dbsource(dbname, 'TEMP'))
-        self.data['PSAL'] = WOA_var_nc(source=dbsource(dbname, 'PSAL'))
+        self.dbname = dbname
+        self.data = {'TEMP': None, 'PSAL': None}
 
     def keys(self):
         return self.data.keys()
 
     def __getitem__(self, item):
+        if self.data[item] is None:
+            self.data[item] = WOA_var_nc(source=dbsource(self.dbname, item))
+
         return self.data[item]
