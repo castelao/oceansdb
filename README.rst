@@ -2,8 +2,8 @@
 OceansDB
 ========
 
-.. image:: https://zenodo.org/badge/4645/castelao/pyWOA.svg
-   :target: https://zenodo.org/badge/latestdoi/4645/castelao/pyWOA
+.. image:: https://zenodo.org/badge/4645/castelao/oceansdb.svg
+   :target: https://zenodo.org/badge/latestdoi/4645/castelao/oceansdb
 
 .. image:: https://readthedocs.org/projects/pywoa/badge/?version=latest
     :target: http://pywoa.readthedocs.org/en/latest/?badge=latest
