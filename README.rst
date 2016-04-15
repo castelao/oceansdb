@@ -5,8 +5,8 @@ OceansDB
 .. image:: https://zenodo.org/badge/4645/castelao/oceansdb.svg
    :target: https://zenodo.org/badge/latestdoi/4645/castelao/oceansdb
 
-.. image:: https://readthedocs.org/projects/pywoa/badge/?version=latest
-    :target: http://pywoa.readthedocs.org/en/latest/?badge=latest
+.. image:: https://readthedocs.org/projects/oceansdb/badge/?version=latest
+    :target: http://oceansdb.readthedocs.org/en/latest/?badge=latest
          :alt: Documentation Status
 
 .. image:: https://img.shields.io/travis/castelao/oceansdb.svg
