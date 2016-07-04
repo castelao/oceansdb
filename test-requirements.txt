@@ -1,2 +1,4 @@
 wheel==0.23.0
 pytest
+tox
+sphinx
