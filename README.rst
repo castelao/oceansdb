@@ -16,44 +16,57 @@ OceansDB
         :target: https://pypi.python.org/pypi/oceansdb
 
 
-Package to subsample, or interpolate, World Ocean Atlas climatology to any coordinates.
+Package to subsample, or interpolate, climatologies like WOA to any coordinates.
 
-This package started with functions to obtain climatological values to compare with measured data, allowing a quality control check by comparison. It hence needed to work for any coordinates requested. I recently split these functionalities from CoTeDe into this standalone package to allow more people to use it for other purposes.
+This package started with functions to obtain climatological values to compare with measured data, allowing a quality control check by comparison. It hence needed to work for any coordinates requested. I split these functionalities from `CoTeDe <http://cotede.castelao.net>`_ into this standalone package to allow more people to use it for other purposes.
 
 * Free software: 3-clause BSD style license - see LICENSE.rst  
-* Documentation: https://oceansdb.readthedocs.org.
+* Documentation: https://oceansdb.readthedocs.io.
 
 Features
 --------
 
-* If the WOA database files are not localy available, download it.
+* If the database files are not localy available, automatically download it.
 * Extract, or interpolate if necessary, climatologic data on requested coordinates;
-* Can request a single point, a profile or a section;
-* Ready to handle -180 to 180 or 0 to 360 coordinate system;
+  * Can request a single point, a profile or a section;
+  * Ready to handle -180 to 180 or 0 to 360 coordinate system;
+* Ready to use with:
+  * World Ocean Atlas (WOA)
+  * CSIRO Atlas Regional Seas (CARS)
+  * ETOPO (topography)
 
 Quick howto use
 ---------------
 
 Inside python:
 
-    from oceansdb import WOA
+.. code-block:: python
 
-    db = WOA()
+    >>> import oceansdb
+    >>> db = oceansdb.WOA()
 
 To get temperature at one point:
-    t = db['TEMP'].extract(var='t_mn', doy=136.875, depth=0, lat=17.5, lon=-37.5)
+
+.. code-block:: python
+
+    >>> t = db['TEMP'].extract(var='mn', doy=136.875, depth=0, lat=17.5, lon=-37.5)
 
 To get one profile of salinity:
-    t = db['PSAL'].extract(var='t_mn', doy=136.875, depth=[0, 10, 15, 18], lat=17.5, lon=-37.5)
+
+.. code-block:: python
+
+    >>> t = db['PSAL'].extract(var='mn', doy=136.875, depth=[0, 10, 15, 18], lat=17.5, lon=-37.5)
 
 To get a full depth section of temperature:
-    t = db['TEMP'].extract(var='t_mn', doy=136.875, lat=17.5, lon=[-39, -37.5, -35])
+
+.. code-block:: python
+
+    >>> t = db['TEMP'].extract(var='mn', doy=136.875, lat=17.5, lon=[-39, -37.5, -35])
 
 
-Or topography for one point:
+Or to get topography for one point:
 
-    import oceansdb
+.. code-block:: python
 
-    db = oceansdb.ETOPO()
-
-    h = db.extract(lat=17.5, lon=0)
+    >>> db = oceansdb.ETOPO()
+    >>> h = db.extract(lat=17.5, lon=0)
