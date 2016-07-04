@@ -26,14 +26,21 @@ This package started with functions to obtain climatological values to compare w
 Features
 --------
 
-* If the database files are not localy available, automatically download it.
-* Extract, or interpolate if necessary, climatologic data on requested coordinates;
-  * Can request a single point, a profile or a section;
-  * Ready to handle -180 to 180 or 0 to 360 coordinate system;
-* Ready to use with:
-  * World Ocean Atlas (WOA)
-  * CSIRO Atlas Regional Seas (CARS)
-  * ETOPO (topography)
+- If the database files are not localy available, automatically download it.
+
+- Extract, or interpolate if necessary, climatologic data on requested coordinates;
+
+  - Can request a single point, a profile or a section;
+
+  - Ready to handle -180 to 180 or 0 to 360 coordinate system;
+
+- Ready to use with:
+
+  - World Ocean Atlas (WOA)
+
+  - CSIRO Atlas Regional Seas (CARS)
+
+  - ETOPO (topography)
 
 Quick howto use
 ---------------
