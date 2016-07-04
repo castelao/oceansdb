@@ -30,8 +30,10 @@ The WOA climatologic temperature will be available as t['t_mn'].
 
     >>> t.keys()
     ['t_mn']
+
     >>> t['t_mn'].shape
     (1,)
+
     >>> t['t_mn']
     masked_array(data = [ 24.60449791],
                  mask = False,
@@ -42,6 +44,7 @@ If you prefer you can obtain all available variables by not defining var, like:
 .. code-block:: python
 
     >>> t = db['PSAL'].extract(doy=136.875, depth=[0, 10, 15, 18], lat=17.5, lon=-37.5)
+
     >>> t.keys()
     ['s_dd', 's_sd', 's_se', 's_mn']
 
@@ -62,5 +65,6 @@ To get a regular 3D grid:
 .. code-block:: python
 
     >>> t = db['TEMP'].extract(var='t_mn', depth=[0, 10.23], doy=136.875, lat=[15, 17.5, 23], lon=[-39, -37.5, -35, -32.73])
+
     >>> t['t_mn'].shape
     (2, 3, 4)
