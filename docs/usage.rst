@@ -68,3 +68,61 @@ To get a regular 3D grid:
 
     >>> t['t_mn'].shape
     (2, 3, 4)
+
+To use bathymetry let's first load ETOPO
+
+.. code-block:: python
+
+    >>> db = oceansdb.ETOPO()
+
+Let's check the variables available in ETOPO
+
+.. code-block:: python 
+
+    >>> db.keys()
+    [elevation]
+
+To get topography for one point:
+
+.. code-block:: python
+
+    >>> db.extract(lat = 15, lon = 38 )
+    {'elevation': masked_array(data = [ 1372.],
+              mask = False,
+        fill_value = 1e+20)}
+
+To get topography along a latitude:
+
+.. code-block:: python
+
+    >>> db.extract(lat=15, lon=[25, 30, 38, 40, 45])
+    {'elevation': masked_array(data = [1067.0 503.0500183105469 1372.0 152.0 1342.6754150390625],
+              mask = [False False False False False],
+        fill_value = 1e+20)}
+
+To get topography along a longitude:
+
+.. code-block:: python
+
+   >>> db.extract(lat=[10, 15, 20, 25], lon=38)
+   {'elevation': masked_array(data = [1904.0328369140625 1372.0 -733.8268432617188 914.0],
+              mask = [False False False False],
+        fill_value = 1e+20)}
+
+To get topography along a area:
+
+.. code-block:: python
+
+   >>> db.extract(lat=[10, 15, 20, 25], lon=[30, 38, 40])
+   {'elevation': masked_array(data =
+   [[366.0 1904.0328369140625 1083.2891845703125]
+   [503.0500183105469 1372.0 152.0]
+   [305.0 -733.8268432617188 -254.84463500976562]
+   [213.0 914.0 899.0667114257812]],
+               mask =
+   [[False False False]
+   [False False False]
+   [False False False]
+   [False False False]],
+         fill_value = 1e+20)}
+
