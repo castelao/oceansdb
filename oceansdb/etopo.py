@@ -91,10 +91,11 @@ class ETOPO_var_nc(object):
         dims['lat'] = np.atleast_1d(self.dims['lat'][yn])
 
         lon_ext = np.array(
+                (self.dims['lon'] - 2*360).tolist() +
                 (self.dims['lon'] - 360).tolist() +
-                        self.dims['lon'].tolist() +
-                        (self.dims['lon']+360).tolist())
-        xn_ext = np.array(3 * list(range(self.dims['lon'].shape[0])))
+                self.dims['lon'].tolist() +
+                (self.dims['lon'] + 360).tolist())
+        xn_ext = np.array(4 * list(range(self.dims['lon'].shape[0])))
         xn_start = np.nonzero(lon_ext <= lon.min())[0].max()
         xn_end = np.nonzero(lon_ext >= lon.max())[0].min()
         xn = xn_ext[xn_start:xn_end+1]
