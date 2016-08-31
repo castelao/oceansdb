@@ -80,7 +80,7 @@ Let's check the variables available in ETOPO
 .. code-block:: python 
 
     >>> db.keys()
-    [elevation]
+    ['elevation']
 
 To get topography for one point:
 
