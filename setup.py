@@ -28,16 +28,14 @@ setup(
     author="Guilherme Castelao",
     author_email='guilherme@castelao.net',
     url='https://github.com/castelao/oceansdb',
-    packages=[
-        'oceansdb',
-    ],
-    package_dir={'oceansdb':
-                 'oceansdb'},
+    packages=['oceansdb'],
+    package_dir={'oceansdb': 'oceansdb'},
     include_package_data=True,
     install_requires=requirements,
     license='3-clause BSD',
     zip_safe=False,
-    keywords='WOA World Ocean Atlas climatology oceanographic data oceanography ETOPO temperature salinity bathymetry',
+    keywords='WOA World Ocean Atlas climatology oceanographic data' +
+             ' oceanography ETOPO temperature salinity bathymetry',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Science/Research',
