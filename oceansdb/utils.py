@@ -73,7 +73,7 @@ def dbsource(dbname, var, resolution=None, tscale=None):
         if 'filename' in cfg:
             datafiles.append(os.path.join(dbpath, cfg['filename']))
         else:
-            datafiles.append(os.path.join(dbpath,
-                os.path.basename(urlparse(cfg['url']).path)))
+            datafiles.append(os.path.join(
+                dbpath, os.path.basename(urlparse(cfg['url']).path)))
 
     return datafiles
