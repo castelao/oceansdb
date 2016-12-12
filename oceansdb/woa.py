@@ -157,7 +157,6 @@ class WOA_var_nc(object):
     standard deviation for the given time, lat, lon, depth.
     """
     def __init__(self, source):
-        import netCDF4
 
         self.ncs = []
         for s in source:
