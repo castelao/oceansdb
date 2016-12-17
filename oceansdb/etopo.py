@@ -213,14 +213,15 @@ class ETOPO(ETOPO_var_nc):
     """
     """
     def __init__(self, dbname='ETOPO'):
-        super(ETOPO, self).__init__(source=dbsource(dbname, 'DEPTH'))
-        #self.data = {}
-        #self.data['DEPTH'] = ETOPO_var_nc(source=dbsource(dbname, 'DEPTH'))
-        #self.data = ETOPO_var_nc(source=dbsource(dbname, 'DEPTH'))
-        #self.data['DEPTH'] = ETOPO_var_nc(source='/Users/castelao/.oceansdbrc/etopo/etopo5.nc')
+        #super(ETOPO, self).__init__(source=dbsource(dbname, 'elevation'))
+        self.dbname = dbname
+        self.data = {'elevation': None}
 
-#    def keys(self):
-#        return self.data.keys()
-#
-#    def __getitem__(self, item):
-#        return self.data[item]
+    def keys(self):
+        return self.data.keys()
+
+    def __getitem__(self, item):
+        if self.data[item] is None:
+            self.data[item] = ETOPO_var_nc(source=dbsource(self.dbname, item))
+
+        return self.data[item]
