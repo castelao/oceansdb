@@ -78,8 +78,8 @@ class ETOPO_var_nc(object):
 
     def load_dims(self):
         self.dims = {
-                'lat': self.ncs[0].variables['ETOPO05_Y'][:],
-                'lon': self.ncs[0].variables['ETOPO05_X'][:],
+                'lat': self.ncs[0].variables['lat'][:],
+                'lon': self.ncs[0].variables['lon'][:],
                 }
 
     def subset(self, lat, lon, var):    
@@ -110,7 +110,7 @@ class ETOPO_var_nc(object):
         #for v, vin in zip(var, varin):
         #    subset[v] = ma.asanyarray(
         #            [self.ncs[0][vin][yn, xn]])
-        subset = {'elevation': self.ncs[0].variables['ROSE'][yn, xn]}
+        subset = {'elevation': self.ncs[0].variables['z'][yn, xn]}
 
         return subset, dims
 
