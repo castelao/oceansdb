@@ -1,4 +1,4 @@
-wheel==0.23.0
-pytest==2.9.2
-tox==2.3.1
-sphinx==1.4.4
+wheel==0.29.0
+pytest==3.0.5
+tox==2.5.0
+sphinx==1.5.1
