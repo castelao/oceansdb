@@ -3,10 +3,7 @@
 # Licensed under a 3-clause BSD style license - see LICENSE.rst
 
 
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
+from setuptools import setup
 
 with open('VERSION') as version_file:
     version = version_file.read().rstrip('\n')
