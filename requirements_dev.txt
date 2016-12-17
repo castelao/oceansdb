@@ -1,5 +1,5 @@
 wheel==0.29.0
-pytest==3.0.5
+pytest>=3.0.5
 tox==2.5.0
 sphinx==1.5.1
 twine==1.8.1
