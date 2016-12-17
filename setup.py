@@ -6,9 +6,6 @@
 from setuptools import setup
 from codecs import open
 
-with open('VERSION', encoding='utf-8') as f:
-    version = f.read().rstrip('\n')
-
 with open('README.rst', encoding='utf-8') as f:
     readme = f.read()
 
@@ -20,7 +17,7 @@ with open('requirements.txt', encoding='utf-8') as f:
 
 setup(
     name='oceansdb',
-    version=version,
+    version=0.6.1,
     description="Package to subsample ocean climatologies and reference data.",
     long_description=readme + '\n\n' + history,
     author="Guilherme Castelao",
