@@ -26,7 +26,7 @@ before_script:
   # Download the required climatology files.
   - python -c "import oceansdb; oceansdb.WOA()['TEMP']"
   - python -c "import oceansdb; oceansdb.CARS()['TEMP']"
-  - python -c "import oceansdb; oceansdb.ETOPO()"
+  - python -c "import oceansdb; oceansdb.ETOPO()['elevation']"
 
 script:
   - py.test --cov --cov-report=term-missing -vv
