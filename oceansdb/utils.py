@@ -67,8 +67,7 @@ def dbsource(dbname, var, resolution=None, tscale=None):
         tscale = cfg['vars'][var][resolution]["default_tscale"]
 
     for cfg in cfg['vars'][var][resolution][tscale]:
-        # download_file(cfg['url'], cfg['md5'], dbpath)
-        download_file(outputdir=dbpath, url=cfg['url'])
+        download_file(outputdir=dbpath, **cfg)
 
         if 'filename' in cfg:
             datafiles.append(os.path.join(dbpath, cfg['filename']))
