@@ -4,7 +4,7 @@ import numpy as np
 from numpy import ma
 from scipy.interpolate import griddata
 
-from oceansdb.utils import dbsource
+from .utils import dbsource
 
 def get_depth(lat, lon, cfg):
     """
