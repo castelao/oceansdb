@@ -1,6 +1,6 @@
 name: oceansdb
 dependencies:
-- netcdf4=1.2.2=np111py27_0
+- netcdf4=1.2.4=np111py27_0
 - numpy=1.11.0=py27_0
 - pip=8.1.1=py27_1
 - py=1.4.31=py27_0
