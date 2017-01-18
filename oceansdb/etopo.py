@@ -77,10 +77,12 @@ class ETOPO_var_nc(object):
         return self.data[item]
 
     def load_dims(self):
-        self.dims = {
-                'lat': self.ncs[0].variables['lat'][:],
-                'lon': self.ncs[0].variables['lon'][:],
-                }
+        dims = ['lat', 'lon']
+        self.dims = {}
+        for d in dims:
+            self.dims[d] = self.ncs[0].variables[d][:]
+            for nc in self.ncs[1:]:
+                assert (self.dims[d] == nc.variables[d][:]).all()
 
     def subset(self, lat, lon, var):    
         dims = {}
