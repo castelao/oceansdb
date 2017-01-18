@@ -6,6 +6,11 @@ from scipy.interpolate import griddata
 
 from .utils import dbsource
 
+try:
+    import netCDF4
+except:
+    print("netCDF4 is not available")
+
 def get_depth(lat, lon, cfg):
     """
 
@@ -61,8 +66,6 @@ class ETOPO_var_nc(object):
     """
     """
     def __init__(self, source):
-        import netCDF4
-
         self.ncs = []
         for s in source:
             self.ncs.append(netCDF4.Dataset(s, 'r'))
