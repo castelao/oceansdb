@@ -129,15 +129,15 @@ class CARS_var_nc(object):
         for s in source:
             self.ncs.append(netCDF4.Dataset(s, 'r'))
 
-        self.load_dims()
+        self.load_dims(dims=['lat', 'lon', 'depth'])
         self.set_keys()
 
     def keys(self):
         return self.KEYS
 
-    def load_dims(self):
+    def load_dims(self, dims):
         self.dims = {}
-        for d in ['lat', 'lon', 'depth']:
+        for d in dims:
             self.dims[d] = self.ncs[0].variables[d][:]
             for nc in self.ncs[1:]:
                 assert (self.dims[d] == nc.variables[d][:]).all()
