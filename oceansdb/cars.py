@@ -118,6 +118,43 @@ def cars_profile(filename, doy, latitude, longitude, depth):
     return output
 
 
+class cars_data(object):
+    """ Returns temperature/salinity from a CARS' file
+
+        CARS climatology decompose temperature and salinity in annual
+          and semi-annual harmonics. This class combines those harmonics
+          on the fly, for the requested indices.
+
+          data = cars_data('cars_file.nc')
+          data[305, 0:10, :, :]
+    """
+    def __init__(self, carsfile):
+        self.nc = netCDF4.Dataset(carsfile, 'r')
+
+    def __getitem__(self, item):
+        """ t, z, y, x
+        """
+        tn, zn, yn, xn = item
+
+        #if type(zn) is not slice:
+        #    zn = slice(zn, zn+1)
+        #zn_an = slice(zn.start, min(64, zn.stop), zn.step)
+        #zn_sa = slice(zn.start, min(55, zn.stop), zn.step)
+
+        output = []
+        d = 2 * np.pi * (np.arange(1, 367)[tn])/366
+        for t in np.atleast_1d(d):
+            tmp = self.nc['mean'][:, yn, xn]
+
+            tmp[:64] += self.nc['an_cos'][:, yn, xn] * np.cos(t) + \
+                    self.nc['an_sin'][:, yn, xn] * np.sin(t)
+            tmp[:55] += self.nc['sa_cos'][:, yn, xn] * np.cos(2*t) + \
+                    self.nc['sa_sin'][:, yn, xn] * np.sin(2*t)
+            output.append(tmp[zn])
+
+        return ma.asanyarray(output)
+
+
 class CARS_var_nc(object):
     """
     Reads the CARS Climatology NetCDF file and
