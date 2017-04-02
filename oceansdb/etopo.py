@@ -67,21 +67,25 @@ class ETOPO_var_nc(object):
             self.ncs.append(netCDF4.Dataset(s, 'r'))
 
         self.load_dims(dims=['lat', 'lon'])
-
-    def keys(self):
-        return ['elevation']
+        self.set_keys()
 
     def __getitem__(self, item):
         # elevation
         return self.data[item]
 
-    def load_dims(self):
-        dims = ['lat', 'lon']
+    def keys(self):
+        return self.KEYS
+
+    def load_dims(self, dims):
         self.dims = {}
         for d in dims:
             self.dims[d] = self.ncs[0].variables[d][:]
             for nc in self.ncs[1:]:
                 assert (self.dims[d] == nc.variables[d][:]).all()
+
+    def set_keys(self):
+        self.KEYS = ['elevation']
+
 
     def subset(self, lat, lon, var):    
         dims = {}
