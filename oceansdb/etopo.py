@@ -2,14 +2,10 @@
 
 import numpy as np
 from numpy import ma
-from scipy.interpolate import griddata
+import netCDF4
 
 from .utils import dbsource
 
-try:
-    import netCDF4
-except:
-    print("netCDF4 is not available")
 
 def get_depth(lat, lon, cfg):
     """
