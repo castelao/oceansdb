@@ -222,24 +222,24 @@ class WOA_var_nc(object):
                         for tnn in idx['tn']])
         return subset, dims
 
-    def closest(self, doy, depth, lat, lon, var):
-        tn = (np.abs(doy - self.dims['time'][:])).argmin()
-        zn = [(np.abs(z - self.dims['depth'][:])).argmin() for z in depth]
-        yn = (np.abs(lat - self.dims['lat'][:])).argmin()
-        # FIXME
-        xn = (np.abs(lon - self.dims['lon'][:])).argmin()
-
-        subset = {}
+    def nearest(self, doy, depth, lat, lon, var):
+        output = {}
+        dims, idx = cropIndices(self.dims, lat, lon, depth, doy)
         for v in var:
-            if v in self.KEYS:
-                subset[v] = self.ncs[tn][v][0, zn, yn, xn]
-            else:
-                # FIXME: Ugly temporary solution
-                tmp = [vv for vv in self.KEYS if vv[2:] == v]
-                assert len(tmp) == 1
-                subset[v] = self.ncs[tn][tmp[0]][0, zn, yn, xn]
-
-        return subset
+            output[v] = ma.masked_all((doy.size, depth.size, lat.size,
+                lon.size), dtype='f')
+            for tn_out, t in enumerate(doy):
+                tn_in = np.absolute(dims['time']-t).argmin()
+                subset = self.ncs[tn_in][v][0, idx['zn'], idx['yn'], idx['xn']]
+                for yn_out, y in enumerate(lat):
+                    yn_in = np.absolute(dims['lat']-y).argmin()
+                    for xn_out, x in enumerate(lon):
+                        xn_in = np.absolute(dims['lon']-x).argmin()
+                        for zn_out, z in enumerate(depth):
+                            zn_in = np.absolute(dims['depth']-z).argmin()
+                            output[v][tn_out, zn_out, yn_out, xn_out] = \
+                                    subset[zn_in, yn_in, xn_in]
+        return output
 
     def subset(self, doy, depth, lat, lon, var):
         """ Subset the necessary data to interpolate in the right position
@@ -413,7 +413,7 @@ class WOA_var_nc(object):
 
         try:
             if mode == 'nearest':
-                output = self.closest(doy, depth, lat, lon, var)
+                output = self.nearest(doy, depth, lat, lon, var)
             else:
                 output = self.interpolate(doy, depth, lat, lon, var)
                 for v in output:

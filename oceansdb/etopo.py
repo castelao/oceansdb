@@ -110,6 +110,21 @@ class ETOPO_var_nc(object):
             subset = {v: self.ncs[0].variables[v][idx['yn'], idx['xn']]}
         return subset, dims
 
+    def nearest(self, lat, lon, var):
+        output = {}
+        dims, idx = cropIndices(self.dims, lat, lon)
+        for v in var:
+            if v == 'elevation':
+                v = 'z'
+            subset = self.ncs[0].variables[v][idx['yn'], idx['xn']]
+            output[v] = ma.masked_all((lat.size, lon.size), dtype='f')
+            for yn_out, y in enumerate(lat):
+                yn_in = np.absolute(dims['lat']-y).argmin()
+                for xn_out, x in enumerate(lon):
+                    xn_in = np.absolute(dims['lon']-x).argmin()
+                    output[v][yn_out, xn_out] = subset[yn_in, xn_in]
+        return output
+
     def subset(self, lat, lon, var):    
         dims = {}
 
@@ -225,7 +240,7 @@ class ETOPO_var_nc(object):
 
         try:
             if mode == 'nearest':
-                output = self.closest(lat, lon, var)
+                output = self.nearest(lat, lon, var)
             else:
                 output = self.interpolate(lat, lon, var)
                 for v in output:
