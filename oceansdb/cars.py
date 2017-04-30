@@ -231,7 +231,7 @@ class CARS_var_nc(object):
         dims, idx = cropIndices(self.dims, lat, lon, depth)
 
         dims['time'] = np.atleast_1d(doy)
-        idx['tn'] = range(len(doy))
+        idx['tn'] = np.arange(dims['time'].size)
 
         # Temporary solution. Create an object for CARS dataset
         xn = idx['xn']
