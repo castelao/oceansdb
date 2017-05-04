@@ -85,13 +85,19 @@ def dbsource(dbname, var, resolution=None, tscale=None):
     if (tscale is None):
         tscale = cfg['vars'][var][resolution]["default_tscale"]
 
-    for cfg in cfg['vars'][var][resolution][tscale]:
-        download_file(outputdir=dbpath, **cfg)
+    for c in cfg['vars'][var][resolution][tscale]:
+        download_file(outputdir=dbpath, **c)
 
-        if 'filename' in cfg:
-            datafiles.append(os.path.join(dbpath, cfg['filename']))
+        if 'filename' in c:
+            filename = os.path.join(dbpath, c['filename'])
         else:
-            datafiles.append(os.path.join(
-                dbpath, os.path.basename(urlparse(cfg['url']).path)))
+            filename = os.path.join(dbpath,
+                    os.path.basename(urlparse(c['url']).path))
+
+    if 'varnames' in cfg['vars'][var][resolution]:
+        datafiles.append(Dataset_flex(filename,
+            aliases=cfg['vars'][var][resolution]['varnames']))
+    else:
+        datafiles.append(Dataset_flex(filename))
 
     return datafiles
