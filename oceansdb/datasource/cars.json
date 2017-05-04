@@ -5,6 +5,14 @@
             "default_resolution": "30min",
             "30min": {
                 "default_tscale": "stationary",
+                "varnames": {
+                    "latitude": "lat",
+                    "longitude": "lon",
+                    "standard_deviation": "std_dev",
+                    "number_of_observations": "nq",
+                    "t_sd": "std_dev",
+                    "t_dd": "nq"
+                    },
 		"stationary": [
                     {
                         "filename": "temperature_cars2009a.nc",
@@ -18,6 +26,14 @@
             "default_resolution": "30min",
             "30min": {
                 "default_tscale": "stationary",
+                "varnames": {
+                    "latitude": "lat",
+                    "longitude": "lon",
+                    "standard_deviation": "std_dev",
+                    "number_of_observations": "nq",
+                    "s_sd": "std_dev",
+                    "s_dd": "nq"
+                    },
 		"stationary": [
                     {
                         "filename": "salinity_cars2009a.nc",
