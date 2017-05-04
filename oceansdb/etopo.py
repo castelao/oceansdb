@@ -121,44 +121,12 @@ class ETOPO_var_nc(object):
                     output[v][yn_out, xn_out] = subset[yn_in, xn_in]
         return output
 
-    def subset(self, lat, lon, var):    
-        dims = {}
-
-        yn = slice(
-                np.nonzero(self.dims['lat'] <= lat.min())[0].max(),
-                np.nonzero(self.dims['lat'] >= lat.max())[0].min() + 1)
-        dims['lat'] = np.atleast_1d(self.dims['lat'][yn])
-
-        lon_ext = np.array(
-                (self.dims['lon'] - 2*360).tolist() +
-                (self.dims['lon'] - 360).tolist() +
-                self.dims['lon'].tolist() +
-                (self.dims['lon'] + 360).tolist())
-        xn_ext = np.array(4 * list(range(self.dims['lon'].shape[0])))
-        xn_start = np.nonzero(lon_ext <= lon.min())[0].max()
-        xn_end = np.nonzero(lon_ext >= lon.max())[0].min()
-        xn = xn_ext[xn_start:xn_end+1]
-        dims['lon'] = np.atleast_1d(lon_ext[xn_start:xn_end+1])
-
-        #varin = []
-        #for v in var:
-        #    if v in self.keys():
-        #        varin.append(v)
-
-        subset = {}
-        #for v, vin in zip(var, varin):
-        #    subset[v] = ma.asanyarray(
-        #            [self.ncs[0][vin][yn, xn]])
-        subset = {'elevation': self.ncs[0].variables['z'][yn, xn]}
-
-        return subset, dims
-
     def interpolate(self, lat, lon, var):
         """ Interpolate each var on the coordinates requested
 
         """
 
-        subset, dims = self.subset(lat, lon, var)
+        subset, dims = self.crop(lat, lon, var)
 
         if np.all([y in dims['lat'] for y in lat]) & \
                 np.all([x in dims['lon'] for x in lon]):

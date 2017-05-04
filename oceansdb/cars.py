@@ -275,109 +275,12 @@ class CARS_var_nc(object):
                                     subset[v][0,zn_in, yn_in, xn_in]
         return output
 
-    def subset(self, doy, depth, lat, lon, var):
-        """ Subset the necessary data to interpolate in the right position
-
-            Special cases that should be handled here:
-                0 to 360 versus -180 to 180
-                position near grenwich, or international date line
-
-        """
-        dims = {}
-
-        zn = slice(
-                np.nonzero(self.dims['depth'] <= depth.min())[0].max(),
-                np.nonzero(
-                    self.dims['depth'] >=
-                            min(self.dims['depth'].max(), depth.max())
-                            )[0].min() + 1
-                )
-        # If a higher degree interpolation system uses more than one data
-        #   point in the edge, I should extend this selection one point on
-        #   each side, without go beyond 0
-        # if zn.start < 0:
-        #    zn = slice(0, zn.stop, zn.step)
-        dims['depth'] = np.atleast_1d(self.dims['depth'][zn])
-
-        yn = slice(
-                np.nonzero(self.dims['lat'] <= lat.min())[0].max(),
-                np.nonzero(self.dims['lat'] >= lat.max())[0].min() + 1)
-        dims['lat'] = np.atleast_1d(self.dims['lat'][yn])
-
-        lon_ext = np.array(
-                (self.dims['lon'] - 360).tolist() +
-                        self.dims['lon'].tolist() +
-                        (self.dims['lon']+360).tolist())
-        xn_ext = np.array(3 * list(range(self.dims['lon'].shape[0])))
-        xn_start = np.nonzero(lon_ext <= lon.min())[0].max()
-        xn_end = np.nonzero(lon_ext >= lon.max())[0].min()
-        xn = xn_ext[xn_start:xn_end+1]
-        dims['lon'] = np.atleast_1d(lon_ext[xn_start:xn_end+1])
-
-        #if self.dims['time'].shape == (1,):
-        #    tn = 0
-        #    dims['time'] = self.dims['time']
-        #else:
-        #    time_ext = np.array(
-        #            [self.dims['time'][-1] - 365.25] +
-        #                    self.dims['time'].tolist() +
-        #                    [self.dims['time'][0] + 365.25])
-        #    tn_ext = list(range(self.dims['time'].size))
-        #    tn_ext = [tn_ext[-1]] + tn_ext + [tn_ext[0]]
-        #    tn_start = np.nonzero(time_ext <= doy.min())[0].max()
-        #    tn_end = np.nonzero(time_ext >= doy.max())[0].min()
-        #    tn = tn_ext[tn_start:tn_end+1]
-        #    dims['time'] = np.atleast_1d(time_ext[tn_start:tn_end+1])
-        dims['time'] = np.atleast_1d(doy)
-
-        # messy way to accept t_mn or mn
-        varin = []
-        #for v in var:
-        #    if v in self.KEYS:
-        #        varin.append(v)
-        #    elif self.KEYS[0][:2] + v in self.KEYS:
-        #        varin.append(self.KEYS[0][:2] + v)
-        import re
-        #for v in var:
-        #    if re.search('(?:[t,s]_)?mn', v):
-        #        varin.append('mn')
-        #    elif re.search('(?:[t,s]_)?sd', v):
-        #        varin.append('sd')
-        #    elif re.search('(?:[t,s]_)?dd', v):
-        #        varin.append('sd')
-
-        subset = {}
-        #for v, vin in zip(var, varin):
-        #    subset[v] = ma.asanyarray(
-        #            [self.ncs[tnn][vin][0, zn, yn, xn] for tnn in tn])
-
-        for v in var:
-            if v == 'mn':
-                mn = []
-                for d in doy:
-                    t = 2 * np.pi * d/366
-                    # Naive solution
-                    # FIXME: This is not an efficient solution.
-                    value = self.ncs[0]['mean'][:, yn, xn]
-                    value[:64] += self.ncs[0]['an_cos'][:, yn, xn] * np.cos(t) + \
-                        self.ncs[0]['an_sin'][:, yn, xn] * np.sin(t)
-                    value[:55] += self.ncs[0]['sa_cos'][:, yn, xn] * np.cos(2*t) + \
-                        self.ncs[0]['sa_sin'][:, yn, xn] * np.sin(2*t)
-                    mn.append(value[zn])
-
-                subset['mn'] = ma.asanyarray(mn)
-            else:
-                subset[v] = ma.asanyarray(
-                        doy.size * [self[v][zn, yn, xn]])
-
-        return subset, dims
-
     def interpolate(self, doy, depth, lat, lon, var):
         """ Interpolate each var on the coordinates requested
 
         """
 
-        subset, dims = self.subset(doy, depth, lat, lon, var)
+        subset, dims = self.crop(doy, depth, lat, lon, var)
 
         if np.all([d in dims['time'] for d in doy]) & \
                 np.all([z in dims['depth'] for z in depth]) & \
