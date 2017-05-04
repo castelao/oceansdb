@@ -132,7 +132,7 @@ class cars_data(object):
           data[305, 0:10, :, :]
     """
     def __init__(self, carsfile):
-        self.nc = netCDF4.Dataset(carsfile, 'r')
+        self.nc = carsfile
 
     def __getitem__(self, item):
         """ t, z, y, x
@@ -165,9 +165,7 @@ class CARS_var_nc(object):
     standard deviation for the given time, lat, lon, depth.
     """
     def __init__(self, source):
-        self.ncs = []
-        for s in source:
-            self.ncs.append(netCDF4.Dataset(s, 'r'))
+        self.ncs = source
 
         self.load_dims(dims=['lat', 'lon', 'depth'])
         self.set_keys()

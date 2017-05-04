@@ -63,9 +63,7 @@ class ETOPO_var_nc(object):
     """
     """
     def __init__(self, source):
-        self.ncs = []
-        for s in source:
-            self.ncs.append(netCDF4.Dataset(s, 'r'))
+        self.ncs = source
 
         self.load_dims(dims=['lat', 'lon'])
         self.set_keys()
