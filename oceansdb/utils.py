@@ -9,6 +9,8 @@ import sys
 import pkg_resources
 import json
 
+from netCDF4 import Dataset
+
 from supportdata import download_file
 
 if sys.version_info >= (3, 0):
@@ -37,6 +39,23 @@ http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/temperature/netcdf
 http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/temperature/netcdf/decav/0.25/woa13_decav_t01_04v2.nc
 
 """
+
+
+class Dataset_flex(object):
+    def __init__(self, filename, **kwargs):
+        self.ds = Dataset(filename, mode='r')
+        if 'aliases' in kwargs:
+            self.aliases = kwargs['aliases']
+        else:
+            self.aliases = {}
+    def __getitem__(self, item):
+        try:
+            return self.ds.variables[self.aliases[item]]
+        except:
+            return self.ds.variables[item]
+    @property
+    def variables(self):
+        return self.ds.variables
 
 
 def dbsource(dbname, var, resolution=None, tscale=None):
