@@ -496,7 +496,8 @@ class CARS(object):
     """
     def __init__(self, dbname='CARS'):
         self.dbname = dbname
-        self.data = {'TEMP': None, 'PSAL': None}
+        self.data = {'sea_water_temperature': None,
+                'sea_water_salinity': None}
 
     def keys(self):
         return self.data.keys()

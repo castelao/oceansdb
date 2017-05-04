@@ -83,7 +83,7 @@ class ETOPO_var_nc(object):
                 assert (self.dims[d] == nc.variables[d][:]).all()
 
     def set_keys(self):
-        self.KEYS = ['elevation']
+        self.KEYS = ['height']
 
     def crop(self, lat, lon, var):
         """ Crop a subset of the dataset for each var
@@ -103,16 +103,14 @@ class ETOPO_var_nc(object):
         dims, idx = cropIndices(self.dims, lat, lon)
         subset = {}
         for v in var:
-            if v == 'elevation':
-                v = 'z'
-            subset = {v: self.ncs[0].variables[v][idx['yn'], idx['xn']]}
+            subset = {v: self.ncs[0][v][idx['yn'], idx['xn']]}
         return subset, dims
 
     def nearest(self, lat, lon, var):
         output = {}
         dims, idx = cropIndices(self.dims, lat, lon)
         for v in var:
-            if v == 'elevation':
+            if v == 'height':
                 v = 'z'
             subset = self.ncs[0].variables[v][idx['yn'], idx['xn']]
             output[v] = ma.masked_all((lat.size, lon.size), dtype='f')
@@ -256,7 +254,7 @@ class ETOPO(ETOPO_var_nc):
     def __init__(self, dbname='ETOPO'):
         #super(ETOPO, self).__init__(source=dbsource(dbname, 'elevation'))
         self.dbname = dbname
-        self.data = {'elevation': None}
+        self.data = {'height': None}
 
     def keys(self):
         return self.data.keys()

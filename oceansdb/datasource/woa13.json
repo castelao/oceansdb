@@ -1,7 +1,7 @@
 {"WOA13": {
     "rel_path": "woa",
     "vars": {
-        "TEMP": {
+        "sea_water_temperature": {
             "default_resolution": "5deg",		
             "5deg": {
                 "default_tscale": "seasonal",
@@ -17,7 +17,7 @@
                     ]
                 }
             },
-        "PSAL": {
+        "sea_water_salinity": {
             "default_resolution": "5deg",		
             "5deg": {
                 "default_tscale": "seasonal",

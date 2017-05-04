@@ -20,7 +20,7 @@ def test_import():
 def test_available_vars():
     db = ETOPO()
     
-    for v in ['elevation']:
+    for v in ['height']:
         assert v in db.keys()
 
 

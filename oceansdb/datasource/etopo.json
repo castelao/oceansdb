@@ -1,10 +1,15 @@
 {"ETOPO": {
     "rel_path": "etopo",
     "vars": {
-        "elevation": {
+        "height": {
             "default_resolution": "1min",
             "5min": {
                 "default_tscale": "stationary",
+		"varnames": {
+                    "latitude": "lat",
+                    "longitude": "lon",
+                    "height": "z"
+                    },
                 "stationary": [
                     {
                         "filename": "etopo5.nc",
@@ -14,6 +19,11 @@
                 },
             "1min": {
                 "default_tscale": "stationary",
+                "varnames": {
+                    "latitude": "lat",
+                    "longitude": "lon",
+                    "height": "z"
+                    },
                 "stationary": [
                     {
                         "filename": "etopo1.nc",

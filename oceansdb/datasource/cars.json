@@ -1,7 +1,7 @@
 {"CARS": {
     "rel_path": "cars",
     "vars": {
-        "TEMP": {
+        "sea_water_temperature": {
             "default_resolution": "30min",
             "30min": {
                 "default_tscale": "stationary",
@@ -14,7 +14,7 @@
                     ]
                 }
             },
-        "PSAL": {
+        "sea_water_salinity": {
             "default_resolution": "30min",
             "30min": {
                 "default_tscale": "stationary",

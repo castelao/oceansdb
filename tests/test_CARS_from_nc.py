@@ -20,7 +20,7 @@ def test_import():
 def test_available_vars():
     db = CARS()
     
-    for v in ['TEMP', 'PSAL']:
+    for v in ['sea_water_temperature', 'sea_water_salinity']:
         assert v in db.keys()
 
 
