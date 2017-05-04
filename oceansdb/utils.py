@@ -94,10 +94,10 @@ def dbsource(dbname, var, resolution=None, tscale=None):
             filename = os.path.join(dbpath,
                     os.path.basename(urlparse(c['url']).path))
 
-    if 'varnames' in cfg['vars'][var][resolution]:
-        datafiles.append(Dataset_flex(filename,
-            aliases=cfg['vars'][var][resolution]['varnames']))
-    else:
-        datafiles.append(Dataset_flex(filename))
+        if 'varnames' in cfg['vars'][var][resolution]:
+            datafiles.append(Dataset_flex(filename,
+                aliases=cfg['vars'][var][resolution]['varnames']))
+        else:
+            datafiles.append(Dataset_flex(filename))
 
     return datafiles
