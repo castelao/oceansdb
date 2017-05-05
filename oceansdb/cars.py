@@ -12,29 +12,14 @@ download_file('http://www.marine.csiro.au/atlas/export/temperature_cars2009a.nc.
 download_file('http://www.marine.csiro.au/atlas/export/salinity_cars2009a.nc.gz', '7f78173f4ef2c0a4ff9b5e52b62dc97d')
 """
 
+import os
 from os.path import expanduser
 import re
 from datetime import datetime
 
 import numpy as np
 from numpy import ma
-
-import os
-
-from oceansdb.utils import dbsource
-
-try:
-    import netCDF4
-except:
-    print("netCDF4 is not available")
-
-# try:
-#    from pydap.client import open_url
-#    import pydap.lib
-#    pydap.lib.CACHE = expanduser('~/.cotederc/pydap_cache')
-# except:
-#    print("PyDAP is not available")
-
+import netCDF4
 from scipy.interpolate import interp1d
 # RectBivariateSpline
 from scipy.interpolate import griddata

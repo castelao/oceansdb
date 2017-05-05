@@ -1,28 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import os
 from os.path import expanduser
 import re
 from datetime import datetime
 
 import numpy as np
 from numpy import ma
-
-import os
-
-from .utils import dbsource
-
-try:
-    import netCDF4
-except:
-    print("netCDF4 is not available")
-
-# try:
-#    from pydap.client import open_url
-#    import pydap.lib
-#    pydap.lib.CACHE = expanduser('~/.cotederc/pydap_cache')
-# except:
-#    print("PyDAP is not available")
-
+import netCDF4
 from scipy.interpolate import interp1d
 # RectBivariateSpline
 from scipy.interpolate import griddata
