@@ -297,6 +297,9 @@ class CARS_var_nc(object):
                         output[v] = subset[v][:, :, :, xn][:, :, yn][:, zn][dn]
                     return output
 
+        for v in var:
+            subset[v][ma.getmaskarray(subset[v])] = np.nan
+
         # The output coordinates shall be created only once.
         points_out = []
         for doyn in doy:
@@ -339,6 +342,8 @@ class CARS_var_nc(object):
                 idx = np.isfinite(values_out)
                 for [t, z, y, x], out in zip(points_out[idx], values_out[idx]):
                     output[v][t==doy, z==depth, y==lat, x==lon] = out
+
+            output[v] = ma.fix_invalid(output[v])
 
         return output
 
