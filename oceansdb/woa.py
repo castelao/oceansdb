@@ -283,6 +283,9 @@ class WOA_var_nc(object):
                             range(points.shape[1])])
                 assert ind.any()
 
+                # These interpolators understand NaN, but not masks.
+                values[ma.getmaskarray(values)] = np.nan
+
                 values_out = griddata(
                         np.atleast_1d(np.squeeze(points[:, ind])),
                         values,
