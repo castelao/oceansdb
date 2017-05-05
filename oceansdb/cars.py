@@ -381,16 +381,12 @@ class CARS_var_nc(object):
         lat = np.atleast_1d(kwargs['lat'])
         lon = np.atleast_1d(kwargs['lon'])
 
-        try:
-            if mode == 'nearest':
-                output = self.nearest(doy, depth, lat, lon, var)
-            else:
-                output = self.interpolate(doy, depth, lat, lon, var)
-                for v in output:
-                    output[v] = np.atleast_1d(np.squeeze(output[v]))
-        except:
-            print("Sorry, I was not able to extract the climatology.")
-            return
+        if mode == 'nearest':
+            output = self.nearest(doy, depth, lat, lon, var)
+        else:
+            output = self.interpolate(doy, depth, lat, lon, var)
+            for v in output:
+                output[v] = np.atleast_1d(np.squeeze(output[v]))
 
         return output
 
