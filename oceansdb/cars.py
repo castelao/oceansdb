@@ -155,6 +155,16 @@ class CARS_var_nc(object):
         self.load_dims(dims=['lat', 'lon', 'depth'])
         self.set_keys()
 
+    def __getitem__(self, item):
+        """
+            !!!ATENTION!!! Need to improve this.
+            cars_data() should be modified to be used when loading ncs with source, thus avoiding the requirement on this getitem but running transparent.
+        """
+        if item == 'mn':
+            return cars_data(self.ncs[0])
+        else:
+            return self.ncs[0].variables[item]
+
     def keys(self):
         return self.KEYS
 
