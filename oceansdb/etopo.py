@@ -66,6 +66,7 @@ def get_depth(lat, lon, cfg):
 
 class ETOPO_var_nc(object):
     """
+    ETOPO global topography
     """
     def __init__(self, source):
         self.ncs = source
