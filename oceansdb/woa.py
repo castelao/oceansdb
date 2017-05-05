@@ -153,6 +153,9 @@ class WOA_var_nc(object):
         self.load_dims(dims=['lat', 'lon', 'depth'])
         self.set_keys()
 
+    def __getitem__(self, item):
+        return self.data[item]
+
     def keys(self):
         return self.KEYS
 
