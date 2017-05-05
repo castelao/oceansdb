@@ -282,9 +282,6 @@ class CARS_var_nc(object):
                         output[v] = subset[v][:, :, :, xn][:, :, yn][:, zn][dn]
                     return output
 
-        for v in var:
-            subset[v][ma.getmaskarray(subset[v])] = np.nan
-
         # The output coordinates shall be created only once.
         points_out = []
         for doyn in doy:
@@ -316,6 +313,9 @@ class CARS_var_nc(object):
                         [np.unique(points[:, i]).size > 1 for i in
                             range(points.shape[1])])
                 assert ind.any()
+
+                # These interpolators understand NaN, but not masks.
+                values[ma.getmaskarray(values)] = np.nan
 
                 values_out = griddata(
                         np.atleast_1d(np.squeeze(points[:, ind])),

@@ -251,10 +251,6 @@ class WOA_var_nc(object):
                         output[v] = subset[v][:, :, :, xn][:, :, yn][:, zn][dn]
                     return output
 
-        # These interpolators don't understand Masked Arrays, but do NaN
-        for v in var:
-            subset[v][ma.getmaskarray(subset[v])] = np.nan
-
         # The output coordinates shall be created only once.
         points_out = []
         for doyn in doy:
