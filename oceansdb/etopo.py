@@ -10,6 +10,8 @@ import netCDF4
 from .utils import dbsource
 from .common import cropIndices
 
+from scipy.interpolate import griddata
+
 
 def get_depth(lat, lon, cfg):
     """
