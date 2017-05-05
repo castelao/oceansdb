@@ -5,6 +5,14 @@
             "default_resolution": "5deg",		
             "5deg": {
                 "default_tscale": "seasonal",
+		"varnames": {
+		    "latitude": "lat",
+		    "longitude": "lon",
+		    "mean": "t_mn",
+                    "standard_deviation": "t_sd",
+                    "standard_error": "t_se",
+                    "number_of_observations": "t_dd"
+		    },
                 "seasonal": [
                     {
                         "url": "http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/temperature/netcdf/decav/5deg/woa13_decav_t13_5dv2.nc"
@@ -21,6 +29,14 @@
             "default_resolution": "5deg",		
             "5deg": {
                 "default_tscale": "seasonal",
+		"varnames": {
+		    "latitude": "lat",
+		    "longitude": "lon",
+		    "mean": "s_mn",
+                    "standard_deviation": "s_sd",
+                    "standard_error": "t_se",
+                    "number_of_observations": "s_dd"
+		    },
                 "seasonal": [
                     {
                         "url": "http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/salinity/netcdf/decav/5deg/woa13_decav_s13_5dv2.nc"
