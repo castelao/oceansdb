@@ -235,6 +235,7 @@ class WOA_var_nc(object):
         """
         subset, dims = self.crop(doy, depth, lat, lon, var)
 
+        # Subset is exactly the requested. No need to interpolate.
         if np.all([d in dims['time'] for d in doy]) & \
                 np.all([z in dims['depth'] for z in depth]) & \
                 np.all([y in dims['lat'] for y in lat]) & \
@@ -250,6 +251,7 @@ class WOA_var_nc(object):
                         output[v] = subset[v][:, :, :, xn][:, :, yn][:, zn][dn]
                     return output
 
+        # These interpolators don't understand Masked Arrays, but do NaN
         for v in var:
             subset[v][ma.getmaskarray(subset[v])] = np.nan
 
