@@ -72,7 +72,6 @@ class ETOPO_var_nc(object):
         self.set_keys()
 
     def __getitem__(self, item):
-        # elevation
         return self.data[item]
 
     def keys(self):
@@ -219,7 +218,6 @@ class ETOPO(ETOPO_var_nc):
     """
     """
     def __init__(self, dbname='ETOPO'):
-        #super(ETOPO, self).__init__(source=dbsource(dbname, 'elevation'))
         self.dbname = dbname
         self.data = {'height': None}
 
@@ -229,5 +227,4 @@ class ETOPO(ETOPO_var_nc):
     def __getitem__(self, item):
         if self.data[item] is None:
             self.data[item] = ETOPO_var_nc(source=dbsource(self.dbname, item))
-
         return self.data[item]

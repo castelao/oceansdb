@@ -394,5 +394,4 @@ class CARS(object):
     def __getitem__(self, item):
         if self.data[item] is None:
             self.data[item] = CARS_var_nc(source=dbsource(self.dbname, item))
-
         return self.data[item]
