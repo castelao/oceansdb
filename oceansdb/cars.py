@@ -45,7 +45,7 @@ from .common import cropIndices
 
 def extract(filename, doy, latitude, longitude, depth):
     """
-        For now only the closest value
+        For now only the nearest value
         For now only for one position, not an array of positions
         longitude 0-360
     """
@@ -80,7 +80,7 @@ def extract(filename, doy, latitude, longitude, depth):
 
 def cars_profile(filename, doy, latitude, longitude, depth):
     """
-        For now only the closest value
+        For now only the nearest value
         For now only for one position, not an array of positions
         longitude 0-360
     """
