@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+""" Module to handle World Ocean Atlas (WOA) climatology
+"""
+
 import os
 from os.path import expanduser
 import re

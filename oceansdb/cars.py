@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""
+""" Module to handle CARS climatology
 
 Reference: http://www.marine.csiro.au/~dunn/cars2009/
 

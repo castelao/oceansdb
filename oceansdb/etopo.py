@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+""" Module to handle ETOPO bathymetry
+"""
+
 import numpy as np
 from numpy import ma
 import netCDF4
