@@ -29,9 +29,9 @@ install:
 
 before_script:
   # Download the required climatology files.
-  - python -c "import oceansdb; oceansdb.WOA()['TEMP']"
-  - python -c "import oceansdb; oceansdb.CARS()['TEMP']"
-  - python -c "import oceansdb; oceansdb.ETOPO()['elevation']"
+  - python -c "import oceansdb; oceansdb.WOA()['sea_water_temperature']"
+  - python -c "import oceansdb; oceansdb.CARS()['sea_water_temperature']"
+  - python -c "import oceansdb; oceansdb.ETOPO()['height']"
 
 script:
   - py.test --cov --cov-report=term-missing -vv
