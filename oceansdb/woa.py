@@ -235,7 +235,7 @@ class WOA_var_nc(object):
         """
         subset, dims = self.crop(doy, depth, lat, lon, var)
 
-        # Subset is exactly the requested. No need to interpolate.
+        # Subset contains everything requested. No need to interpolate.
         if np.all([d in dims['time'] for d in doy]) & \
                 np.all([z in dims['depth'] for z in depth]) & \
                 np.all([y in dims['lat'] for y in lat]) & \
@@ -251,53 +251,83 @@ class WOA_var_nc(object):
                         output[v] = subset[v][:, :, :, xn][:, :, yn][:, zn][dn]
                     return output
 
-        # The output coordinates shall be created only once.
-        points_out = []
-        for doyn in doy:
-            for depthn in depth:
-                for latn in lat:
-                    for lonn in lon:
-                        points_out.append([doyn, depthn, latn, lonn])
-        points_out = np.array(points_out)
-
         output = {}
         for v in var:
             output[v] = ma.masked_all(
                     (doy.size, depth.size, lat.size, lon.size),
                     dtype=subset[v].dtype)
 
-            # The valid data
-            idx = np.nonzero(~ma.getmaskarray(subset[v]))
+            # These interpolators don't understand Masked Arrays, but do NaN
+            if subset[v].dtype in ['int32']:
+                subset[v] = subset[v].astype('f')
+            subset[v][ma.getmaskarray(subset[v])] = np.nan
+            subset[v] = subset[v].data
 
-            if idx[0].size > 0:
-                points = np.array([
-                    dims['time'][idx[0]], dims['depth'][idx[1]],
-                    dims['lat'][idx[2]], dims['lon'][idx[3]]]).T
-                values = subset[v][idx]
+        # First linear interpolate on time.
+        if not (doy == dims['time']).all():
+            for v in subset.keys():
+                f = interp1d(dims['time'], subset[v], axis=0)
+                subset[v] = f(doy)
+            dims['time'] = np.atleast_1d(doy)
 
-                # Interpolate along the dimensions that have more than one
-                #   position, otherwise it means that the output is exactly
-                #   on that coordinate.
-                ind = np.array(
-                        [np.unique(points[:, i]).size > 1 for i in
-                            range(points.shape[1])])
-                assert ind.any()
+        if not ((lat == dims['lat']).all() and (lon == dims['lon']).all()):
+            # Lat x Lon target coordinates are the same for all time and depth.
+            points_out = []
+            for latn in lat:
+                for lonn in lon:
+                    points_out.append([latn, lonn])
+            points_out = np.array(points_out)
 
-                # These interpolators understand NaN, but not masks.
-                values[ma.getmaskarray(values)] = np.nan
+            # Interpolate on X/Y plane
+            for v in subset:
+                tmp = np.nan * np.ones(
+                        (doy.size, dims['depth'].size, lat.size, lon.size),
+                        dtype=subset[v].dtype)
+                for nt in range(doy.size):
+                    for nz in range(dims['depth'].size):
+                        data = subset[v][nt, nz]
+                        # The valid data
+                        idx = np.nonzero(~np.isnan(data))
+                        if idx[0].size > 0:
+                            points = np.array([
+                                dims['lat'][idx[0]], dims['lon'][idx[1]]]).T
+                            values = data[idx]
+                            # Interpolate along the dimensions that have more than
+                            #   one position, otherwise it means that the output
+                            #   is exactly on that coordinate.
+                            #ind = np.array([np.unique(points[:, i]).size > 1
+                            #    for i in range(points.shape[1])])
+                            #assert ind.any()
 
-                values_out = griddata(
-                        np.atleast_1d(np.squeeze(points[:, ind])),
-                        values,
-                        np.atleast_1d(np.squeeze(points_out[:, ind]))
-                        )
+                            values_out = griddata(
+                                    #np.atleast_1d(np.squeeze(points[:, ind])),
+                                    np.atleast_1d(np.squeeze(points)),
+                                    values,
+                                    #np.atleast_1d(np.squeeze(points_out[:, ind])))
+                                    np.atleast_1d(np.squeeze(points_out)))
 
-                # Remap the interpolated value back into a 4D array
-                idx = np.isfinite(values_out)
-                for [t, z, y, x], out in zip(points_out[idx], values_out[idx]):
-                    output[v][t==doy, z==depth, y==lat, x==lon] = out
+                            # Remap the interpolated value back into a 4D array
+                            idx = np.isfinite(values_out)
+                            for [y, x], out in zip(
+                                    points_out[idx], values_out[idx]):
+                                tmp[nt, nz, y==lat, x==lon] = out
+                subset[v] = tmp
 
-            output[v] = ma.fix_invalid(output[v])
+        # Interpolate on z
+        if not np.all(depth == dims['depth']):
+            for v in list(subset.keys()):
+                try:
+                    f = interp1d(dims['depth'], subset[v], axis=1,
+                            bounds_error=False)
+                    subset[v] = f(depth)
+                except:
+                    print("Fail to interpolate '%s' in depth" % v)
+                    del(subset[v])
+
+        for v in subset:
+            if output[v].dtype in ['int32']:
+                subset[v] = np.round(subset[v])
+            output[v][:] = ma.fix_invalid(subset[v][:])
 
         return output
 
