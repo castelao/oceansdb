@@ -28,27 +28,27 @@ def test_available_vars():
 def test_coincident_gridpoint():
     db = CARS()
 
-    t = db['TEMP'].extract(var='mn', doy=100,
+    t = db['sea_water_temperature'].extract(var='mn', doy=100,
             depth=0, lat=17.5, lon=322.5)
     assert np.allclose(t['mn'], [23.78240879])
 
-    t = db['TEMP'].extract(var='mn', doy=[100, 150],
+    t = db['sea_water_temperature'].extract(var='mn', doy=[100, 150],
             depth=0, lat=17.5, lon=322.5)
     assert np.allclose(t['mn'], [23.78240879, 24.57544294])
 
-    t = db['TEMP'].extract(var='mn', doy=100,
+    t = db['sea_water_temperature'].extract(var='mn', doy=100,
             depth=[0, 10], lat=17.5, lon=322.5)
     assert np.allclose(t['mn'], [23.78240879, 23.97279877])
 
-    t = db['TEMP'].extract(var='mn', doy=100,
+    t = db['sea_water_temperature'].extract(var='mn', doy=100,
             depth=0, lat=[17.5, 12.5], lon=322.5)
     assert np.allclose(t['mn'], [24.61333538, 23.78240879])
 
-    t = db['TEMP'].extract(var='mn', doy=100,
+    t = db['sea_water_temperature'].extract(var='mn', doy=100,
             depth=0, lat=17.5, lon=[322.5, 327.5])
     assert np.allclose(t['mn'], [23.78240879, 24.03691995])
 
-    t = db['TEMP'].extract(var='mn', doy=100,
+    t = db['sea_water_temperature'].extract(var='mn', doy=100,
             depth=[0, 10], lat=[17.5, 12.5], lon=322.5)
     assert np.allclose(t['mn'],
             [[24.61333538, 23.78240879], [24.7047015, 23.97279877]])

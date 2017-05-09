@@ -30,7 +30,7 @@ def test_coincident_gridpoint():
 
     t = db['sea_water_temperature'].extract(var='t_mn', doy=136.875,
             depth=0, lat=17.5, lon=-37.5)
-    assert np.allclose(t['mn'], [24.60449791])
+    assert np.allclose(t['t_mn'], [24.60449791])
 
     t = db['sea_water_temperature'].extract(var='t_mn', doy=[136.875, 228.125],
             depth=0, lat=17.5, lon=-37.5)
