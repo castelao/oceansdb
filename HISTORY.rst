@@ -3,6 +3,12 @@
 History
 -------
 
+0.7.0 (2017-05-11)
+------------------
+
+* New generic crop functionality.
+* Interpolate in steps, in order: time, lat x lon, and finally z. Gives better results for profiles.
+
 0.6.0 (2016-04-14)
 ------------------
 
