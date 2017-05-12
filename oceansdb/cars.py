@@ -402,6 +402,11 @@ class CARS(object):
         return self.data.keys()
 
     def __getitem__(self, item):
+        if item == 'TEMP':
+            return self['sea_water_temperature']
+        elif item == 'PSAL':
+            return self['sea_water_salinity']
+
         if self.data[item] is None:
             self.data[item] = CARS_var_nc(source=dbsource(self.dbname, item))
         return self.data[item]
