@@ -24,6 +24,12 @@ def test_available_vars():
         assert v in db.keys()
 
 
+def test_oceansites_nomenclature():
+    db = CARS()
+    assert db['sea_water_temperature'] == db['TEMP']
+    #assert db['sea_water_salinity'] == db['PSAL']
+
+
 # ==== Request points coincidents to the CARS gridpoints
 def test_coincident_gridpoint():
     db = CARS()

@@ -24,6 +24,12 @@ def test_available_vars():
         assert v in db.keys()
 
 
+def test_oceansites_nomenclature():
+    db = WOA()
+    assert db['sea_water_temperature'] == db['TEMP']
+    #assert db['sea_water_salinity'] == db['PSAL']
+
+
 # ==== Request points coincidents to the WOA gridpoints
 def test_coincident_gridpoint():
     db = WOA()
