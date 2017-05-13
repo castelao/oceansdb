@@ -330,9 +330,9 @@ class WOA_var_nc(object):
         if not np.all(depth == dims['depth']):
             for v in list(subset.keys()):
                 try:
-                    f = interp1d(dims['depth'], subset[v], axis=1,
-                            bounds_error=False)
-                    subset[v] = f(depth)
+                    f = interp1d(dims['depth'], subset[v], axis=1, bounds_error=False)
+                    # interp1d does not handle Masked Arrays
+                    subset[v] = f(np.array(depth))
                 except:
                     print("Fail to interpolate '%s' in depth" % v)
                     del(subset[v])
