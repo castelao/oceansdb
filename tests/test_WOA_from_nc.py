@@ -11,6 +11,7 @@ from numpy import ma
 
 from oceansdb.woa import WOA
 
+
 def test_import():
     # A shortcut
     from oceansdb import WOA
@@ -31,7 +32,6 @@ def test_ncs_size():
 
 def test_available_vars():
     db = WOA()
-    
     for v in ['sea_water_temperature', 'sea_water_salinity']:
         assert v in db.keys()
 
@@ -52,24 +52,24 @@ def test_coincident_gridpoint():
 
     t = db['sea_water_temperature'].extract(var='t_mn', doy=[136.875, 228.125],
             depth=0, lat=17.5, lon=-37.5)
-    assert np.allclose(t['t_mn'], [24.60449791,  26.38446426])
+    assert np.allclose(t['t_mn'], [24.60449791, 26.38446426])
 
     t = db['sea_water_temperature'].extract(var='t_mn', doy=136.875,
             depth=[0, 10], lat=17.5, lon=-37.5)
-    assert np.allclose(t['t_mn'], [24.60449791,  24.62145996])
+    assert np.allclose(t['t_mn'], [24.60449791, 24.62145996])
 
     t = db['sea_water_temperature'].extract(var='t_mn', doy=136.875,
             depth=0, lat=[17.5, 12.5], lon=-37.5)
-    assert np.allclose(t['t_mn'], [25.17827606,  24.60449791])
+    assert np.allclose(t['t_mn'], [25.17827606, 24.60449791])
 
     t = db['sea_water_temperature'].extract(var='t_mn', doy=136.875,
             depth=0, lat=17.5, lon=[-37.5, -32.5])
-    assert np.allclose(t['t_mn'], [24.60449791,  23.98172188])
+    assert np.allclose(t['t_mn'], [24.60449791, 23.98172188])
 
     t = db['sea_water_temperature'].extract(var='t_mn', doy=136.875,
             depth=[0, 10], lat=[17.5, 12.5], lon=-37.5)
     assert np.allclose(t['t_mn'],
-            [[ 25.17827606,  24.60449791], [ 25.25433731,  24.62145996]])
+            [[25.17827606, 24.60449791], [25.25433731, 24.62145996]])
 
 
 def test_lon_cyclic():
@@ -87,15 +87,18 @@ def test_lon_cyclic():
             depth=0, lat=17.5, lon=[322.5, 327.5])
     assert np.allclose(t1['t_mn'], t2['t_mn'])
 
+
 def test_no_data_available():
     """ This is a position without valid data """
 
     db = WOA()
-    out = db['sea_water_temperature'].extract(doy=155, lat=48.1953, lon=-69.5855,
+    out = db['sea_water_temperature'].extract(
+            doy=155, lat=48.1953, lon=-69.5855,
             depth=[2.0, 5.0, 6.0, 21.0, 44.0, 79.0, 5000])
     assert sorted(out.keys()) == [u't_dd', u't_mn', u't_sd', u't_se']
     for v in out:
         ma.getmaskarray(out[v]).all()
+
 
 def test_extract_overlimit():
     """ Thest a request over the limits of the database """
