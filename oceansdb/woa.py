@@ -299,12 +299,25 @@ class WOA_var_nc(object):
                             #    for i in range(points.shape[1])])
                             #assert ind.any()
 
-                            values_out = griddata(
+                            try:
+                                values_out = griddata(
                                     #np.atleast_1d(np.squeeze(points[:, ind])),
                                     np.atleast_1d(np.squeeze(points)),
                                     values,
                                     #np.atleast_1d(np.squeeze(points_out[:, ind])))
                                     np.atleast_1d(np.squeeze(points_out)))
+                            except:
+                                values_out = []
+                                for p in points_out:
+                                    try:
+                                        values_out.append(griddata(
+                                            np.atleast_1d(np.squeeze(points)),
+                                            values,
+                                            np.atleast_1d(np.squeeze(
+                                                p))))
+                                    except:
+                                        values_out.append(np.nan)
+                                values_out = np.array(values_out)
 
                             # Remap the interpolated value back into a 4D array
                             idx = np.isfinite(values_out)

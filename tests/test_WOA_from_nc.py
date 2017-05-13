@@ -114,7 +114,17 @@ def test_extract_overlimit():
     assert ma.allclose(t['t_mn'],
             ma.masked_array([24.62145996, 0], mask=[False, True]))
 
-# ======
+
+def test_interpolate_partially_insuficient_data():
+    """ Special case with unsificient data for some points
+
+        At 4700m depth the limited available data isin a plane that does not
+          contain the desired output. It should not fail, but return non
+          masked valid values where it is possible.
+    """
+    db = WOA()
+    t = db['sea_water_temperature'].extract(var='mean', doy=108, lat=4, lon=-38)
+    assert not t['mean'].mask.all()
 
 
 def notest_get_point():
