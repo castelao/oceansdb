@@ -17,6 +17,18 @@ def test_import():
     db = WOA()
 
 
+def test_ncs_size():
+    """ Check if loaded the 4 seasonal climatology files
+
+        The default for WOA is to load the seasonal climatology composed
+          of four files, one for each season. This test checks if all four
+          files were loaded.
+    """
+    db = WOA()
+    assert len(db['sea_water_temperature'].ncs) == 4
+    assert len(db['sea_water_salinity'].ncs) == 4
+
+
 def test_available_vars():
     db = WOA()
     
