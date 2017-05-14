@@ -1,7 +1,7 @@
 {"ETOPO": {
     "rel_path": "etopo",
     "vars": {
-        "height": {
+        "topography": {
             "default_resolution": "1min",
             "5min": {
                 "default_tscale": "stationary",

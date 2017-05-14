@@ -222,14 +222,17 @@ class ETOPO(ETOPO_var_nc):
     """
     def __init__(self, dbname='ETOPO'):
         self.dbname = dbname
-        self.data = {'height': None}
+        self.data = {'topography': None}
 
     def keys(self):
         return self.data.keys()
 
     def __getitem__(self, item):
         if item == 'elevation':
-            return self['height']
+            print("elevation is deprecated. Use topography instead")
+            import time
+            time.sleep(3)
+            return self['topography']
 
         if self.data[item] is None:
             self.data[item] = ETOPO_var_nc(source=dbsource(self.dbname, item))
