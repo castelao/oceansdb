@@ -237,3 +237,9 @@ class ETOPO(ETOPO_var_nc):
         if self.data[item] is None:
             self.data[item] = ETOPO_var_nc(source=dbsource(self.dbname, item))
         return self.data[item]
+
+    def extract(self, *args, **kwargs):
+        print("Deprecated syntax, better use: db['topography'].extract(...)")
+        import time
+        time.sleep(3)
+        return self['topography'].extract(*args, **kwargs)['height']
