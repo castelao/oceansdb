@@ -2,8 +2,8 @@
 OceansDB
 ========
 
-.. image:: https://zenodo.org/badge/4645/castelao/oceansdb.svg
-   :target: https://zenodo.org/badge/latestdoi/4645/castelao/oceansdb
+.. image:: https://zenodo.org/badge/52222122.svg
+   :target: https://zenodo.org/badge/latestdoi/52222122
 
 .. image:: https://readthedocs.org/projects/oceansdb/badge/?version=latest
     :target: http://oceansdb.readthedocs.org/en/latest/?badge=latest
