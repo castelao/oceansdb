@@ -32,7 +32,7 @@ setup(
     keywords='WOA World Ocean Atlas climatology oceanographic data' +
              ' oceanography ETOPO temperature salinity bathymetry',
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: BSD License',
         "Programming Language :: Python :: 2",
