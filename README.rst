@@ -52,28 +52,34 @@ Inside python:
     >>> import oceansdb
     >>> db = oceansdb.WOA()
 
-To get temperature at one point:
+Temperature at one point:
 
 .. code-block:: python
 
-    >>> t = db['TEMP'].extract(var='mn', doy=136.875, depth=0, lat=17.5, lon=-37.5)
+    >>> t = db['sea_water_temperature'].extract(var='mean', doy=136.875, depth=0, lat=17.5, lon=-37.5)
 
-To get one profile of salinity:
-
-.. code-block:: python
-
-    >>> t = db['PSAL'].extract(var='mn', doy=136.875, depth=[0, 10, 15, 18], lat=17.5, lon=-37.5)
-
-To get a full depth section of temperature:
+A profile of salinity:
 
 .. code-block:: python
 
-    >>> t = db['TEMP'].extract(var='mn', doy=136.875, lat=17.5, lon=[-39, -37.5, -35])
+    >>> t = db['sea_water_salinity'].extract(var='mean', doy=136.875, depth=[0, 10, 15, 18], lat=17.5, lon=-37.5)
 
+A full depth section of temperature:
+
+.. code-block:: python
+
+    >>> t = db['sea_water_temperature'].extract(var='mean', doy=136.875, lat=17.48, lon=[-39, -37.5, -35.2])
+
+Using CARS instead of WOA:
+
+.. code-block:: python
+
+    >>> db = oceansdb.CARS()
+    >>> t = db['sea_water_temperature'].extract(var='mean', doy=136.875, lat=17.48, lon=[-39, -37.5, -35.2], depth=[0,10,120,280])
 
 Or to get topography for one point:
 
 .. code-block:: python
 
     >>> db = oceansdb.ETOPO()
-    >>> h = db.extract(lat=17.5, lon=0)
+    >>> h = db['topography'].extract(lat=17.5, lon=0)
