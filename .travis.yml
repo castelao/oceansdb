@@ -31,7 +31,7 @@ before_script:
   # Download the required climatology files.
   - python -c "import oceansdb; oceansdb.WOA()['sea_water_temperature']"
   - python -c "import oceansdb; oceansdb.CARS()['sea_water_temperature']"
-  - python -c "import oceansdb; oceansdb.ETOPO()['height']"
+  - python -c "import oceansdb; oceansdb.ETOPO()['topography']"
 
 script:
   - py.test --cov --cov-report=term-missing -vv
