@@ -34,7 +34,7 @@
 		    "longitude": "lon",
 		    "mean": "s_mn",
                     "standard_deviation": "s_sd",
-                    "standard_error": "t_se",
+                    "standard_error": "s_se",
                     "number_of_observations": "s_dd"
 		    },
                 "seasonal": [
