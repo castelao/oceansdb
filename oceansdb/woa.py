@@ -387,6 +387,57 @@ class WOA_var_nc(object):
 
         return output
 
+    def extract_track(self, mode=None, **kwargs):
+        """
+
+            Possible scenarios:
+              - Track:   doy{1,n}, depth{1,n2}, lat{n}, lon{n}
+        """
+        for k in kwargs:
+            assert k in ['var', 'doy', 'depth', 'lat', 'lon'], \
+                    "Wrong dimension to extract, check the manual"
+
+        if 'var' in kwargs:
+            var = np.atleast_1d(kwargs['var'])
+        else:
+            var = np.asanyarray(self.KEYS)
+
+        doy = np.atleast_1d(kwargs['doy'])
+        if type(doy[0]) is datetime:
+            doy = np.array([int(d.strftime('%j')) for d in doy])
+
+        if 'depth' in kwargs:
+            depth = np.atleast_1d(kwargs['depth'])
+        else:
+            depth = self.dims['depth'][:]
+
+        assert np.all(depth >= 0), "Depth was supposed to be positive."
+
+        lat = np.atleast_1d(kwargs['lat'])
+        lon = np.atleast_1d(kwargs['lon'])
+
+        assert lat.shape == lon.shape
+
+        output = {}
+        for v in var:
+            output[v] = []
+
+        for y, x in zip(lat, lon):
+            if mode == 'nearest':
+                tmp = self.nearest(
+                        doy, depth, np.array([y]), np.array([x]), var)
+            else:
+                tmp = self.interpolate(
+                        doy, depth, np.array([y]), np.array([x]), var)
+
+            for v in tmp:
+                output[v].append(tmp[v])
+
+        for v in output:
+            output[v] = np.atleast_1d(np.squeeze(output[v]))
+
+        return output
+
     def get_profile(var, doy, depth, lat, lon):
         print("get_profile is deprecated. You should migrate to extract()")
         return extract(var=var, doy=doy, depth=depth, lat=lat, lon=lon)
