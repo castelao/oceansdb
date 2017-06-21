@@ -161,3 +161,11 @@ def notest_get_track():
 def test_dev():
     db = WOA()
     t = db['sea_water_temperature'].extract(doy=228.125, lat=12.5, lon=-37.5)
+
+
+def test_horizontalSurface_coincidentLatLon():
+    """ Creates an horizontal surface with coincident Lat/Lon
+    """
+    db = WOA()
+    t = db['sea_water_temperature'].extract(var='mean', doy=136.875, depth=43,
+            lon = np.arange(-180, -170, 1), lat = np.arange(-50, -40, 1))
