@@ -270,7 +270,7 @@ class WOA_var_nc(object):
                 subset[v] = f(doy)
             dims['time'] = np.atleast_1d(doy)
 
-        if not ((lat == dims['lat']).all() and (lon == dims['lon']).all()):
+        if not (np.all(lat == dims['lat']) and np.all(lon == dims['lon'])):
             # Lat x Lon target coordinates are the same for all time and depth.
             points_out = []
             for latn in lat:
