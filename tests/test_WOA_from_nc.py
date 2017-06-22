@@ -136,9 +136,17 @@ def test_get_point():
     assert np.allclose(t['t_mn'], [24.306862])
 
 
-def notest_get_profile():
+def test_get_point_inland():
     db = WOA()
 
+    t = db['sea_water_temperature'].extract(var='t_mn', doy=90,
+            depth=0, lat=-19.9, lon=-43.9)
+    for v in t:
+        assert t[v].mask.all()
+
+
+def notest_get_profile():
+    db = WOA()
 
     t = db['sea_water_temperature'].extract(var='t_mn', doy=10,
             depth=[0,10], lat=10, lon=330)
