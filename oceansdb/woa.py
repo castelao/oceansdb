@@ -382,7 +382,8 @@ class WOA_var_nc(object):
             output = self.nearest(doy, depth, lat, lon, var)
         else:
             output = self.interpolate(doy, depth, lat, lon, var)
-            for v in output:
+
+        for v in output:
                 output[v] = np.atleast_1d(np.squeeze(output[v]))
 
         return output
