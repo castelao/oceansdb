@@ -127,13 +127,13 @@ def test_interpolate_partially_insuficient_data():
     assert not t['mean'].mask.all()
 
 
-def notest_get_point():
+def test_get_point():
     db = WOA()
 
     t = db['sea_water_temperature'].extract(var='t_mn', doy=90,
             depth=0, lat=17.5, lon=-37.5)
             #depth=0, lat=10, lon=330)
-    assert np.allclose(t['mn'], [24.60449791])
+    assert np.allclose(t['t_mn'], [24.306862])
 
 
 def notest_get_profile():
