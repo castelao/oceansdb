@@ -10,4 +10,4 @@ Development Lead
 Contributors
 ------------
 
-None yet. Why not be the first?
+Erdem M Karakoylu: Reported bad checksum on CARS' salinity file (issue #7).
