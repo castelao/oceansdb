@@ -160,6 +160,19 @@ def notest_get_profile():
     assert np.allclose(t['t_dd'], [ 798, 776])
 
 
+def test_get_section():
+    db = WOA()
+    t = db['sea_water_temperature'].extract(var='t_mn', doy=10,
+            depth=[0,10], lat=28, lon=[-117, -114, -112, -105, -99, -93])
+
+
+def test_get_surface():
+    db = WOA()
+    t = db['sea_water_temperature'].extract(var='t_mn', doy=10,
+            depth=[0,10], lat=[21, 24, 28, 32],
+            lon=[-117, -114, -112, -105, -99, -93])
+
+
 def notest_get_track():
     db = WOA()
     db['sea_water_temperature'].get_track(doy=[datetime.now()], depth=0, lat=[10], lon=[330])
