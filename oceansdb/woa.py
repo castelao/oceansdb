@@ -162,15 +162,15 @@ class WOA_var_nc(object):
     def load_dims(self, dims):
         self.dims = {}
         for d in dims:
-            self.dims[d] = self.ncs[0].variables[d][:]
+            self.dims[d] = self.ncs[0][d][:]
             for nc in self.ncs[1:]:
-                assert (self.dims[d] == nc.variables[d][:]).all()
+                assert (self.dims[d] == nc[d][:]).all()
 
         self.dims['time'] = []
         mfrac = 365/12.
         for nc in self.ncs:
             assert nc.variables['time'].size == 1
-            self.dims['time'].append(mfrac * nc.variables['time'][0])
+            self.dims['time'].append(mfrac * nc['time'][0])
         self.dims['time'] = np.array(self.dims['time'])
 
     def set_keys(self):

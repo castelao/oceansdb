@@ -83,9 +83,9 @@ class ETOPO_var_nc(object):
     def load_dims(self, dims):
         self.dims = {}
         for d in dims:
-            self.dims[d] = self.ncs[0].variables[d][:]
+            self.dims[d] = self.ncs[0][d][:]
             for nc in self.ncs[1:]:
-                assert (self.dims[d] == nc.variables[d][:]).all()
+                assert (self.dims[d] == nc[d][:]).all()
 
     def set_keys(self):
         self.KEYS = ['height']
