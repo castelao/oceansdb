@@ -31,15 +31,14 @@ def test_coincident_gridpoint():
     h = db['topography'].extract(lat=17.5, lon=0)
     assert np.allclose(h['height'], [298.])
 
-
     h = db['topography'].extract(lat=[17.5, 18.5], lon=0)
-    assert np.allclose(h['height'], [298., 376.])
+    assert np.allclose(h['height'], [298., 375.])
 
     h = db['topography'].extract(lat=17.5, lon=[0, 0.25])
     assert np.allclose(h['height'], [298., 310.])
 
     h = db['topography'].extract(lat=[17.5, 18.5], lon=[0, 0.25])
-    assert np.allclose(h['height'], [[298., 310.], [376., 382.]])
+    assert np.allclose(h['height'], [[298., 310.], [376., 381.]])
 
 
 def test_lon_cyclic():
