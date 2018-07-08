@@ -145,19 +145,19 @@ def test_get_point_inland():
         assert t[v].mask.all()
 
 
-def notest_get_profile():
+def test_get_profile():
     db = WOA()
 
-    t = db['sea_water_temperature'].extract(var='t_mn', doy=10,
+    t = db['sea_water_temperature'].extract(var='mean', doy=10,
             depth=[0,10], lat=10, lon=330)
-    assert np.allclose(t['mn'], [ 28.09378815,  28.09343529])
+    assert np.allclose(t['mean'], [ 26.07524300,  26.12986183])
 
     t = db['sea_water_temperature'].extract(doy=10,
             depth=[0,10], lat=10, lon=330)
-    assert np.allclose(t['t_se'], [ 0.01893404,  0.0176903 ])
-    assert np.allclose(t['t_sd'], [ 0.5348658,  0.4927946])
-    assert np.allclose(t['t_mn'], [ 28.09378815,  28.09343529])
-    assert np.allclose(t['t_dd'], [ 798, 776])
+    assert np.allclose(t['t_se'], [ 0.02941939,  0.0287159 ])
+    assert np.allclose(t['t_sd'], [ 0.8398821,  0.8142529])
+    assert np.allclose(t['t_mn'], [ 26.07524300,  26.12986183])
+    assert np.allclose(t['t_dd'], [ 813, 806])
 
 
 def test_profile_maskedDepth():
