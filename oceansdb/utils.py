@@ -59,14 +59,13 @@ class Dataset_flex(object):
 
 
 def dbsource(dbname, var, resolution=None, tscale=None):
+    """Return which file(s) to use according to dbname, var, etc
     """
-
-        Temporary solution, just to move on with CoTeDe.
-    """
-
     db_cfg = {}
     cfg_dir = 'datasource'
-    for src_cfg in pkg_resources.resource_listdir('oceansdb', cfg_dir):
+    cfg_files = pkg_resources.resource_listdir('oceansdb', cfg_dir)
+    cfg_files = [f for f in cfg_files if f[-5:] == '.json']
+    for src_cfg in cfg_files:
         text = pkg_resources.resource_string(
                 'oceansdb', os.path.join(cfg_dir, src_cfg))
         text = text.decode('UTF-8', 'replace')
