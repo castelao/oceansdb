@@ -160,6 +160,15 @@ def notest_get_profile():
     assert np.allclose(t['t_dd'], [ 798, 776])
 
 
+def test_profile_maskedDepth():
+    """Test BUG#10
+    """
+    db = WOA()
+    depth = ma.masked_array([10, 100])
+    db['sea_water_temperature'].extract(var='mean', doy=10,
+            depth=depth, lat=10, lon=330)
+
+
 def test_get_section():
     db = WOA()
     t = db['sea_water_temperature'].extract(var='t_mn', doy=10,

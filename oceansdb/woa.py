@@ -327,7 +327,9 @@ class WOA_var_nc(object):
                 subset[v] = tmp
 
         # Interpolate on z
-        if not np.all(depth == dims['depth']):
+        same_depth = (np.shape(depth) == dims['depth'].shape) and \
+                np.allclose(depth, dims['depth'])
+        if not same_depth:
             for v in list(subset.keys()):
                 try:
                     f = interp1d(dims['depth'], subset[v], axis=1, bounds_error=False)
