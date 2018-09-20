@@ -6,9 +6,9 @@
             "5min": {
                 "default_tscale": "stationary",
 		"varnames": {
-                    "latitude": "lat",
-                    "longitude": "lon",
-                    "height": "z"
+                    "lat": "ETOPO05_Y",
+                    "lon": "ETOPO05_X",
+                    "height": "ROSE"
                     },
                 "stationary": [
                     {
