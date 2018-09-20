@@ -220,9 +220,10 @@ class ETOPO_var_nc(object):
 class ETOPO(ETOPO_var_nc):
     """
     """
-    def __init__(self, dbname='ETOPO'):
+    def __init__(self, dbname='ETOPO', resolution=None):
         self.dbname = dbname
         self.data = {'topography': None}
+        self.resolution = resolution
 
     def keys(self):
         return self.data.keys()
@@ -235,7 +236,8 @@ class ETOPO(ETOPO_var_nc):
             return self['topography']
 
         if self.data[item] is None:
-            self.data[item] = ETOPO_var_nc(source=dbsource(self.dbname, item))
+            self.data[item] = ETOPO_var_nc(source=dbsource(
+                self.dbname, item, self.resolution))
         return self.data[item]
 
     def extract(self, *args, **kwargs):
