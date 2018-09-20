@@ -80,49 +80,63 @@ Let's check the variables available in ETOPO
 .. code-block:: python 
 
     >>> db.keys()
-    ['elevation']
+    ['topography']
 
 To get topography for one point:
 
 .. code-block:: python
 
-    >>> db.extract(lat = 15, lon = 38 )
-    {'elevation': masked_array(data = [ 1372.],
-              mask = False,
-        fill_value = 1e+20)}
+    >>> db['topography'].extract(lat=15, lon=38)
+    {'height': masked_array(data=[1012],
+              mask=[False],
+        fill_value=999999,
+             dtype=int32)}
 
 To get topography along a latitude:
 
 .. code-block:: python
 
-    >>> db.extract(lat=15, lon=[25, 30, 38, 40, 45])
-    {'elevation': masked_array(data = [1067.0 503.0500183105469 1372.0 152.0 1342.6754150390625],
-              mask = [False False False False False],
-        fill_value = 1e+20)}
+    >>> db['topography'].extract(lat=15, lon=[-25, -30, -38, -40, -45])
+    {'height': masked_array(data=[-4150, -5451, -5588, -5217, -3840],
+              mask=[False, False, False, False, False],
+        fill_value=999999,
+             dtype=int32)}
 
 To get topography along a longitude:
 
 .. code-block:: python
 
-   >>> db.extract(lat=[10, 15, 20, 25], lon=38)
-   {'elevation': masked_array(data = [1904.0328369140625 1372.0 -733.8268432617188 914.0],
-              mask = [False False False False],
-        fill_value = 1e+20)}
+   >>> db['topography'].extract(lat=[10, 15, 20, 25], lon=38)
+   {'height': masked_array(data=[1486, 1012, -759, 797],
+              mask=[False, False, False, False],
+        fill_value=999999,
+             dtype=int32)}
 
 To get topography along a area:
 
 .. code-block:: python
 
-   >>> db.extract(lat=[10, 15, 20, 25], lon=[30, 38, 40])
-   {'elevation': masked_array(data =
-   [[366.0 1904.0328369140625 1083.2891845703125]
-   [503.0500183105469 1372.0 152.0]
-   [305.0 -733.8268432617188 -254.84463500976562]
-   [213.0 914.0 899.0667114257812]],
-               mask =
-   [[False False False]
-   [False False False]
-   [False False False]
-   [False False False]],
-         fill_value = 1e+20)}
+   >>> db['topography'].extract(lat=[10, 15, 20, 25], lon=[30, 38, 40])
+   {'height': masked_array(
+   data=[[413, 1486, 1227],
+         [504, 1012, 210],
+         [294, -759, -217],
+         [241, 797, 1050]],
+   mask=[[False, False, False],
+         [False, False, False],
+         [False, False, False],
+         [False, False, False]],
+   fill_value=999999,
+   dtype=int32)}
 
+To use ETOPO with 5min resolution instead of the 1min:
+
+.. code-block:: python
+
+    >>> db = oceansdb.ETOPO(resolution='5min')
+
+    >>> db['topography'].extract(lat=15, lon=38)
+    {'height': masked_array(data=[1372.0],
+              mask=[False],
+        fill_value=1e+20,
+             dtype=float32)}

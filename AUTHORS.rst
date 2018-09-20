@@ -12,3 +12,4 @@ Contributors
 
 Erdem M Karakoylu: Reported bad checksum on CARS' salinity file (issue #7).
 @sgartzman: Reported bug #8, truncated files on Python-2.
+@maryjacketti: Reported bug #12, outdated ETOPO documentation.
