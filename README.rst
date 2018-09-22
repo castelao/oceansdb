@@ -52,7 +52,13 @@ Inside python:
     >>> import oceansdb
     >>> db = oceansdb.WOA()
 
-Temperature at one point:
+Find out what is available:
+
+.. code-block:: python
+
+    >>> db.keys()
+
+Average temperature at one point:
 
 .. code-block:: python
 
