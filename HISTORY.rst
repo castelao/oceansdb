@@ -3,6 +3,11 @@
 History
 -------
 
+0.8.0
+-----
+
+* Allowing to choose resolution and temporal scale.
+
 0.7.0 (2017-05-11)
 ------------------
 
