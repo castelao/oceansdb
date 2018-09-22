@@ -95,9 +95,11 @@ def test_no_data_available():
     out = db['sea_water_temperature'].extract(
             doy=155, lat=48.1953, lon=-69.5855,
             depth=[2.0, 5.0, 6.0, 21.0, 44.0, 79.0, 5000])
-    assert sorted(out.keys()) == [u't_dd', u't_mn', u't_sd', u't_se']
-    for v in out:
-        ma.getmaskarray(out[v]).all()
+    varnames = [u't_dd', u't_mn', u't_sd', u't_se']
+    for v in varnames:
+        assert v in out.keys()
+    for v in varnames:
+        assert ma.getmaskarray(out[v]).all()
 
 
 def test_extract_overlimit():
@@ -141,8 +143,7 @@ def test_get_point_inland():
 
     t = db['sea_water_temperature'].extract(var='t_mn', doy=90,
             depth=0, lat=-19.9, lon=-43.9)
-    for v in t:
-        assert t[v].mask.all()
+    assert t['t_mn'].mask.all()
 
 
 def test_get_profile():
