@@ -1,0 +1,352 @@
+{"WOA18": {
+    "rel_path": "woa",
+    "vars": {
+        "sea_water_temperature": {
+            "default_resolution": "5deg",		
+            "1deg": {
+                "default_tscale": "seasonal",
+		"varnames": {
+		    "latitude": "lat",
+		    "longitude": "lon",
+		    "mean": "t_mn",
+                    "standard_deviation": "t_sd",
+                    "standard_error": "t_se",
+                    "number_of_observations": "t_dd"
+		    },
+		"annual": [
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/1.00/woa18_decav_t00_01.nc",
+                        "md5hash": "eb9bdea329168602bad26abae9a73a03"
+                        }
+                    ],
+		"monthly": [
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/1.00/woa18_decav_t01_01.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/1.00/woa18_decav_t02_01.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/1.00/woa18_decav_t03_01.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/1.00/woa18_decav_t04_01.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/1.00/woa18_decav_t05_01.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/1.00/woa18_decav_t06_01.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/1.00/woa18_decav_t07_01.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/1.00/woa18_decav_t08_01.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/1.00/woa18_decav_t09_01.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/1.00/woa18_decav_t10_01.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/1.00/woa18_decav_t11_01.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/1.00/woa18_decav_t12_01.nc",
+                        "md5hash": ""
+                        }
+                    ],
+                "seasonal": [
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/1.00/woa18_decav_t13_01.nc",
+                        "md5hash": "6222df53be387df9927f4bf5f8d75bf7"
+                        },
+	            {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/1.00/woa18_decav_t14_01.nc",
+			"md5hash": "5239d4b0d654d2f20e1793d3e946717d"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/1.00/woa18_decav_t15_01.nc",
+                        "md5hash": "af7c741308b2ed879ecbb7bca356f29e"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/1.00/woa18_decav_t16_01.nc",
+                        "md5hash": "d81b7b228b8ea7f9bd61c25dc8ebc4fd"
+                        }
+                    ]
+                },
+            "5deg": {
+                "default_tscale": "seasonal",
+		"varnames": {
+		    "latitude": "lat",
+		    "longitude": "lon",
+		    "mean": "t_mn",
+                    "standard_deviation": "t_sd",
+                    "standard_error": "t_se",
+                    "number_of_observations": "t_dd"
+		    },
+		"annual": [
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/5deg/woa18_decav_t00_5d.nc",
+                        "md5hash": "9cc5cf28d4f1f4057c9d9f263ca13d2a"
+                        }
+                    ],
+		"monthly": [
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/5deg/woa18_decav_t01_5d.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/5deg/woa18_decav_t02_5d.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/5deg/woa18_decav_t03_5d.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/5deg/woa18_decav_t04_5d.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/5deg/woa18_decav_t05_5d.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/5deg/woa18_decav_t06_5d.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/5deg/woa18_decav_t07_5d.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/5deg/woa18_decav_t08_5d.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/5deg/woa18_decav_t09_5d.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/5deg/woa18_decav_t10_5d.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/5deg/woa18_decav_t11_5d.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/5deg/woa18_decav_t12_5d.nc",
+                        "md5hash": ""
+                        }
+                    ],
+                "seasonal": [
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/5deg/woa18_decav_t13_5d.nc",
+                        "md5hash": "4ef05bbca9d4ea244d3c2d490439c689"
+                        },
+	            {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/5deg/woa18_decav_t14_5d.nc",
+			"md5hash": "0c330a71fc192308b4829da19082aa5e"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/5deg/woa18_decav_t15_5d.nc",
+                        "md5hash": "5d7c2ff27d36cd48bf9b4bdf6971d564"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/temperature/decav/5deg/woa18_decav_t16_5d.nc",
+                        "md5hash": "4033f6679317500df489b52c26eccaf2"
+                        }
+                    ]
+                }
+            },
+        "sea_water_salinity": {
+            "default_resolution": "5deg",		
+            "1deg": {
+                "default_tscale": "seasonal",
+		"varnames": {
+		    "latitude": "lat",
+		    "longitude": "lon",
+		    "mean": "t_mn",
+                    "standard_deviation": "t_sd",
+                    "standard_error": "t_se",
+                    "number_of_observations": "t_dd"
+		    },
+		"annual": [
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/1.00/woa18_decav_s00_01.nc",
+                        "md5hash": "e5d6c2e757b13a2e6904b8d4849c33e6"
+                        }
+                    ],
+		"monthly": [
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/1.00/woa18_decav_s01_01.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/1.00/woa18_decav_s02_01.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/1.00/woa18_decav_s03_01.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/1.00/woa18_decav_s04_01.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/1.00/woa18_decav_s05_01.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/1.00/woa18_decav_s06_01.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/1.00/woa18_decav_s07_01.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/1.00/woa18_decav_s08_01.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/1.00/woa18_decav_s09_01.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/1.00/woa18_decav_s10_01.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/1.00/woa18_decav_s11_01.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/1.00/woa18_decav_s12_01.nc",
+                        "md5hash": ""
+                        }
+                    ],
+                "seasonal": [
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/1.00/woa18_decav_s13_01.nc",
+                        "md5hash": "4adb6984f710946e1f4b7a23b0bed5c3"
+                        },
+	            {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/1.00/woa18_decav_s14_01.nc",
+			"md5hash": "f26da41a2a9cb9efc460a540311dc9d2"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/1.00/woa18_decav_s15_01.nc",
+                        "md5hash": "39480fc67d3665a2b410f6cf7475494e"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/1.00/woa18_decav_s16_01.nc",
+                        "md5hash": "9a58e086e4b99a8b3a5fa539ae5443ee"
+                        }
+                    ]
+                },
+            "5deg": {
+                "default_tscale": "seasonal",
+		"varnames": {
+		    "latitude": "lat",
+		    "longitude": "lon",
+		    "mean": "s_mn",
+                    "standard_deviation": "s_sd",
+                    "standard_error": "s_se",
+                    "number_of_observations": "s_dd"
+		    },
+		"annual": [
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/5deg/woa18_decav_s00_5d.nc",
+                        "md5hash": "4116d4e94471a922737f32816be12763"
+                        }
+                    ],
+		"monthly": [
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/5deg/woa18_decav_s01_5d.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/5deg/woa18_decav_s02_5d.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/5deg/woa18_decav_s03_5d.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/5deg/woa18_decav_s04_5d.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/5deg/woa18_decav_s05_5d.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/5deg/woa18_decav_s06_5d.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/5deg/woa18_decav_s07_5d.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/5deg/woa18_decav_s08_5d.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/5deg/woa18_decav_s09_5d.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/5deg/woa18_decav_s10_5d.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/5deg/woa18_decav_s11_5d.nc",
+                        "md5hash": ""
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/5deg/woa18_decav_s12_5d.nc",
+                        "md5hash": ""
+                        }
+                    ],
+                "seasonal": [
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/5deg/woa18_decav_s13_5d.nc",
+                        "md5hash": "068185c82eea8d2309499f58ada8fd4d"
+                        },
+	            {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/5deg/woa18_decav_s14_5d.nc",
+                        "md5hash": "896ac6d9b345727971d434e2cb7f8252"
+		        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/5deg/woa18_decav_s15_5d.nc",
+                        "md5hash": "2885fae777a27b5411b89e304b5c2a70"
+		        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/thredds/fileServer/ncei/woa/salinity/decav/5deg/woa18_decav_s16_5d.nc",
+                        "md5hash": "8a5849e4977ebe1b891781d3eec80b10"
+		        }
+                    ]
+                }
+            }
+        }
+    }
+}
