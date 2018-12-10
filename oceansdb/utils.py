@@ -19,9 +19,6 @@ else:
     from urlparse import urlparse
 
 
-def oceansdb_dir():
-    return os.path.expanduser(os.getenv('OCEANSDB_DIR', '~/.config/oceansdb'))
-
 """
 
         http://data.nodc.noaa.gov/thredds/dodsC/woa/WOA13/DATAv2/temperature/netcdf/decav/0.25/woa13_decav_t00_04v2.nc.html
@@ -39,6 +36,13 @@ http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/temperature/netcdf
 http://data.nodc.noaa.gov/thredds/fileServer/woa/WOA13/DATAv2/temperature/netcdf/decav/0.25/woa13_decav_t01_04v2.nc
 
 """
+
+
+def oceansdb_dir():
+    """Path where oceansDB databases files are saved
+    """
+    dbpath = os.getenv('OCEANSDB_DIR', '~/.config/oceansdb')
+    return os.path.expanduser(dbpath).replace('/', os.path.sep)
 
 
 class Dataset_flex(object):
