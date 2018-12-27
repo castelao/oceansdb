@@ -63,7 +63,7 @@ def woa_profile_from_dap(var, d, lat, lon, depth, cfg):
     xn = (np.abs(lon-dataset['lon'][:])).argmin()
     yn = (np.abs(lat-dataset['lat'][:])).argmin()
 
-    if re.match("temperature\d?$", var):
+    if re.match(r'temperature\d?$', var):
         mn = ma.masked_values(dataset.t_mn.t_mn[dn, :, yn, xn].reshape(
             dataset['depth'].shape[0]), dataset.t_mn.attributes['_FillValue'])
         sd = ma.masked_values(dataset.t_sd.t_sd[dn, :, yn, xn].reshape(
@@ -73,7 +73,7 @@ def woa_profile_from_dap(var, d, lat, lon, depth, cfg):
         # Use this in the future. A minimum # of samples
         # dd = ma.masked_values(dataset.t_dd.t_dd[dn, :, yn, xn].reshape(
         #    dataset['depth'].shape[0]), dataset.t_dd.attributes['_FillValue'])
-    elif re.match("salinity\d?$", var):
+    elif re.match(r'salinity\d?$', var):
         mn = ma.masked_values(dataset.s_mn.s_mn[dn, :, yn, xn].reshape(
             dataset['depth'].shape[0]), dataset.s_mn.attributes['_FillValue'])
         sd = ma.masked_values(dataset.s_sd.s_sd[dn, :, yn, xn].reshape(
