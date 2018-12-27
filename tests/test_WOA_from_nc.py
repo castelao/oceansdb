@@ -199,4 +199,9 @@ def test_horizontalSurface_coincidentLatLon():
     """
     db = WOA()
     t = db['sea_water_temperature'].extract(var='mean', doy=136.875, depth=43,
-            lon = np.arange(-180, -170, 1), lat = np.arange(-50, -40, 1))
+                                            lon = np.arange(-180, -170, 1),
+                                            lat = np.arange(-50, -40, 1),
+                                            mode = 'nearest')
+    t = db['sea_water_temperature'].extract(var='mean', doy=136.875, depth=43,
+                                            lon = np.arange(-180, -170, 1),
+                                            lat = np.arange(-50, -40, 1))
