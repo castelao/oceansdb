@@ -3,7 +3,6 @@
 """ Module to handle World Ocean Atlas (WOA) climatology
 """
 
-import os
 from os.path import expanduser
 import re
 from datetime import datetime
@@ -206,8 +205,8 @@ class WOA_var_nc(object):
         subset = {}
         for v in var:
             subset[v] = ma.asanyarray([
-                self.ncs[tnn][v][0, idx['zn'], idx['yn'], idx['xn']] \
-                        for tnn in idx['tn']])
+                self.ncs[tnn][v][0, idx['zn'], idx['yn'], idx['xn']]
+                for tnn in idx['tn']])
         return subset, dims
 
     def nearest(self, doy, depth, lat, lon, var):
