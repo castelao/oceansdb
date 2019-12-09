@@ -59,3 +59,20 @@ def test_lon_cyclic():
         h2 = db['topography'].extract(lat=17.5, lon=lon2)
         assert np.allclose(h1['height'], h2['height']), \
                 "Different height between: %s and %s" % (lon1, lon2)
+
+
+def test_resolution():
+    """Test different resolutions of ETOPO
+
+       Test in places where the two resolutions give different values to
+       validate the result
+    """
+    # 5 min arc resolution
+    db = ETOPO(resolution='5min')
+    h5min = db['topography'].extract(lat=-67, lon=103)
+    assert np.allclose(h5min['height'], [1585.0])
+
+    # 1 min arc resolution
+    db = ETOPO(resolution='1min')
+    h1min = db['topography'].extract(lat=-67, lon=103)
+    assert np.allclose(h1min['height'], [-26])

@@ -83,9 +83,9 @@ Using CARS instead of WOA:
     >>> db = oceansdb.CARS()
     >>> t = db['sea_water_temperature'].extract(var='mean', doy=136.875, lat=17.48, lon=[-39, -37.5, -35.2], depth=[0,10,120,280])
 
-Or to get topography for one point:
+Or to get topography for one point from the 1 min arc resolution:
 
 .. code-block:: python
 
-    >>> db = oceansdb.ETOPO()
+    >>> db = oceansdb.ETOPO(resolution='1min')
     >>> h = db['topography'].extract(lat=17.5, lon=0)
