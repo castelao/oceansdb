@@ -2,7 +2,7 @@
     "rel_path": "etopo",
     "vars": {
         "topography": {
-            "default_resolution": "1min",
+            "default_resolution": "5min",
             "5min": {
                 "default_tscale": "stationary",
 		"varnames": {

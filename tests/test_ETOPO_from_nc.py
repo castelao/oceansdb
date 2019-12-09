@@ -29,16 +29,16 @@ def test_coincident_gridpoint():
     db = ETOPO()
 
     h = db['topography'].extract(lat=17.5, lon=0)
-    assert np.allclose(h['height'], [298.])
+    assert np.allclose(h['height'], [305.])
 
     h = db['topography'].extract(lat=[17.5, 18.5], lon=0)
-    assert np.allclose(h['height'], [298., 375.])
+    assert np.allclose(h['height'], [305., 335.])
 
     h = db['topography'].extract(lat=17.5, lon=[0, 0.25])
-    assert np.allclose(h['height'], [298., 310.])
+    assert np.allclose(h['height'], [305., 305.])
 
     h = db['topography'].extract(lat=[17.5, 18.5], lon=[0, 0.25])
-    assert np.allclose(h['height'], [[298., 310.], [376., 381.]])
+    assert np.allclose(h['height'], [[305., 305.], [335., 335.]])
 
 
 def test_lon_cyclic():
