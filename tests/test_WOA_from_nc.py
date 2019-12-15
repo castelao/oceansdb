@@ -72,6 +72,23 @@ def test_coincident_gridpoint():
             [[25.17827606, 24.60449791], [25.25433731, 24.62145996]])
 
 
+def test_only_one_coincident_gridpoint():
+    """Makes difference if only lat, or only lon, is coincident
+
+       Because lat/lon is interpolated together as a 2D space, if only
+       one coordinate is coincident it should be instead a 1D interpolation.
+    """
+    db = WOA('WOA13')
+
+    t = db['sea_water_temperature'].extract(var='t_mn', doy=136.875,
+            depth=0, lat=-14.03, lon=62.5)
+    assert np.allclose(t['t_mn'], [27.41223907])
+
+    t = db['sea_water_temperature'].extract(var='t_mn', doy=136.875,
+            depth=0, lat=-12.5, lon=62.03)
+    assert np.allclose(t['t_mn'], [27.76179314])
+
+
 def test_lon_cyclic():
     db = WOA()
 

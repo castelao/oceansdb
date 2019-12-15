@@ -10,13 +10,18 @@ def cropIndices(dims, lat, lon, depth=None, doy=None):
         Assuming that the dataset have the dimensions given by
           dims, this function return the indices to conform with
           the given coordinates (lat, lon, ...)
+
+        ATTENTION: To address a bug when only lat, or only lon, are coincident
+          to the input, cropIndices is now taking one extra point around the
+          required to cover the desired output. This is not the optimal
+          solution, but a temporary one.
     """
     dims_out = {}
     idx = {}
     
     yn = slice(
-            np.nonzero(dims['lat'] <= lat.min())[0].max(),
-            np.nonzero(dims['lat'] >= lat.max())[0].min() + 1)
+            np.nonzero(dims['lat'] < lat.min())[0].max(),
+            np.nonzero(dims['lat'] > lat.max())[0].min() + 1)
     dims_out['lat'] = np.atleast_1d(dims['lat'][yn])
     idx['yn'] = yn
 
@@ -26,8 +31,8 @@ def cropIndices(dims, lat, lon, depth=None, doy=None):
             dims['lon'].tolist() +
             (dims['lon'] + 360).tolist())
     xn_ext = list(4 * list(range(dims['lon'].shape[0])))
-    xn_start = np.nonzero(lon_ext <= lon.min())[0].max()
-    xn_end = np.nonzero(lon_ext >= lon.max())[0].min()
+    xn_start = np.nonzero(lon_ext < lon.min())[0].max()
+    xn_end = np.nonzero(lon_ext > lon.max())[0].min()
     xn = xn_ext[xn_start:xn_end+1]
     dims_out['lon'] = np.atleast_1d(lon_ext[xn_start:xn_end+1])
     idx['xn'] = xn
