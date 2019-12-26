@@ -58,3 +58,31 @@ def test_coincident_gridpoint():
             depth=[0, 10], lat=[17.5, 12.5], lon=322.5)
     assert np.allclose(t['mn'],
             [[24.61333538, 23.78240879], [24.7047015, 23.97279877]])
+
+
+def valid_mean_masked_std():
+    """Position with valid mean but masked standard deviation
+
+       This was a special case for CoTeDe's quality control where there is a
+       reference mean value but can't scale the variability since there is no
+       standard deviation.
+
+       I checked this values manually, directly from the original CARS'
+       netCDF.
+    """
+    t = db['sea_water_temperature'].extract(var='mn', doy=156,
+            lat=-30, lon=15, depth=1000)
+    assert np.allclose(t['mn'], [3.365484633192386])
+
+    t = db['sea_water_temperature'].extract(var='std_dev', doy=156,
+            lat=-30, lon=15, depth=1000)
+    assert ma.is_masked(t['std_dev'])
+
+    t = db['sea_water_temperature'].extract(var='mn', doy=156,
+            lat=-30, lon=15, depth=[475, 500])
+    assert np.allclose(t['mn'], [6.576306195708654, 6.205499360879657])
+
+    t = db['sea_water_temperature'].extract(var='std_dev', doy=156,
+            lat=-30, lon=15, depth=1000)
+    assert np.allclose(t['std_dev'][0], [0.7555582683533487])
+    assert ma.is_masked(t['std_dev'][1])
