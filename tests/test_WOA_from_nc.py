@@ -200,10 +200,29 @@ def test_get_surface():
             lon=[-117, -114, -112, -105, -99, -93])
 
 
-def notest_get_track():
+def test_extract_track():
     db = WOA()
-    db['sea_water_temperature'].get_track(doy=[datetime.now()], depth=0, lat=[10], lon=[330])
-    db['sea_water_temperature'].get_track(doy=2*[datetime.now()], depth=0, lat=[10, 12], lon=[330, -35])
+    t = db['sea_water_temperature'].extract_track(var='t_mn',
+                                                  doy=34,
+                                                  depth=0,
+                                                  lat=[10],
+                                                  lon=[330])
+    assert np.allclose(t['t_mn'], [25.49964])
+
+    t = db['sea_water_temperature'].extract_track(var='t_mn',
+                                                  doy=34,
+                                                  depth=0,
+                                                  lat=[10, 12],
+                                                  lon=[330, -35])
+    assert np.allclose(t['t_mn'], [25.49964 , 25.218174])
+
+    t = db['sea_water_temperature'].extract_track(var='t_mn',
+                                                  doy=[34, 208],
+                                                  depth=0,
+                                                  lat=[10, 12],
+                                                  lon=[330, -35])
+    assert np.allclose(t['t_mn'], [25.49964 , 26.933895])
+
 
 
 def test_dev():
