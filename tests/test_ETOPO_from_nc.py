@@ -76,3 +76,13 @@ def test_resolution():
     db = ETOPO(resolution='1min')
     h1min = db['topography'].extract(lat=-67, lon=103)
     assert np.allclose(h1min['height'], [-26])
+
+
+def test_extract_track():
+    db = ETOPO()
+
+    h = db['topography'].extract_track(lat=[17.5, 18.5], lon=[0, 0.25])
+    assert np.allclose(h['height'], [305., 335.])
+
+    h = db['topography'].extract_track(lat=[12, 15], lon=[-38, -35])
+    assert np.allclose(h['height'], [-4895.982 , -5959.1216])

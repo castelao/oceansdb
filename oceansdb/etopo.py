@@ -186,6 +186,46 @@ class ETOPO_var_nc(object):
 
         return output
 
+    def extract_track(self, mode=None, **kwargs):
+        """
+
+            Possible scenarios:
+              - Track:   doy{1,n}, depth{1,n2}, lat{n}, lon{n}
+        """
+        for k in kwargs:
+            assert k in ['var', 'lat', 'lon'], \
+                    "Wrong dimension to extract, check the manual"
+
+        if 'var' in kwargs:
+            var = np.atleast_1d(kwargs['var'])
+        else:
+            var = np.asanyarray(self.KEYS)
+
+        lat = np.atleast_1d(kwargs['lat'])
+        lon = np.atleast_1d(kwargs['lon'])
+
+        assert lat.shape == lon.shape
+
+        output = {}
+        for v in var:
+            output[v] = []
+
+        for y, x in zip(lat, lon):
+            if mode == 'nearest':
+                tmp = self.nearest(
+                        np.array([y]), np.array([x]), var)
+            else:
+                tmp = self.interpolate(
+                        np.array([y]), np.array([x]), var)
+
+            for v in tmp:
+                output[v].append(tmp[v])
+
+        for v in output:
+            output[v] = np.atleast_1d(np.squeeze(output[v]))
+
+        return output
+
     def extract(self, mode=None, **kwargs):
         """
 
