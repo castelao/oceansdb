@@ -420,17 +420,23 @@ class WOA_var_nc(object):
 
         assert lat.shape == lon.shape
 
+        if doy.shape == (1,):
+            doy = doy[0] * np.ones(lat.shape, dtype='i')
+
+        if depth.shape == (1,):
+            depth = depth[0] * np.ones(lat.shape, dtype='i')
+
         output = {}
         for v in var:
             output[v] = []
 
-        for y, x in zip(lat, lon):
+        for t, z, y, x in zip(doy, depth, lat, lon):
             if mode == 'nearest':
                 tmp = self.nearest(
-                        doy, depth, np.array([y]), np.array([x]), var)
+                        np.array([t]), np.array([z]), np.array([y]), np.array([x]), var)
             else:
                 tmp = self.interpolate(
-                        doy, depth, np.array([y]), np.array([x]), var)
+                        np.array([t]), np.array([z]), np.array([y]), np.array([x]), var)
 
             for v in tmp:
                 output[v].append(tmp[v])
