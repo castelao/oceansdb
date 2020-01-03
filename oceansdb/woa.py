@@ -169,7 +169,8 @@ class WOA_var_nc(object):
         mfrac = 365/12.
         for nc in self.ncs:
             assert nc.variables['time'].size == 1
-            self.dims['time'].append(mfrac * nc['time'][0])
+            assert nc.variables['time'].units[:6] == 'months'
+            self.dims['time'].append(mfrac * (nc['time'][0] % 12))
         self.dims['time'] = np.array(self.dims['time'])
 
     def set_keys(self):

@@ -44,7 +44,7 @@ def test_oceansites_nomenclature():
 
 # ==== Request points coincidents to the WOA gridpoints
 def test_coincident_gridpoint():
-    db = WOA()
+    db = WOA(dbname='WOA13')
 
     t = db['sea_water_temperature'].extract(var='t_mn', doy=136.875,
             depth=0, lat=17.5, lon=-37.5)
@@ -78,7 +78,7 @@ def test_only_one_coincident_gridpoint():
        Because lat/lon is interpolated together as a 2D space, if only
        one coordinate is coincident it should be instead a 1D interpolation.
     """
-    db = WOA('WOA13')
+    db = WOA(dbname='WOA13')
 
     t = db['sea_water_temperature'].extract(var='t_mn', doy=136.875,
             depth=0, lat=-14.03, lon=62.5)
@@ -121,7 +121,7 @@ def test_no_data_available():
 
 def test_extract_overlimit():
     """ Thest a request over the limits of the database """
-    db = WOA()
+    db = WOA(dbname='WOA13')
 
     t = db['sea_water_temperature'].extract(var='t_mn', doy=136.875,
             depth=5502, lat=17.5, lon=-37.5)
@@ -147,7 +147,7 @@ def test_interpolate_partially_insuficient_data():
 
 
 def test_get_point():
-    db = WOA()
+    db = WOA(dbname='WOA13')
 
     t = db['sea_water_temperature'].extract(var='t_mn', doy=90,
             depth=0, lat=17.5, lon=-37.5)
@@ -164,7 +164,7 @@ def test_get_point_inland():
 
 
 def test_get_profile():
-    db = WOA()
+    db = WOA(dbname='WOA13')
 
     t = db['sea_water_temperature'].extract(var='mean', doy=10,
             depth=[0,10], lat=10, lon=330)
@@ -201,7 +201,7 @@ def test_get_surface():
 
 
 def test_extract_track():
-    db = WOA()
+    db = WOA(dbname='WOA13')
     t = db['sea_water_temperature'].extract_track(var='t_mn',
                                                   doy=34,
                                                   depth=0,
