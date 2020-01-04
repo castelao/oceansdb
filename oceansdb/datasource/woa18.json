@@ -274,7 +274,7 @@
 		"annual": [
                     {
                         "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/salinity/netcdf/decav/5deg/woa18_decav_s00_5d.nc",
-                        "md5hash": "4116d4e94471a922737f32816be12763"
+                        "md5hash": "6a2378fa6f5f2c80ce698535ad613a85"
                         }
                     ],
 		"monthly": [
