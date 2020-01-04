@@ -43,7 +43,7 @@ def test_oceansites_nomenclature():
 
 
 # ==== Request points coincidents to the WOA gridpoints
-def test_coincident_gridpoint():
+def test_coincident_gridpoint_13():
     db = WOA(dbname='WOA13')
 
     t = db['sea_water_temperature'].extract(var='t_mn', doy=136.875,
@@ -70,6 +70,35 @@ def test_coincident_gridpoint():
             depth=[0, 10], lat=[17.5, 12.5], lon=-37.5)
     assert np.allclose(t['t_mn'],
             [[25.17827606, 24.60449791], [25.25433731, 24.62145996]])
+
+
+def test_coincident_gridpoint():
+    db = WOA()
+
+    t = db['sea_water_temperature'].extract(var='t_mn', doy=136.875,
+            depth=0, lat=17.5, lon=-37.5)
+    assert np.allclose(t['t_mn'], [24.641016])
+
+    t = db['sea_water_temperature'].extract(var='t_mn', doy=[136.875, 228.125],
+            depth=0, lat=17.5, lon=-37.5)
+    assert np.allclose(t['t_mn'], [24.641016, 26.392792])
+
+    t = db['sea_water_temperature'].extract(var='t_mn', doy=136.875,
+            depth=[0, 10], lat=17.5, lon=-37.5)
+    assert np.allclose(t['t_mn'], [24.641016, 24.636028])
+
+    t = db['sea_water_temperature'].extract(var='t_mn', doy=136.875,
+            depth=0, lat=[17.5, 12.5], lon=-37.5)
+    assert np.allclose(t['t_mn'], [25.167528, 24.641016])
+
+    t = db['sea_water_temperature'].extract(var='t_mn', doy=136.875,
+            depth=0, lat=17.5, lon=[-37.5, -32.5])
+    assert np.allclose(t['t_mn'], [24.641016, 23.979605])
+
+    t = db['sea_water_temperature'].extract(var='t_mn', doy=136.875,
+            depth=[0, 10], lat=[17.5, 12.5], lon=-37.5)
+    assert np.allclose(t['t_mn'],
+            [[25.167528, 24.641016], [25.190489, 24.636028]])
 
 
 def test_only_one_coincident_gridpoint():

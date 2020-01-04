@@ -455,7 +455,7 @@ class WOA_var_nc(object):
 class WOA(object):
     """
     """
-    def __init__(self, dbname='WOA13', resolution=None, tscale=None):
+    def __init__(self, dbname='WOA18', resolution=None, tscale=None):
         self.dbname = dbname
         self.data = {'sea_water_temperature': None,
                 'sea_water_salinity': None}
