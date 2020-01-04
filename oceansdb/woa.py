@@ -390,7 +390,7 @@ class WOA_var_nc(object):
 
         return output
 
-    def extract_track(self, mode=None, **kwargs):
+    def track(self, mode=None, **kwargs):
         """
 
             Possible scenarios:
