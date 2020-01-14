@@ -346,6 +346,179 @@
 		        }
                     ]
                 }
+            },
+        "dissolved_oxygen": {
+            "default_resolution": "5deg",
+            "1deg": {
+                "default_tscale": "seasonal",
+		"varnames": {
+		    "latitude": "lat",
+		    "longitude": "lon",
+		    "mean": "o_mn",
+                    "standard_deviation": "o_sd",
+                    "standard_error": "o_se",
+                    "number_of_observations": "o_dd"
+		    },
+		"annual": [
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/1.00/woa18_all_o00_01.nc",
+                        "md5hash": "c022221423e15285ef69427b672f3736"
+                        }
+                    ],
+		"monthly": [
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/1.00/woa18_all_o01_01.nc",
+                        "md5hash": "beca4d668758d0526415e77766b5adeb"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/1.00/woa18_all_o02_01.nc",
+                        "md5hash": "8943c953226326b432997ae7af7dca95"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/1.00/woa18_all_o03_01.nc",
+                        "md5hash": "e7bfb3195927e85da4ca42300e19bdf7"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/1.00/woa18_all_o04_01.nc",
+                        "md5hash": "fc1fd84f9edff8c69238b550ecd7ba57"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/1.00/woa18_all_o05_01.nc",
+                        "md5hash": "f34845a234aba03eae342a78569c8379"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/1.00/woa18_all_o06_01.nc",
+                        "md5hash": "cdc1ba96e2e7d49afd4752902d02593c"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/1.00/woa18_all_o07_01.nc",
+                        "md5hash": "957b0246ba97e5676ed9467889e85681"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/1.00/woa18_all_o08_01.nc",
+                        "md5hash": "0b6cb146ef1c85b94a1a717491012b49"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/1.00/woa18_all_o09_01.nc",
+                        "md5hash": "a34027567546d6d4c9660038333fa631"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/1.00/woa18_all_o10_01.nc",
+                        "md5hash": "1f9c132e05ea5cb0b6bc23185e25cef0"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/1.00/woa18_all_o11_01.nc",
+                        "md5hash": "ebda216ff34219914daa32e3a399746d"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/1.00/woa18_all_o12_01.nc",
+                        "md5hash": "2fdd0a84978f0756f8dd242801841c20"
+                        }
+                    ],
+                "seasonal": [
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/1.00/woa18_all_o13_01.nc",
+                        "md5hash": "971ac80c1b00bda140432adac06efeac"
+                        },
+	            {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/1.00/woa18_all_o14_01.nc",
+			"md5hash": "8fdad539a92de3fb095f7af2f403834e"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/1.00/woa18_all_o15_01.nc",
+                        "md5hash": "84e4ef7edd5031287a1f2bf280974046"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/1.00/woa18_all_o16_01.nc",
+                        "md5hash": "67d0958e4aa1ca827d10dd08e9ccf6d9"
+                        }
+                    ]
+                },
+            "5deg": {
+                "default_tscale": "seasonal",
+		"varnames": {
+		    "latitude": "lat",
+		    "longitude": "lon",
+		    "mean": "o_mn",
+                    "standard_deviation": "o_sd",
+                    "standard_error": "o_se",
+                    "number_of_observations": "o_dd"
+		    },
+		"annual": [
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/5deg/woa18_all_o00_5d.nc",
+                        "md5hash": "18f3f480d4552c032b88f2ca7ebcfc52"
+                        }
+                    ],
+		"monthly": [
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/5deg/woa18_all_o01_5d.nc",
+                        "md5hash": "8a8ebace535d8fc1c7daff2107a5f945"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/5deg/woa18_all_o02_5d.nc",
+                        "md5hash": "a15b1a75c377874719a35bad3e2cfffa"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/5deg/woa18_all_o03_5d.nc",
+                        "md5hash": "45f8a61e7fb667ee0f93f7cb68d27956"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/5deg/woa18_all_o04_5d.nc",
+                        "md5hash": "4854756e0f79d5c033b5b681a6b934e5"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/5deg/woa18_all_o05_5d.nc",
+                        "md5hash": "4ba62667949a10aebfb38594142321ee"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/5deg/woa18_all_o06_5d.nc",
+                        "md5hash": "5b5495ab661cb21919a49283978ead49"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/5deg/woa18_all_o07_5d.nc",
+                        "md5hash": "f13646e18f4bf325ebf8744d4da06cba"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/5deg/woa18_all_o08_5d.nc",
+                        "md5hash": "73f1d097df33e603ea3afc995553df08"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/5deg/woa18_all_o09_5d.nc",
+                        "md5hash": "b46c25ac3ce1329b518ee7f793e8504d"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/5deg/woa18_all_o10_5d.nc",
+                        "md5hash": "39da780f55dfa0204813d744743939c7"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/5deg/woa18_all_o11_5d.nc",
+                        "md5hash": "7dc4edfc37be7b73adee61a8799884a8"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/5deg/woa18_all_o12_5d.nc",
+                        "md5hash": "7ac7ceb7e60181726c13326106ea36e5"
+                        }
+                    ],
+                "seasonal": [
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/5deg/woa18_all_o13_5d.nc",
+                        "md5hash": "fd2f8d7953f4a6982026311fda0c536e"
+                        },
+	            {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/5deg/woa18_all_o14_5d.nc",
+			"md5hash": "307752da7b6a6052f5c35ae4f64b7edb"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/5deg/woa18_all_o15_5d.nc",
+                        "md5hash": "d12e9fe986652fa6e2b90a7b03241cca"
+                        },
+                    {
+                        "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/oxygen/netcdf/all/5deg/woa18_all_o16_5d.nc",
+                        "md5hash": "87007f9f373b928171d05cb02f443281"
+                        }
+                    ]
+                }
             }
         }
     }

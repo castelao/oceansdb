@@ -458,7 +458,9 @@ class WOA(object):
     def __init__(self, dbname='WOA18', resolution=None, tscale=None):
         self.dbname = dbname
         self.data = {'sea_water_temperature': None,
-                'sea_water_salinity': None}
+                'sea_water_salinity': None,
+                'dissolved_oxygen': None,
+                }
         self.resolution = resolution
         self.tscale = tscale
 
@@ -470,6 +472,8 @@ class WOA(object):
             return self['sea_water_temperature']
         elif item in ['PSAL', 'salinity']:
             return self['sea_water_salinity']
+        elif item in ['DOXY']:
+            return self['dissolved_oxygen']
 
         if self.data[item] is None:
             self.data[item] = WOA_var_nc(source=dbsource(
