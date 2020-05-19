@@ -230,29 +230,29 @@ def test_get_surface():
 
 
 def test_track():
-    db = WOA(dbname='WOA13')
-    t = db['sea_water_temperature'].track(var='t_mn',
-                                          doy=34,
-                                          depth=0,
-                                          lat=[10],
-                                          lon=[330])
-    assert np.allclose(t['t_mn'], [25.49964])
+    db = WOA(dbname='WOA18')
+    params = [
+            [{"doy": 34, "depth": 0, "lat": 10, "lon": 330},
+                [25.51016]],
+            [{"doy": 120, "depth": 0, "lat": 10, "lon": 330},
+                [25.795078]],
+            [{"doy": 34, "depth": 300, "lat": 10, "lon": 330},
+                [10.52824]],
+            [{"doy": 34, "depth": 0, "lat": 12, "lon": -25},
+                [24.412867]],
+            [{"doy": [34, 120], "depth": 0, "lat": 10, "lon": 330},
+                [25.51016, 25.795078]],
+            [{"doy": 34, "depth": [0, 300], "lat": 10, "lon": 330},
+                [25.51016, 10.52824]],
+            [{"doy": 34, "depth": 0, "lat": [10, 12], "lon": [330, -25]},
+                [25.51016, 24.412867]],
+            [{"doy": [34, 120], "depth": 0, "lat": [10, 12], "lon": [330, -25]},
+                [25.51016, 24.953312]],
+            ]
 
-    t = db['sea_water_temperature'].track(var='t_mn',
-                                          doy=34,
-                                          depth=0,
-                                          lat=[10, 12],
-                                          lon=[330, -35])
-    assert np.allclose(t['t_mn'], [25.49964 , 25.218174])
-
-    t = db['sea_water_temperature'].track(var='t_mn',
-                                          doy=[34, 208],
-                                          depth=0,
-                                          lat=[10, 12],
-                                          lon=[330, -35])
-    assert np.allclose(t['t_mn'], [25.49964 , 26.933895])
-
-
+    for p in params:
+        t = db['sea_water_temperature'].track(var='t_mn', **p[0])
+        assert np.allclose(t['t_mn'], p[1])
 
 def test_dev():
     db = WOA()

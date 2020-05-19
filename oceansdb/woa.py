@@ -421,11 +421,15 @@ class WOA_var_nc(object):
 
         assert lat.shape == lon.shape
 
-        if doy.shape == (1,):
-            doy = doy[0] * np.ones(lat.shape, dtype='i')
+        N = max(doy.size, depth.size, lat.size)
 
+        if doy.shape == (1,):
+            doy = doy * np.ones(N, dtype='i')
         if depth.shape == (1,):
-            depth = depth[0] * np.ones(lat.shape, dtype='i')
+            depth = depth * np.ones(N, dtype='i')
+        if lat.shape == (1,):
+            lat = lat * np.ones(N, dtype='i')
+            lon = lon * np.ones(N, dtype='i')
 
         output = {}
         for v in var:
