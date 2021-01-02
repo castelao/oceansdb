@@ -447,7 +447,7 @@ class WOA_var_nc(object):
                 output[v].append(tmp[v])
 
         for v in output:
-            output[v] = np.atleast_1d(np.squeeze(output[v]))
+            output[v] = np.atleast_1d(ma.array(output[v]).squeeze())
 
         return output
 
