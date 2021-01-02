@@ -270,3 +270,17 @@ def test_horizontalSurface_coincidentLatLon():
     t = db['sea_water_temperature'].extract(var='mean', doy=136.875, depth=43,
                                             lon = np.arange(-180, -170, 1),
                                             lat = np.arange(-50, -40, 1))
+
+def test_track_on_land():
+    """A track on land should return masked NaN values
+    """
+    db = WOA()
+    t = db["sea_water_temperature"].track(
+        var="mean",
+        doy=136.875,
+        depth=0,
+        lon=[1.4357, 1.4376],
+        lat=[43.5938, 43.5980]
+    )
+    for v in t:
+        assert ma.getmaskarray(t[v]).all()
