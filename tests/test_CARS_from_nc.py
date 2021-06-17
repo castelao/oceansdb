@@ -86,3 +86,16 @@ def valid_mean_masked_std():
             lat=-30, lon=15, depth=1000)
     assert np.allclose(t['std_dev'][0], [0.7555582683533487])
     assert ma.is_masked(t['std_dev'][1])
+
+
+def test_special_cases_near_land():
+    """Specific cases from WOD
+
+    Simon pointed 3 profiles from WOD that would fail
+    """
+    db = CARS()
+
+    coords = [[-67.4683, 109.91, -1.55866820], [-4.32, 114.65, 28.42269382], [-66.95, 111.7, -1.47608867]]
+    for (lat, lon, ans) in coords:
+        t = db["sea_water_temperature"].extract(var="mn", doy=90, depth=0, lat=lat, lon=lon)
+        assert np.allclose(t["mn"], ans)

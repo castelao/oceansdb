@@ -322,16 +322,18 @@ class CARS_var_nc(object):
                 ind = np.array(
                         [np.unique(points[:, i]).size > 1 for i in
                             range(points.shape[1])])
-                assert ind.any()
 
-                # These interpolators understand NaN, but not masks.
-                values[ma.getmaskarray(values)] = np.nan
+                if ind.any():
+                    # These interpolators understand NaN, but not masks.
+                    values[ma.getmaskarray(values)] = np.nan
 
-                values_out = griddata(
+                    values_out = griddata(
                         np.atleast_1d(np.squeeze(points[:, ind])),
                         values,
                         np.atleast_1d(np.squeeze(points_out[:, ind]))
-                        )
+                    )
+                else:
+                    values_out = values
 
                 # Remap the interpolated value back into a 4D array
                 idx = np.isfinite(values_out)
