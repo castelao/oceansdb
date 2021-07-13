@@ -34,8 +34,8 @@ def cropIndices(dims, lat, lon, depth=None, doy=None):
     xn_start = np.nonzero(lon_ext < lon.min())[0].max()
     xn_end = np.nonzero(lon_ext > lon.max())[0].min()
     xn = xn_ext[xn_start:xn_end+1]
-    dims_out['lon'] = np.atleast_1d(lon_ext[xn_start:xn_end+1])
-    idx['xn'] = xn
+    dims_out['lon'], i = np.unique(lon_ext[xn_start:xn_end+1], return_index=True)
+    idx['xn'] = [xn[ii] for ii in i]
 
     if depth is not None:
         zn = slice(
