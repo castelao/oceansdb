@@ -32,7 +32,9 @@ def cropIndices(dims, lat, lon, depth=None, doy=None):
             (dims['lon'] + 360).tolist())
     xn_ext = list(4 * list(range(dims['lon'].shape[0])))
     xn_start = np.nonzero(lon_ext <= lon.min())[0].max()
+    module_logger.debug("xn_start: {}".format(xn_start))
     xn_end = np.nonzero(lon_ext >= lon.max())[0].min()
+    module_logger.debug("xn_end: {}".format(xn_end))
     xn = xn_ext[xn_start:xn_end+1]
     dims_out['lon'], i = np.unique(lon_ext[xn_start:xn_end+1], return_index=True)
     idx['xn'] = [xn[ii] for ii in i]
