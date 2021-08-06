@@ -42,6 +42,19 @@ def test_access_coordinates():
         assert cars[dataset]["depth_ann"][63] == 1800.
         assert cars[dataset]["depth_semiann"][54] == 1000.
 
+def test_access_variables():
+    cars = CARS()
+
+    dataset = "sea_water_temperature"
+    assert ma.allclose(cars[dataset]["mean"][2, 180, 644], 25.803320464498803)
+    assert ma.allclose(cars[dataset]["nq"][2, 180, 644], 1003)
+    assert ma.allclose(cars[dataset]["std_dev"][2, 180, 644], 1.23336334365892)
+
+    dataset = "sea_water_salinity"
+    assert ma.allclose(cars[dataset]["mean"][2, 180, 644], 36.459932400469995)
+    assert ma.allclose(cars[dataset]["nq"][2, 180, 644], 837)
+    assert ma.allclose(cars[dataset]["std_dev"][2, 180, 644], 0.23606427296171395)
+
 # ==== Request points coincidents to the CARS gridpoints
 def test_coincident_gridpoint():
     db = CARS()
