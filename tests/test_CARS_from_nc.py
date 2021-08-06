@@ -30,6 +30,18 @@ def test_oceansites_nomenclature():
     #assert db['sea_water_salinity'] == db['PSAL']
 
 
+def test_access_coordinates():
+    """Direct access to coordinates and some checking values
+    """
+    cars = CARS()
+
+    for dataset in ("sea_water_temperature", "sea_water_salinity"):
+        assert cars[dataset]["lon"][644] == 322.0
+        assert cars[dataset]["lat"][180] == 15.
+        assert cars[dataset]["depth"][78] == 5500.
+        assert cars[dataset]["depth_ann"][63] == 1800.
+        assert cars[dataset]["depth_semiann"][54] == 1000.
+
 # ==== Request points coincidents to the CARS gridpoints
 def test_coincident_gridpoint():
     db = CARS()
