@@ -160,6 +160,8 @@ class CARS_var_nc(object):
             !!!ATENTION!!! Need to improve this.
             cars_data() should be modified to be used when loading ncs with source, thus avoiding the requirement on this getitem but running transparent.
         """
+        item = self.ncs[0].aliases.get(item, item)
+
         if item == 'mn':
             return cars_data(self.ncs[0])
         else:

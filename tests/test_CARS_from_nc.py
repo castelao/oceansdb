@@ -55,6 +55,20 @@ def test_access_variables():
     assert ma.allclose(cars[dataset]["nq"][2, 180, 644], 837)
     assert ma.allclose(cars[dataset]["std_dev"][2, 180, 644], 0.23606427296171395)
 
+def test_access_through_aliases(zn=2, xn=180, yn=644):
+    """Use aliases from datasource descriptor to fix varname
+    """
+    cars = CARS()
+
+    aliases = (("std_dev", "standard_deviation"), ("nq", "number_of_observations"))
+    for dataset in ("sea_water_temperature", "sea_water_salinity"):
+        for a in aliases:
+            assert ma.allclose(cars[dataset][a[0]][zn, xn, yn], cars[dataset][a[1]][zn, xn, yn])
+
+    assert ma.allclose(cars[dataset]["lat"][xn], cars[dataset]["latitude"][xn])
+    assert ma.allclose(cars[dataset]["lon"][yn], cars[dataset]["longitude"][yn])
+
+
 # ==== Request points coincidents to the CARS gridpoints
 def test_coincident_gridpoint():
     db = CARS()
