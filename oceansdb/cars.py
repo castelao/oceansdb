@@ -179,8 +179,7 @@ class CARS_var_nc(object):
             cars_data() should be modified to be used when loading ncs with source, thus avoiding the requirement on this getitem but running transparent.
         """
         item = self.ncs[0].aliases.get(item, item)
-
-        if item == 'mn':
+        if item == "climatology":
             return cars_data(self.ncs[0])
         else:
             return self.ncs[0].variables[item]
@@ -254,7 +253,7 @@ class CARS_var_nc(object):
 
         subset = {}
         for v in var:
-            if v == 'mn':
+            if v == 'climatology':
                 mn = []
                 for d in doy:
                     t = 2 * np.pi * d/366
