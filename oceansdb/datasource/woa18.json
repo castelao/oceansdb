@@ -5,14 +5,14 @@
             "default_resolution": "5deg",
             "1deg": {
                 "default_tscale": "seasonal",
-		"varnames": {
-		    "latitude": "lat",
-		    "longitude": "lon",
-		    "mean": "t_mn",
+                "varnames": {
+                    "latitude": "lat",
+                    "longitude": "lon",
+                    "mean": "t_mn",
                     "standard_deviation": "t_sd",
                     "standard_error": "t_se",
                     "number_of_observations": "t_dd"
-		    },
+                    },
 		"annual": [
                     {
                         "url": "https://data.nodc.noaa.gov/woa/WOA18/DATA/temperature/netcdf/decav/1.00/woa18_decav_t00_01.nc",
@@ -90,10 +90,10 @@
                 },
             "5deg": {
                 "default_tscale": "seasonal",
-		"varnames": {
-		    "latitude": "lat",
-		    "longitude": "lon",
-		    "mean": "t_mn",
+                "varnames": {
+                    "latitude": "lat",
+                    "longitude": "lon",
+                    "mean": "t_mn",
                     "standard_deviation": "t_sd",
                     "standard_error": "t_se",
                     "number_of_observations": "t_dd"
