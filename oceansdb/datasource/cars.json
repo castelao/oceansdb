@@ -10,6 +10,7 @@
                     "longitude": "lon",
                     "standard_deviation": "std_dev",
                     "number_of_observations": "nq",
+                    "t_mn": "mn",
                     "t_sd": "std_dev",
                     "t_dd": "nq"
                     },
@@ -31,6 +32,7 @@
                     "longitude": "lon",
                     "standard_deviation": "std_dev",
                     "number_of_observations": "nq",
+                    "s_mn": "mn",
                     "s_sd": "std_dev",
                     "s_dd": "nq"
                     },
