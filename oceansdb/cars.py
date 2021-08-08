@@ -131,9 +131,16 @@ class cars_data(object):
         self.nc = carsfile
 
     def __getitem__(self, item):
-        """ t, z, y, x
+        """CARS climatology for the requested indices
+
+        If time is omitted, it is assumed a sequence 0:365, i.e., every
+        day of the year.
         """
-        tn, zn, yn, xn = item
+        if len(item) == 3:
+            tn = slice(0, None)
+            zn, yn, xn = item
+        else:
+            tn, zn, yn, xn = item
 
         #if type(zn) is not slice:
         #    zn = slice(zn, zn+1)
