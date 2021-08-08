@@ -12,6 +12,7 @@ download_file('http://www.marine.csiro.au/atlas/export/temperature_cars2009a.nc.
 download_file('http://www.marine.csiro.au/atlas/export/salinity_cars2009a.nc.gz', '7f78173f4ef2c0a4ff9b5e52b62dc97d')
 """
 
+import logging
 import os
 from os.path import expanduser
 import re
@@ -26,6 +27,16 @@ from scipy.interpolate import griddata
 
 from .utils import dbsource
 from .common import cropIndices
+
+module_logger = logging.getLogger(__name__)
+
+try:
+    import xarray as xr
+
+    XARRAY_AVAILABLE = True
+except ImportError:
+    XARRAY_AVAILABLE = False
+    module_logger.debug("Xarray is not available.")
 
 
 def extract(filename, doy, latitude, longitude, depth):
