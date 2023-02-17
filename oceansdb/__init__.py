@@ -2,7 +2,7 @@
 
 __author__ = 'Guilherme Castelao'
 __email__ = 'guilherme@castelao.net'
-__version__ = '0.8.14'
+__version__ = '0.8.15'
 
 
 from oceansdb.woa import WOA
