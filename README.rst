@@ -50,7 +50,7 @@ Inside python:
 .. code-block:: python
 
     >>> import oceansdb
-    >>> db = oceansdb.WOA()
+    >>> with oceansdb.WOA() as db:
 
 Find out what is available:
 

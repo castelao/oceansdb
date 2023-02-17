@@ -107,32 +107,32 @@ def woa_track_from_file(d, lat, lon, filename, varnames=None):
 
     doy = np.array([int(dd.strftime('%j')) for dd in d])
 
-    nc = netCDF4.Dataset(expanduser(filename), 'r')
+    with netCDF4.Dataset(expanduser(filename), 'r') as nc:
 
-    if varnames is None:
-        varnames = {}
-        for v in nc.variables.keys():
-            if nc.variables[v].dimensions == \
-                    (u'time', u'depth', u'lat', u'lon'):
-                        varnames[v] = v
+        if varnames is None:
+            varnames = {}
+            for v in nc.variables.keys():
+                if nc.variables[v].dimensions == \
+                        (u'time', u'depth', u'lat', u'lon'):
+                            varnames[v] = v
 
-    output = {}
-    for v in varnames:
-        output[v] = []
+        output = {}
+        for v in varnames:
+            output[v] = []
 
-    for d_n, lat_n, lon_n in zip(doy, lat, lon):
-        # Get the nearest point. In the future interpolate.
-        n_d = (np.abs(d_n - nc.variables['time'][:])).argmin()
-        n_x = (np.abs(lon_n - nc.variables['lon'][:])).argmin()
-        n_y = (np.abs(lat_n - nc.variables['lat'][:])).argmin()
+        for d_n, lat_n, lon_n in zip(doy, lat, lon):
+            # Get the nearest point. In the future interpolate.
+            n_d = (np.abs(d_n - nc.variables['time'][:])).argmin()
+            n_x = (np.abs(lon_n - nc.variables['lon'][:])).argmin()
+            n_y = (np.abs(lat_n - nc.variables['lat'][:])).argmin()
+
+            for v in varnames:
+                output[v].append(nc.variables[varnames[v]][n_d, 0, n_y, n_x])
 
         for v in varnames:
-            output[v].append(nc.variables[varnames[v]][n_d, 0, n_y, n_x])
+            output[v] = ma.fix_invalid(output[v])
 
-    for v in varnames:
-        output[v] = ma.fix_invalid(output[v])
-
-    return output
+        return output
 
 
 class WOA_URL(object):
@@ -151,6 +151,16 @@ class WOA_var_nc(object):
 
         self.load_dims(dims=['lat', 'lon', 'depth'])
         self.set_keys()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, exc_traceback):
+        self.close()
+
+    def close(self):
+        for nc in self.ncs:
+            nc.close()
 
     def __getitem__(self, item):
         return self.data[item]
@@ -483,3 +493,15 @@ class WOA(object):
             self.data[item] = WOA_var_nc(source=dbsource(
                 self.dbname, item, self.resolution, self.tscale))
         return self.data[item]
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, exc_traceback):
+        self.close()
+
+    def close(self):
+        for data_key in self.data:
+            var_nc = self.data.get(data_key)
+            if var_nc:
+                var_nc.close()

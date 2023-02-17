@@ -42,25 +42,25 @@ def extract(filename, doy, latitude, longitude, depth):
     assert (longitude >= 0) & (longitude <= 360)
     assert depth >= 0
 
-    nc = netCDF4.Dataset(filename)
+    with netCDF4.Dataset(filename) as nc:
 
-    t = 2 * np.pi * doy/366
+        t = 2 * np.pi * doy/366
 
-    Z = np.absolute(nc['depth'][:] - depth).argmin()
-    I = np.absolute(nc['lat'][:] - latitude).argmin()
-    J = np.absolute(nc['lon'][:] - longitude).argmin()
+        Z = np.absolute(nc['depth'][:] - depth).argmin()
+        I = np.absolute(nc['lat'][:] - latitude).argmin()
+        J = np.absolute(nc['lon'][:] - longitude).argmin()
 
-    # Naive solution
-    value = nc['mean'][:, I, J]
-    value[:64] += nc['an_cos'][Z, I, J] * np.cos(t) + \
-            nc['an_sin'][:, I, J] * np.sin(t)
-    value[:55] += nc['sa_cos'][Z, I, J] * np.cos(2*t) + \
-            nc['sa_sin'][:, I, J] * np.sin(2*t)
-    value = value[Z]
+        # Naive solution
+        value = nc['mean'][:, I, J]
+        value[:64] += nc['an_cos'][Z, I, J] * np.cos(t) + \
+                nc['an_sin'][:, I, J] * np.sin(t)
+        value[:55] += nc['sa_cos'][Z, I, J] * np.cos(2*t) + \
+                nc['sa_sin'][:, I, J] * np.sin(2*t)
+        value = value[Z]
 
-    std = nc['std_dev'][Z, I, J]
+        std = nc['std_dev'][Z, I, J]
 
-    return value, std
+        return value, std
 
 
 def cars_profile(filename, doy, latitude, longitude, depth):
@@ -77,33 +77,33 @@ def cars_profile(filename, doy, latitude, longitude, depth):
     assert (longitude >= 0) & (longitude <= 360)
     assert depth >= 0
 
-    nc = netCDF4.Dataset(filename)
+    with netCDF4.Dataset(filename) as nc:
 
-    t = 2 * np.pi * doy/366
+        t = 2 * np.pi * doy/366
 
-    # Improve this. Optimize to get only necessary Z
-    Z = slice(0, nc['depth'].size)
-    I = np.absolute(nc['lat'][:] - latitude).argmin()
-    J = np.absolute(nc['lon'][:] - longitude).argmin()
+        # Improve this. Optimize to get only necessary Z
+        Z = slice(0, nc['depth'].size)
+        I = np.absolute(nc['lat'][:] - latitude).argmin()
+        J = np.absolute(nc['lon'][:] - longitude).argmin()
 
-    # Not efficient, but it works
-    assert (nc['depth'][:64] == nc['depth_ann'][:]).all()
-    assert (nc['depth'][:55] == nc['depth_semiann'][:]).all()
-    value = nc['mean'][:, I, J]
-    value[:64] += nc['an_cos'][Z, I, J] * np.cos(t) + \
-            nc['an_sin'][:, I, J] * np.sin(t)
-    value[:55] += nc['sa_cos'][Z, I, J] * np.cos(2*t) + \
-            nc['sa_sin'][:, I, J] * np.sin(2*t)
-    value = value
+        # Not efficient, but it works
+        assert (nc['depth'][:64] == nc['depth_ann'][:]).all()
+        assert (nc['depth'][:55] == nc['depth_semiann'][:]).all()
+        value = nc['mean'][:, I, J]
+        value[:64] += nc['an_cos'][Z, I, J] * np.cos(t) + \
+                nc['an_sin'][:, I, J] * np.sin(t)
+        value[:55] += nc['sa_cos'][Z, I, J] * np.cos(2*t) + \
+                nc['sa_sin'][:, I, J] * np.sin(2*t)
+        value = value
 
-    output = {'depth': np.asanyarray(depth)}
-    from scipy.interpolate import griddata
-    output['value'] = griddata(nc['depth'][Z], value[Z], depth)
+        output = {'depth': np.asanyarray(depth)}
+        from scipy.interpolate import griddata
+        output['value'] = griddata(nc['depth'][Z], value[Z], depth)
 
-    for v in ['std_dev']:
-        output[v] = griddata(nc['depth'][Z], nc[v][Z, I, J], depth)
+        for v in ['std_dev']:
+            output[v] = griddata(nc['depth'][Z], nc[v][Z, I, J], depth)
 
-    return output
+        return output
 
 
 class cars_data(object):
@@ -154,6 +154,16 @@ class CARS_var_nc(object):
 
         self.load_dims(dims=['lat', 'lon', 'depth'])
         self.set_keys()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, exc_traceback):
+        self.close()
+
+    def close(self):
+        for nc in self.ncs:
+            nc.close()
 
     def __getitem__(self, item):
         """
@@ -412,3 +422,16 @@ class CARS(object):
         if self.data[item] is None:
             self.data[item] = CARS_var_nc(source=dbsource(self.dbname, item))
         return self.data[item]
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, exc_traceback):
+        self.close()
+
+    def close(self):
+        for data_key in self.data:
+            var_nc = self.data.get(data_key)
+            if var_nc:
+                var_nc.close()
+
