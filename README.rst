@@ -56,36 +56,36 @@ Find out what is available:
 
 .. code-block:: python
 
-    >>> db.keys()
+    >>>     db.keys()
 
 Average temperature at one point:
 
 .. code-block:: python
 
-    >>> t = db['sea_water_temperature'].extract(var='mean', doy=136.875, depth=0, lat=17.5, lon=-37.5)
+    >>>     t = db['sea_water_temperature'].extract(var='mean', doy=136.875, depth=0, lat=17.5, lon=-37.5)
 
 A profile of salinity:
 
 .. code-block:: python
 
-    >>> t = db['sea_water_salinity'].extract(var='mean', doy=136.875, depth=[0, 10, 15, 18], lat=17.5, lon=-37.5)
+    >>>     t = db['sea_water_salinity'].extract(var='mean', doy=136.875, depth=[0, 10, 15, 18], lat=17.5, lon=-37.5)
 
 A full depth section of temperature:
 
 .. code-block:: python
 
-    >>> t = db['sea_water_temperature'].extract(var='mean', doy=136.875, lat=17.48, lon=[-39, -37.5, -35.2])
+    >>>     t = db['sea_water_temperature'].extract(var='mean', doy=136.875, lat=17.48, lon=[-39, -37.5, -35.2])
 
 Using CARS instead of WOA:
 
 .. code-block:: python
 
-    >>> db = oceansdb.CARS()
-    >>> t = db['sea_water_temperature'].extract(var='mean', doy=136.875, lat=17.48, lon=[-39, -37.5, -35.2], depth=[0,10,120,280])
+    >>> with oceansdb.CARS() as db:
+    >>>     t = db['sea_water_temperature'].extract(var='mean', doy=136.875, lat=17.48, lon=[-39, -37.5, -35.2], depth=[0,10,120,280])
 
 Or to get topography for one point from the 1 min arc resolution:
 
 .. code-block:: python
 
-    >>> db = oceansdb.ETOPO(resolution='1min')
-    >>> h = db['topography'].extract(lat=17.5, lon=0)
+    >>> with oceansdb.ETOPO(resolution='1min') as db:
+    >>>     h = db['topography'].extract(lat=17.5, lon=0)
