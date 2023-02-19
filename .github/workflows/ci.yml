@@ -39,7 +39,7 @@ jobs:
 
     - name: Cache ETOPO
       id: cache-etopo
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: |
           ~/.config/oceansdb/etopo5.nc
@@ -51,7 +51,7 @@ jobs:
 
     - name: Cache WOA
       id: cache-woa
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: |
           ~/.config/oceansdb/woa18_decav_t13_5d.nc
@@ -62,7 +62,7 @@ jobs:
           ~/.config/oceansdb/woa18_decav_s14_5d.nc
           ~/.config/oceansdb/woa18_decav_s15_5d.nc
           ~/.config/oceansdb/woa18_decav_s16_5d.nc
-        key: ${{ runner.os }}-WOA
+        key: ${{ runner.os }}-WOA18
 
     - name: Download WOA database
       if: steps.cache-woa.outputs.cache-hit != 'true'
@@ -72,7 +72,7 @@ jobs:
 
     - name: Cache CARS
       id: cache-cars
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: |
           ~/.config/oceansdb/temperature_cars2009a.nc
