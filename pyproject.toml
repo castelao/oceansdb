@@ -9,3 +9,26 @@ build-backend = 'setuptools.build_meta'
 
 [project]
 name="oceansdb"
+description="Subsample ocean climatologies and reference data"
+readme = "README.rst"
+requires-python = ">=3.7"
+keywords = ["WOA", "World Ocean Atlas", "climatology", "oceanography",
+            "ETOPO", "temperature", "salinity", "bathymetry", "CARS"]
+classifiers=[
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: BSD License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Topic :: Scientific/Engineering"
+]
+dependencies = [
+  "numpy>=1.14",
+  "scipy>=1.1",
+  "netCDF4>=1.2.4",
+  "supportdata>=0.1.3",
+]
