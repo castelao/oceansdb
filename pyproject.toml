@@ -9,7 +9,7 @@ build-backend = 'setuptools.build_meta'
 
 [project]
 name="oceansdb"
-version="0.8.14"
+dynamic = ["version"]
 description="Subsample ocean climatologies and reference data"
 readme = "README.rst"
 requires-python = ">=3.7"
@@ -49,3 +49,13 @@ test = [
   "coverage >= 4.2",
   "supportdata >= 0.1.2",
 ]
+
+[project.urls]
+repository = "https://github.com/castelao/oceansdb"
+
+[tool.black]
+line-length = 88
+
+[tool.setuptools_scm]
+write_to = "oceansdb/version.py"
+git_describe_command = "git describe --dirty --tags --long --match 'v*' --first-parent"
