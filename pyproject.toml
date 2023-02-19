@@ -13,8 +13,13 @@ dynamic = ["version"]
 description="Subsample ocean climatologies and reference data"
 readme = "README.rst"
 requires-python = ">=3.7"
+license = {file = "LICENSE"}
 keywords = ["WOA", "World Ocean Atlas", "climatology", "oceanography",
             "ETOPO", "temperature", "salinity", "bathymetry", "CARS"]
+authors = [
+  {email = "guilherme@castelao.net"},
+  {name = "Guilherme Castelao"}
+]
 classifiers=[
   "Development Status :: 4 - Beta",
   "Intended Audience :: Science/Research",
