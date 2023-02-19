@@ -9,6 +9,7 @@ build-backend = 'setuptools.build_meta'
 
 [project]
 name="oceansdb"
+version="0.8.14"
 description="Subsample ocean climatologies and reference data"
 readme = "README.rst"
 requires-python = ">=3.7"

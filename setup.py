@@ -7,7 +7,6 @@ from setuptools import setup
 from codecs import open
 
 setup(
-    version='0.8.14',
     author="Guilherme Castelao",
     author_email='guilherme@castelao.net',
     url='https://github.com/castelao/oceansdb',
