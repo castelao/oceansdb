@@ -59,3 +59,34 @@ line-length = 88
 [tool.setuptools_scm]
 write_to = "oceansdb/version.py"
 git_describe_command = "git describe --dirty --tags --long --match 'v*' --first-parent"
+
+[tool.ruff]
+select = ["A", "I", "W"]
+ignore = []
+
+# Allow autofix for all enabled rules (when `--fix`) is provided.
+fixable = []
+unfixable = []
+
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".eggs",
+    ".git",
+    ".mypy_cache",
+    ".nox",
+    ".ruff_cache",
+    ".tox",
+    "__pypackages__",
+    "_build",
+    "build",
+    "dist",
+]
+per-file-ignores = {}
+
+line-length = 88
+
+# Assume Python 3.7.
+target-version = "py37"
+
+[tool.ruff.pydocstyle]
+convention = "numpy"
