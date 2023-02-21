@@ -17,7 +17,7 @@ with open('requirements.txt', encoding='utf-8') as f:
 
 setup(
     name='oceansdb',
-    version='0.8.15',
+    version='0.8.14',
     description="Package to subsample ocean climatologies and reference data.",
     long_description=readme + '\n\n' + history,
     author="Guilherme Castelao",
