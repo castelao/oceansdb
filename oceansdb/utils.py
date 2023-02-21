@@ -57,6 +57,12 @@ class Dataset_flex(object):
             return self.ds.variables[self.aliases[item]]
         except:
             return self.ds.variables[item]
+    def __enter__(self):
+        return self
+    def __exit__(self, exc_type, exc_value, exc_traceback):
+        self.close()
+    def close(self):
+        self.ds.close()
     @property
     def variables(self):
         return self.ds.variables

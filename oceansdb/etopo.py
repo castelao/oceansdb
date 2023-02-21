@@ -28,40 +28,45 @@ def get_depth(lat, lon, cfg):
 
     # if lat.shape != lon.shape:
     #            print "lat and lon must have the same size"
-
+    etopo_netcdf = None
     try:
         try:
-            etopo = netCDF4.Dataset(expanduser(cfg['file']))
+            try:
+                etopo = netCDF4.Dataset(expanduser(cfg['file']))
+            except:
+                # FIXME, It must have a time limit defined here, otherwise it can
+                #   get stuck trying to open the file.
+                etopo = netCDF4.Dataset(expanduser(cfg['url']))
+            etopo_netcdf = etopo
+            x = etopo.variables['ETOPO05_X'][:]
+            y = etopo.variables['ETOPO05_Y'][:]
         except:
-            # FIXME, It must have a time limit defined here, otherwise it can
-            #   get stuck trying to open the file.
-            etopo = netCDF4.Dataset(expanduser(cfg['url']))
-        x = etopo.variables['ETOPO05_X'][:]
-        y = etopo.variables['ETOPO05_Y'][:]
-    except:
-        etopo = open_url(cfg['url']).ROSE
-        x = etopo.ETOPO05_X[:]
-        y = etopo.ETOPO05_Y[:]
+            etopo = open_url(cfg['url']).ROSE
+            x = etopo.ETOPO05_X[:]
+            y = etopo.ETOPO05_Y[:]
 
-    if lon < 0:
-        lon += 360
+        if lon < 0:
+            lon += 360
 
-    iini = (abs(lon - x)).argmin() - 2
-    ifin = (abs(lon - x)).argmin() + 2
-    jini = (abs(lat - y)).argmin() - 2
-    jfin = (abs(lat - y)).argmin() + 2
+        iini = (abs(lon - x)).argmin() - 2
+        ifin = (abs(lon - x)).argmin() + 2
+        jini = (abs(lat - y)).argmin() - 2
+        jfin = (abs(lat - y)).argmin() + 2
 
-    assert (iini >= 0) or (iini <= len(x)) or \
-        (jini >= 0) or (jini <= len(y)), \
-        "Sorry not ready to handle too close to boundaries"
+        assert (iini >= 0) or (iini <= len(x)) or \
+            (jini >= 0) or (jini <= len(y)), \
+            "Sorry not ready to handle too close to boundaries"
 
-    try:
-        z = etopo.variables['ROSE'][jini:jfin, iini:ifin]
-    except:
-        z = etopo.ROSE[jini:jfin, iini:ifin]
+        try:
+            z = etopo.variables['ROSE'][jini:jfin, iini:ifin]
+        except:
+            z = etopo.ROSE[jini:jfin, iini:ifin]
 
-    interpolator = RectBivariateSpline(x[iini:ifin], y[jini:jfin], z.T)
-    return interpolator(lon, lat)[0][0]
+        interpolator = RectBivariateSpline(x[iini:ifin], y[jini:jfin], z.T)
+        return interpolator(lon, lat)[0][0]
+    finally:
+      if etopo_netcdf:
+          etopo_netcdf.close()
 
 
 class ETOPO_var_nc(object):
@@ -73,6 +78,16 @@ class ETOPO_var_nc(object):
 
         self.load_dims(dims=['lat', 'lon'])
         self.set_keys()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, exc_traceback):
+        self.close()
+
+    def close(self):
+        for nc in self.ncs:
+            nc.close()
 
     def __getitem__(self, item):
         return self.data[item]
@@ -279,6 +294,18 @@ class ETOPO(ETOPO_var_nc):
             self.data[item] = ETOPO_var_nc(source=dbsource(
                 self.dbname, item, self.resolution))
         return self.data[item]
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, exc_traceback):
+        self.close()
+
+    def close(self):
+        for data_key in self.data:
+            var_nc = self.data.get(data_key)
+            if var_nc:
+                var_nc.close()
 
     def extract(self, *args, **kwargs):
         print("Deprecated syntax, better use: db['topography'].extract(...)")

@@ -18,3 +18,4 @@ Contributors
 * Uday Bhaskar T V S: Reported improper path to DB files for Windows machines.
 * Carin Anderson & Ozan Göktürk: Reported bug #14 - coordinates partially coincident.
 * Simon Good: Reported bug on CARS related to #17.
+* Chris Slater: Added support for PEP-343 to release NetCDF file resources
