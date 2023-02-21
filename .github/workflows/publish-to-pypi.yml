@@ -1,0 +1,55 @@
+name: Publish distributions to PyPI and TestPyPI
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build-n-publish:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.9"
+
+    - name: Install pypa/build
+      run: >-
+        python -m
+        pip install
+        build
+        --user
+    - name: Build a binary wheel and a source tarball
+      run: >-
+        python -m
+        build
+        --sdist
+        --wheel
+        --outdir dist/
+        .
+
+    - name: Check distribution files
+      run: |
+        pip install twine
+        twine check dist/*
+
+    # - name: Publish distribution package to Test PyPI
+    #  uses: pypa/gh-action-pypi-publish@master
+    #  with:
+    #    password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+    #    repository_url: https://test.pypi.org/legacy/
+    - name: Publish distribution package to PyPI
+      if: startsWith(github.ref, 'refs/tags')
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        user: __token__
+        password: ${{ secrets.PYPI_API_TOKEN }}
+        verify_metadata: false
+        verbose: true
+        print_hash: true
