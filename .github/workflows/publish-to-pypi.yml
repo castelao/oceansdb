@@ -2,11 +2,17 @@ name: Publish distributions to PyPI and TestPyPI
 
 on:
   push:
+    tags:
+      - v*
   workflow_dispatch:
 
 jobs:
+  test:
+    uses: castelao/oceansdb/.github/workflows/ci.yml@main
+
   build-n-publish:
     name: Build
+    needs: test
     runs-on: ubuntu-latest
 
     steps:
