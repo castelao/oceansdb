@@ -31,6 +31,54 @@ def test_oceansites_nomenclature():
         #assert db['sea_water_salinity'] == db['PSAL']
 
 
+def test_access_coordinates():
+    """Direct access to coordinates and some checking values
+    """
+    cars = CARS()
+
+    for dataset in ("sea_water_temperature", "sea_water_salinity"):
+        assert cars[dataset]["lon"][644] == 322.0
+        assert cars[dataset]["lat"][180] == 15.
+        assert cars[dataset]["depth"][78] == 5500.
+        assert cars[dataset]["depth_ann"][63] == 1800.
+        assert cars[dataset]["depth_semiann"][54] == 1000.
+
+def test_access_variables():
+    cars = CARS()
+
+    dataset = "sea_water_temperature"
+    assert ma.allclose(cars[dataset]["mean"][2, 180, 644], 25.803320464498803)
+    assert ma.allclose(cars[dataset]["nq"][2, 180, 644], 1003)
+    assert ma.allclose(cars[dataset]["std_dev"][2, 180, 644], 1.23336334365892)
+
+    dataset = "sea_water_salinity"
+    assert ma.allclose(cars[dataset]["mean"][2, 180, 644], 36.459932400469995)
+    assert ma.allclose(cars[dataset]["nq"][2, 180, 644], 837)
+    assert ma.allclose(cars[dataset]["std_dev"][2, 180, 644], 0.23606427296171395)
+
+def test_access_climatology():
+    cars = CARS()
+
+    dataset = "sea_water_temperature"
+    assert ma.allclose(cars[dataset]["climatology"][100, 2, 180, 644], 24.50428392)
+    dataset = "sea_water_salinity"
+    assert ma.allclose(cars[dataset]["climatology"][100, 2, 180, 644], 36.27384162)
+
+
+def test_access_through_aliases(zn=2, xn=180, yn=644):
+    """Use aliases from datasource descriptor to fix varname
+    """
+    cars = CARS()
+
+    aliases = (("std_dev", "standard_deviation"), ("nq", "number_of_observations"), ("climatology", "mn"))
+    for dataset in ("sea_water_temperature", "sea_water_salinity"):
+        for a in aliases:
+            assert ma.allclose(cars[dataset][a[0]][zn, xn, yn], cars[dataset][a[1]][zn, xn, yn])
+
+    assert ma.allclose(cars[dataset]["lat"][xn], cars[dataset]["latitude"][xn])
+    assert ma.allclose(cars[dataset]["lon"][yn], cars[dataset]["longitude"][yn])
+
+
 # ==== Request points coincidents to the CARS gridpoints
 def test_coincident_gridpoint():
     with CARS() as db:

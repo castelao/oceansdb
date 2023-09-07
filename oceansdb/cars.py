@@ -12,6 +12,7 @@ download_file('http://www.marine.csiro.au/atlas/export/temperature_cars2009a.nc.
 download_file('http://www.marine.csiro.au/atlas/export/salinity_cars2009a.nc.gz', '7f78173f4ef2c0a4ff9b5e52b62dc97d')
 """
 
+import logging
 import os
 from os.path import expanduser
 import re
@@ -26,6 +27,16 @@ from scipy.interpolate import griddata
 
 from .utils import dbsource
 from .common import cropIndices
+
+module_logger = logging.getLogger(__name__)
+
+try:
+    import xarray as xr
+
+    XARRAY_AVAILABLE = True
+except ImportError:
+    XARRAY_AVAILABLE = False
+    module_logger.debug("Xarray is not available.")
 
 
 def extract(filename, doy, latitude, longitude, depth):
@@ -120,9 +131,16 @@ class cars_data(object):
         self.nc = carsfile
 
     def __getitem__(self, item):
-        """ t, z, y, x
+        """CARS climatology for the requested indices
+
+        If time is omitted, it is assumed a sequence 0:365, i.e., every
+        day of the year.
         """
-        tn, zn, yn, xn = item
+        if len(item) == 3:
+            tn = slice(0, None)
+            zn, yn, xn = item
+        else:
+            tn, zn, yn, xn = item
 
         #if type(zn) is not slice:
         #    zn = slice(zn, zn+1)
@@ -170,7 +188,8 @@ class CARS_var_nc(object):
             !!!ATENTION!!! Need to improve this.
             cars_data() should be modified to be used when loading ncs with source, thus avoiding the requirement on this getitem but running transparent.
         """
-        if item == 'mn':
+        item = self.ncs[0].aliases.get(item, item)
+        if item == "climatology":
             return cars_data(self.ncs[0])
         else:
             return self.ncs[0].variables[item]
@@ -244,7 +263,7 @@ class CARS_var_nc(object):
 
         subset = {}
         for v in var:
-            if v == 'mn':
+            if v == 'climatology':
                 mn = []
                 for d in doy:
                     t = 2 * np.pi * d/366
